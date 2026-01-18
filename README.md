@@ -42,7 +42,7 @@ npx serve .
 
 ## How the AI Tutor Works
 
-The tutor uses **WebLLM** to run a small language model (Llama-3.2-1B) directly in your browser:
+The tutor uses **WebLLM** to run a small language model directly in your browser:
 
 - 🆓 **Free** - No API keys or accounts needed
 - 🔒 **Private** - No data leaves your browser
