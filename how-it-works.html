@@ -32,15 +32,21 @@
                 <span class="hamburger-line"></span>
                 <span class="hamburger-line"></span>
             </button>
-            <nav><ul class="nav-links">
-                <li><a href="index.html" class="nav-link">Home</a></li>
-                <li><a href="index.html#modules" class="nav-link">Modules</a></li>
-                <li><a href="projects.html" class="nav-link">Build More</a></li>
-                <li><a href="how-it-works.html" class="nav-link active">How It Works</a></li>
-            </ul></nav>
+            <nav aria-label="Main navigation">
+                <ul class="nav-links">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="index.html#modules" class="nav-link">Modules</a></li>
+                    <li><a href="projects.html" class="nav-link">Build More</a></li>
+                    <li><a href="how-it-works.html" class="nav-link active">How It Works</a></li>
+                </ul>
+            </nav>
             <div class="header-actions">
-                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
-                    <span class="theme-icon-light">☀️</span><span class="theme-icon-dark">🌙</span>
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode (Press 'd')">
+                    <span class="theme-icon-light" aria-hidden="true">☀️</span>
+                    <span class="theme-icon-dark" aria-hidden="true">🌙</span>
+                </button>
+                <button id="keyboard-help" class="icon-btn" aria-label="Keyboard shortcuts" title="Keyboard shortcuts (Press '?')">
+                    <span aria-hidden="true">⌨️</span>
                 </button>
             </div>
         </div>
