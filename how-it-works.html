@@ -73,7 +73,9 @@
         <h3>2. WebLLM for Free AI</h3>
         <div class="concept-box">
             <strong>What is WebLLM?</strong><br>
-            A library that runs AI models directly in your browser using WebGPU. No API keys, no server costs, no data sent anywhere. The model downloads once (~500MB) and runs locally.
+            A library that runs AI models directly in your browser using WebGPU. No API keys, no server costs, no data sent anywhere.<br><br>
+            <strong>What gets downloaded?</strong><br>
+            <a href="https://huggingface.co/mlc-ai/Llama-3.2-1B-Instruct-q4f16_1-MLC">Llama 3.2 1B Instruct</a> (~500MB) - a small but capable language model from Meta, quantized to 4-bit precision by the <a href="https://mlc.ai/">MLC project</a>. It's cached in your browser after the first download.
         </div>
         <pre><code class="language-javascript">// How we load the AI model
 import { CreateMLCEngine } from 'https://esm.run/@mlc-ai/web-llm';
@@ -193,7 +195,10 @@ git push -u origin main
         <h2>Resources</h2>
         <ul>
             <li><a href="https://webllm.mlc.ai/">WebLLM Documentation</a> - Run LLMs in browser</li>
+            <li><a href="https://huggingface.co/mlc-ai/Llama-3.2-1B-Instruct-q4f16_1-MLC">Llama 3.2 1B Model</a> - The model used by this tutor</li>
+            <li><a href="https://mlc.ai/">MLC AI</a> - Machine Learning Compilation project</li>
             <li><a href="https://github.com/The-Pocket/PocketFlow">PocketFlow</a> - 100-line LLM framework</li>
+            <li><a href="https://pyodide.org/">Pyodide</a> - Python in the browser via WebAssembly</li>
             <li><a href="https://www.w3.org/WAI/WCAG21/quickref/">WCAG 2.1 Quick Reference</a> - Accessibility guidelines</li>
             <li><a href="https://pages.github.com/">GitHub Pages</a> - Free hosting</li>
         </ul>

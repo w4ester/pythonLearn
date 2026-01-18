@@ -168,8 +168,68 @@
 }
 
 .code-container:hover .explain-btn,
-.explain-btn:focus {
+.code-container:hover .run-btn,
+.explain-btn:focus,
+.run-btn:focus {
     opacity: 1;
+}
+
+/* Run Button */
+.run-btn {
+    position: absolute;
+    top: var(--space-sm);
+    right: calc(var(--space-sm) + 90px);
+    background: #22c55e;
+    color: white;
+    border: none;
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: 4px;
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity var(--transition-fast), background-color var(--transition-fast);
+    z-index: 10;
+}
+
+.run-btn:hover {
+    background: #16a34a;
+}
+
+.run-btn:disabled {
+    background: #6b7280;
+    cursor: not-allowed;
+}
+
+/* Code Output Area */
+.code-output {
+    margin-top: var(--space-sm);
+    padding: var(--space-md);
+    background: var(--color-code-bg);
+    border-radius: var(--border-radius);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-sm);
+    color: #e8e8f0;
+    white-space: pre-wrap;
+    word-break: break-word;
+    border-left: 4px solid var(--color-border);
+}
+
+.code-output.hidden {
+    display: none;
+}
+
+.code-output.loading {
+    border-left-color: #fbbf24;
+    color: #a0a0b8;
+}
+
+.code-output.success {
+    border-left-color: #22c55e;
+}
+
+.code-output.error {
+    border-left-color: #ef4444;
+    color: #fca5a5;
 }
 
 /* Quiz Section */

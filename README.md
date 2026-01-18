@@ -6,8 +6,9 @@ A free, accessible, AI-powered Python learning platform that runs entirely in yo
 
 ## Features
 
-- ✅ **6 Learning Modules** - Mapped to PCEP & Google IT Automation certifications
-- 🤖 **AI Tutor** - Free in-browser LLM (WebLLM) - no API keys needed!
+- ✅ **6 Learning Modules** - Beginner-friendly Python curriculum
+- 💬 **AI Tutor** - Free in-browser LLM (WebLLM) or local models (Ollama, llama.cpp)
+- ▶️ **Run Python in Browser** - Execute code directly with Pyodide
 - 🌙 **Dark/Light Mode** - Respects system preference
 - ♿ **WCAG 2.1 AA Accessible** - Keyboard navigation, screen reader friendly
 - 💾 **Progress Tracking** - Saved locally in your browser

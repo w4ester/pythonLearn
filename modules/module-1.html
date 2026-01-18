@@ -257,7 +257,7 @@ print("Next year you'll be", next_year)</code></pre>
     <!-- AI Tutor Panel (same as index) -->
     <div id="tutor-panel" class="tutor-panel" aria-hidden="true">
         <div class="tutor-header">
-            <h2>🤖 Python Tutor</h2>
+            <h2>Python Tutor</h2>
             <div class="tutor-status" id="tutor-status">
                 <span class="status-dot"></span>
                 <span class="status-text">Loading...</span>
@@ -285,7 +285,7 @@ print("Next year you'll be", next_year)</code></pre>
     </div>
 
     <button id="tutor-fab" class="tutor-fab" aria-label="Open AI tutor">
-        <span class="fab-icon">🤖</span>
+        <span class="fab-icon">💬</span>
         <span class="fab-text">Ask AI</span>
     </button>
 
@@ -295,9 +295,11 @@ print("Next year you'll be", next_year)</code></pre>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
     <script src="../js/app.js"></script>
     <script src="../js/tutor-flow.js"></script>
     <script src="../js/tutor-ui.js"></script>
+    <script src="../js/pyodide-runner.js"></script>
     <script>
         // Quiz answers
         const answers = { q1: 'b', q2: 'c', q3: 'c' };
