@@ -363,6 +363,18 @@ a:hover, a:focus {
     background: var(--color-primary-hover);
 }
 
+/* Links inside buttons should inherit button text color */
+.btn a,
+a.btn {
+    color: inherit;
+    text-decoration: none;
+}
+
+.btn a:visited,
+a.btn:visited {
+    color: inherit;
+}
+
 .btn-secondary {
     background: transparent;
     color: var(--color-primary);
