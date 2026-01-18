@@ -713,6 +713,13 @@ kbd {
         display: block;
         padding: var(--space-md);
         border-radius: var(--border-radius);
+        background: var(--color-bg-alt);
+        border: 1px solid var(--color-border);
+    }
+
+    .nav-link:hover, .nav-link.active {
+        background: var(--color-bg-elevated);
+        color: var(--color-primary);
     }
 
     .modules-grid {
