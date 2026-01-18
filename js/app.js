@@ -282,7 +282,34 @@ document.addEventListener('DOMContentLoaded', () => {
     if (openTutorBtn) {
         openTutorBtn.addEventListener('click', () => window.TutorUI?.open());
     }
-    
+
+    // Mobile hamburger menu
+    const hamburger = document.querySelector('.hamburger');
+    const nav = document.querySelector('.header-content nav');
+    if (hamburger && nav) {
+        hamburger.addEventListener('click', () => {
+            const isOpen = hamburger.getAttribute('aria-expanded') === 'true';
+            hamburger.setAttribute('aria-expanded', !isOpen);
+            nav.classList.toggle('open', !isOpen);
+        });
+
+        // Close menu when clicking a link
+        nav.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.setAttribute('aria-expanded', 'false');
+                nav.classList.remove('open');
+            });
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!hamburger.contains(e.target) && !nav.contains(e.target)) {
+                hamburger.setAttribute('aria-expanded', 'false');
+                nav.classList.remove('open');
+            }
+        });
+    }
+
     console.log('🐍 PyLearn initialized! Press ? for keyboard shortcuts.');
 });
 
