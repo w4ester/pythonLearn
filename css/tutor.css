@@ -1,0 +1,338 @@
+/* ===========================================
+   AI Tutor Chat Panel Styles
+   =========================================== */
+
+/* Floating Action Button */
+.tutor-fab {
+    position: fixed;
+    bottom: var(--space-lg);
+    right: var(--space-lg);
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: var(--space-md) var(--space-lg);
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--font-size-base);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    box-shadow: 0 4px 20px rgba(45, 106, 79, 0.4);
+    transition: all var(--transition-fast);
+    z-index: 90;
+}
+
+.tutor-fab:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 28px rgba(45, 106, 79, 0.5);
+}
+
+.tutor-fab[aria-expanded="true"] {
+    display: none;
+}
+
+.fab-icon {
+    font-size: 1.25em;
+}
+
+/* Chat Panel */
+.tutor-panel {
+    position: fixed;
+    bottom: var(--space-lg);
+    right: var(--space-lg);
+    width: 400px;
+    max-width: calc(100vw - 2rem);
+    height: 600px;
+    max-height: calc(100vh - 120px);
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-lg);
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all var(--transition-base);
+}
+
+.tutor-panel[aria-hidden="false"] {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Header */
+.tutor-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-md) var(--space-lg);
+    background: var(--color-primary);
+    color: white;
+    border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+}
+
+.tutor-header h2 {
+    margin: 0;
+    font-size: var(--font-size-lg);
+    flex: 1;
+}
+
+.tutor-status {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: var(--font-size-sm);
+    opacity: 0.9;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #fbbf24;
+}
+
+.status-dot.ready {
+    background: #34d399;
+}
+
+.status-dot.error {
+    background: #f87171;
+}
+
+.tutor-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    opacity: 0.8;
+}
+
+.tutor-close:hover {
+    opacity: 1;
+}
+
+/* Messages Area */
+.tutor-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.message {
+    max-width: 90%;
+    padding: var(--space-md);
+    border-radius: var(--border-radius);
+    animation: messageIn 0.3s ease;
+}
+
+@keyframes messageIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.bot-message {
+    background: var(--color-bg-alt);
+    align-self: flex-start;
+    border: 1px solid var(--color-border);
+}
+
+.user-message {
+    background: var(--color-primary);
+    color: white;
+    align-self: flex-end;
+}
+
+.message p {
+    margin: 0 0 var(--space-sm);
+}
+
+.message p:last-child {
+    margin-bottom: 0;
+}
+
+.message ul {
+    margin: var(--space-sm) 0;
+    padding-left: var(--space-lg);
+}
+
+.message li {
+    margin-bottom: var(--space-xs);
+}
+
+.message code {
+    background: var(--color-code-bg);
+    color: #e8e8f0;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+.message pre {
+    background: var(--color-code-bg);
+    padding: var(--space-md);
+    border-radius: var(--border-radius);
+    overflow-x: auto;
+    margin: var(--space-sm) 0;
+}
+
+.message pre code {
+    background: none;
+    padding: 0;
+}
+
+/* Typing indicator */
+.typing-indicator {
+    display: flex;
+    gap: 4px;
+    padding: var(--space-md);
+    align-self: flex-start;
+}
+
+.typing-indicator span {
+    width: 8px;
+    height: 8px;
+    background: var(--color-text-muted);
+    border-radius: 50%;
+    animation: typing 1.4s infinite ease-in-out;
+}
+
+.typing-indicator span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.typing-indicator span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes typing {
+    0%, 60%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-6px); }
+}
+
+/* Input Area */
+.tutor-input-area {
+    padding: var(--space-md);
+    border-top: 1px solid var(--color-border);
+}
+
+.model-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-md);
+    text-align: center;
+}
+
+.model-loading.hidden {
+    display: none;
+}
+
+.loading-spinner {
+    width: 24px;
+    height: 24px;
+    border: 3px solid var(--color-border);
+    border-top-color: var(--color-primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.loading-progress {
+    width: 100%;
+    height: 6px;
+    background: var(--color-border);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.loading-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+.tutor-form {
+    display: flex;
+    gap: var(--space-sm);
+}
+
+.tutor-form input {
+    flex: 1;
+    padding: var(--space-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    font-size: var(--font-size-base);
+}
+
+.tutor-form input:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.tutor-form input:focus {
+    border-color: var(--color-primary);
+}
+
+.tutor-form button {
+    padding: var(--space-md) var(--space-lg);
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-lg);
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
+}
+
+.tutor-form button:hover:not(:disabled) {
+    background: var(--color-primary-hover);
+}
+
+.tutor-form button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Mobile adjustments */
+@media (max-width: 480px) {
+    .tutor-panel {
+        bottom: 0;
+        right: 0;
+        width: 100%;
+        max-width: 100%;
+        height: 100vh;
+        max-height: 100vh;
+        border-radius: 0;
+    }
+    
+    .tutor-fab {
+        bottom: var(--space-md);
+        right: var(--space-md);
+    }
+}

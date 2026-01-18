@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 1: Python Basics | PyLearn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/tutor.css">
+    <link rel="stylesheet" href="../css/module.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <header class="site-header">
+        <div class="header-content">
+            <a href="../index.html" class="logo">
+                <span class="logo-icon">🐍</span>
+                <span class="logo-text">PyLearn</span>
+            </a>
+            <nav aria-label="Main navigation">
+                <ul class="nav-links">
+                    <li><a href="../index.html" class="nav-link">Home</a></li>
+                    <li><a href="../index.html#modules" class="nav-link active">Modules</a></li>
+                    <li><a href="../projects.html" class="nav-link">Build More</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+                    <span class="theme-icon-light">☀️</span>
+                    <span class="theme-icon-dark">🌙</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content" class="module-content">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="../index.html">Home</a>
+            <span aria-hidden="true">→</span>
+            <a href="../index.html#modules">Modules</a>
+            <span aria-hidden="true">→</span>
+            <span aria-current="page">Module 1</span>
+        </nav>
+
+        <article class="module-article">
+            <header class="module-header">
+                <span class="module-badge">Module 1 of 6</span>
+                <h1>Python Basics</h1>
+                <p class="module-meta">
+                    <span class="tag">PCEP 1.1-1.4</span>
+                    <span class="tag">Google IT Week 1</span>
+                    <span class="reading-time">~20 min read</span>
+                </p>
+            </header>
+
+            <section class="lesson" id="intro">
+                <h2>Welcome to Python! 🐍</h2>
+                <p>Python is one of the most beginner-friendly programming languages. It reads almost like English and is used everywhere: websites, data science, AI, automation, and more.</p>
+                <p>By the end of this module, you'll understand <strong>variables</strong>, <strong>data types</strong>, and <strong>basic operators</strong>.</p>
+                
+                <div class="callout callout-tip">
+                    <strong>💡 Tip:</strong> Click the "Explain This" button on any code example to have the AI tutor break it down for you!
+                </div>
+            </section>
+
+            <section class="lesson" id="variables">
+                <h2>Variables: Storing Information</h2>
+                <p>A <strong>variable</strong> is like a labeled box that holds a value. You create one by choosing a name and using the <code>=</code> sign.</p>
+                
+                <div class="code-container">
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python"># Creating variables
+name = "Ada"          # A text value (string)
+age = 25              # A number (integer)
+height = 5.4          # A decimal number (float)
+is_student = True     # A true/false value (boolean)
+
+# Using variables
+print(name)           # Output: Ada
+print("Age:", age)    # Output: Age: 25</code></pre>
+                </div>
+                
+                <h3>Variable Naming Rules</h3>
+                <ul>
+                    <li>Must start with a letter or underscore (_)</li>
+                    <li>Can contain letters, numbers, and underscores</li>
+                    <li>Case-sensitive: <code>Name</code> and <code>name</code> are different</li>
+                    <li>Can't use Python keywords like <code>if</code>, <code>for</code>, <code>class</code></li>
+                </ul>
+                
+                <div class="code-container">
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python"># Good variable names
+user_name = "Python Fan"
+totalScore = 100
+_private = "hidden"
+
+# Bad variable names (will cause errors!)
+# 2fast = "error"      # Can't start with number
+# my-var = "error"     # Can't use hyphens
+# class = "error"      # Can't use keywords</code></pre>
+                </div>
+            </section>
+
+            <section class="lesson" id="data-types">
+                <h2>Data Types: Kinds of Information</h2>
+                <p>Python has several built-in data types. Here are the most common:</p>
+                
+                <div class="data-types-grid">
+                    <div class="type-card">
+                        <h4>str (String)</h4>
+                        <p>Text in quotes</p>
+                        <code>"Hello"</code>
+                    </div>
+                    <div class="type-card">
+                        <h4>int (Integer)</h4>
+                        <p>Whole numbers</p>
+                        <code>42</code>
+                    </div>
+                    <div class="type-card">
+                        <h4>float (Float)</h4>
+                        <p>Decimal numbers</p>
+                        <code>3.14</code>
+                    </div>
+                    <div class="type-card">
+                        <h4>bool (Boolean)</h4>
+                        <p>True or False</p>
+                        <code>True</code>
+                    </div>
+                </div>
+                
+                <div class="code-container">
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python"># Check a variable's type with type()
+message = "Hello"
+count = 10
+price = 19.99
+active = True
+
+print(type(message))  # <class 'str'>
+print(type(count))    # <class 'int'>
+print(type(price))    # <class 'float'>
+print(type(active))   # <class 'bool'></code></pre>
+                </div>
+            </section>
+
+            <section class="lesson" id="operators">
+                <h2>Operators: Doing Things with Data</h2>
+                
+                <h3>Math Operators</h3>
+                <div class="code-container">
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python"># Basic math
+a = 10
+b = 3
+
+print(a + b)   # Addition: 13
+print(a - b)   # Subtraction: 7
+print(a * b)   # Multiplication: 30
+print(a / b)   # Division: 3.333...
+print(a // b)  # Floor division: 3 (rounds down)
+print(a % b)   # Modulo (remainder): 1
+print(a ** b)  # Exponent: 1000 (10 to the power of 3)</code></pre>
+                </div>
+                
+                <h3>String Operations</h3>
+                <div class="code-container">
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python"># Combining strings (concatenation)
+first = "Hello"
+second = "World"
+greeting = first + " " + second
+print(greeting)  # Hello World
+
+# Repeating strings
+laugh = "ha" * 3
+print(laugh)  # hahaha
+
+# String length
+print(len(greeting))  # 11</code></pre>
+                </div>
+            </section>
+
+            <section class="lesson" id="input-output">
+                <h2>Input and Output</h2>
+                <p><code>print()</code> displays output. <code>input()</code> asks the user for input.</p>
+                
+                <div class="code-container">
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python"># Getting user input
+name = input("What's your name? ")
+print("Hello, " + name + "!")
+
+# Note: input() always returns a string!
+age = input("How old are you? ")
+# age is a string like "25", not the number 25
+
+# Convert to number for math
+age_number = int(age)
+next_year = age_number + 1
+print("Next year you'll be", next_year)</code></pre>
+                </div>
+            </section>
+
+            <!-- Quiz Section -->
+            <section class="quiz-section" id="quiz">
+                <h2>📝 Test Your Knowledge</h2>
+                <div id="quiz-container">
+                    <div class="quiz-question" data-question="1">
+                        <p><strong>Question 1:</strong> What data type is <code>"42"</code>?</p>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q1" value="a"> int</label>
+                            <label><input type="radio" name="q1" value="b"> str</label>
+                            <label><input type="radio" name="q1" value="c"> float</label>
+                            <label><input type="radio" name="q1" value="d"> bool</label>
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-question" data-question="2">
+                        <p><strong>Question 2:</strong> What does <code>10 % 3</code> return?</p>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q2" value="a"> 3</label>
+                            <label><input type="radio" name="q2" value="b"> 3.33</label>
+                            <label><input type="radio" name="q2" value="c"> 1</label>
+                            <label><input type="radio" name="q2" value="d"> 0</label>
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-question" data-question="3">
+                        <p><strong>Question 3:</strong> Which variable name is invalid?</p>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q3" value="a"> my_var</label>
+                            <label><input type="radio" name="q3" value="b"> _count</label>
+                            <label><input type="radio" name="q3" value="c"> 2nd_place</label>
+                            <label><input type="radio" name="q3" value="d"> userName</label>
+                        </div>
+                    </div>
+                    
+                    <button id="check-quiz" class="btn btn-primary">Check Answers</button>
+                    <div id="quiz-result" class="quiz-result"></div>
+                </div>
+            </section>
+
+            <!-- Navigation -->
+            <nav class="module-nav">
+                <a href="../index.html" class="btn btn-secondary">← Back to Modules</a>
+                <button id="mark-complete" class="btn btn-primary">Mark as Complete ✓</button>
+                <a href="module-2.html" class="btn btn-secondary">Next: Control Flow →</a>
+            </nav>
+        </article>
+    </main>
+
+    <!-- AI Tutor Panel (same as index) -->
+    <div id="tutor-panel" class="tutor-panel" aria-hidden="true">
+        <div class="tutor-header">
+            <h2>🤖 Python Tutor</h2>
+            <div class="tutor-status" id="tutor-status">
+                <span class="status-dot"></span>
+                <span class="status-text">Loading...</span>
+            </div>
+            <button id="close-tutor" class="tutor-close" aria-label="Close tutor">×</button>
+        </div>
+        <div class="tutor-messages" id="tutor-messages" role="log" aria-live="polite">
+            <div class="message bot-message">
+                <p><strong>Module 1 Tutor</strong></p>
+                <p>I can help explain anything on this page! Click "Explain This" on any code, or ask me directly.</p>
+            </div>
+        </div>
+        <div class="tutor-input-area">
+            <div id="model-loading" class="model-loading">
+                <div class="loading-spinner"></div>
+                <span id="loading-text">Initializing...</span>
+                <div class="loading-progress"><div class="loading-bar" id="loading-bar"></div></div>
+            </div>
+            <form id="tutor-form" class="tutor-form">
+                <label for="tutor-input" class="visually-hidden">Ask a question</label>
+                <input type="text" id="tutor-input" placeholder="Ask about Python basics..." autocomplete="off" disabled>
+                <button type="submit" id="tutor-submit" disabled>→</button>
+            </form>
+        </div>
+    </div>
+
+    <button id="tutor-fab" class="tutor-fab" aria-label="Open AI tutor">
+        <span class="fab-icon">🤖</span>
+        <span class="fab-text">Ask AI</span>
+    </button>
+
+    <footer class="site-footer">
+        <p>Built with the <strong>Producer Mindset</strong> 🚀</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/tutor-flow.js"></script>
+    <script src="../js/tutor-ui.js"></script>
+    <script>
+        // Quiz answers
+        const answers = { q1: 'b', q2: 'c', q3: 'c' };
+        
+        document.getElementById('check-quiz')?.addEventListener('click', () => {
+            let correct = 0;
+            let total = Object.keys(answers).length;
+            
+            for (const [q, correctAns] of Object.entries(answers)) {
+                const selected = document.querySelector(`input[name="${q}"]:checked`);
+                const questionEl = document.querySelector(`[data-question="${q.slice(1)}"]`);
+                
+                if (selected) {
+                    if (selected.value === correctAns) {
+                        correct++;
+                        questionEl.classList.add('correct');
+                        questionEl.classList.remove('incorrect');
+                    } else {
+                        questionEl.classList.add('incorrect');
+                        questionEl.classList.remove('correct');
+                    }
+                }
+            }
+            
+            const result = document.getElementById('quiz-result');
+            const score = Math.round((correct / total) * 100);
+            result.innerHTML = `<p>You got <strong>${correct}/${total}</strong> correct (${score}%)</p>`;
+            result.className = 'quiz-result ' + (score >= 70 ? 'pass' : 'fail');
+            
+            // Save score to progress
+            if (window.PyLearn?.Progress) {
+                const progress = window.PyLearn.Progress.get();
+                progress.modules[1].quizScore = score;
+                window.PyLearn.Progress.save(progress);
+            }
+        });
+        
+        // Mark complete button
+        document.getElementById('mark-complete')?.addEventListener('click', () => {
+            if (window.PyLearn?.Progress) {
+                window.PyLearn.Progress.completeModule(1);
+                alert('🎉 Module 1 marked as complete!');
+            }
+        });
+        
+        // Explain This button handler
+        function explainCode(btn) {
+            const codeBlock = btn.nextElementSibling.querySelector('code');
+            if (codeBlock && window.TutorUI) {
+                window.TutorUI.askAboutCode(codeBlock.textContent);
+            }
+        }
+    </script>
+</body>
+</html>

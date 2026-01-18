@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 5: Files & Exceptions | PyLearn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/tutor.css">
+    <link rel="stylesheet" href="../css/module.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <header class="site-header">
+        <div class="header-content">
+            <a href="../index.html" class="logo"><span class="logo-icon">🐍</span><span class="logo-text">PyLearn</span></a>
+            <nav><ul class="nav-links">
+                <li><a href="../index.html" class="nav-link">Home</a></li>
+                <li><a href="../index.html#modules" class="nav-link active">Modules</a></li>
+                <li><a href="../projects.html" class="nav-link">Build More</a></li>
+            </ul></nav>
+            <div class="header-actions">
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+                    <span class="theme-icon-light">☀️</span><span class="theme-icon-dark">🌙</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content" class="module-content">
+        <nav class="breadcrumb"><a href="../index.html">Home</a><span>→</span><a href="../index.html#modules">Modules</a><span>→</span><span>Module 5</span></nav>
+
+        <article class="module-article">
+            <header class="module-header">
+                <span class="module-badge">Module 5 of 6</span>
+                <h1>Files & Exceptions</h1>
+                <p class="module-meta"><span class="tag">PCEP 5.1-5.2</span><span class="tag">Google Week 4</span></p>
+            </header>
+
+            <section class="lesson">
+                <h2>Reading Files</h2>
+                <p>Python can read text files easily.</p>
+                <div class="code-container">
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python"># Open and read entire file
+with open("data.txt", "r") as file:
+    content = file.read()
+    print(content)
+
+# Read line by line
+with open("data.txt", "r") as file:
+    for line in file:
+        print(line.strip())  # strip() removes \n
+
+# Read all lines into a list
+with open("data.txt", "r") as file:
+    lines = file.readlines()
+    print(lines)  # ['line1\n', 'line2\n', ...]</code></pre>
+                </div>
+                <div class="callout callout-tip">
+                    <strong>💡 Why "with"?</strong> The <code>with</code> statement automatically closes the file when done, even if errors occur. Always use it!
+                </div>
+            </section>
+
+            <section class="lesson">
+                <h2>Writing Files</h2>
+                <div class="code-container">
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python"># Write (creates or overwrites file)
+with open("output.txt", "w") as file:
+    file.write("Hello, World!\n")
+    file.write("Second line\n")
+
+# Append (adds to existing file)
+with open("output.txt", "a") as file:
+    file.write("This is added at the end\n")
+
+# Write multiple lines
+lines = ["Line 1", "Line 2", "Line 3"]
+with open("output.txt", "w") as file:
+    for line in lines:
+        file.write(line + "\n")</code></pre>
+                </div>
+            </section>
+
+            <section class="lesson">
+                <h2>Working with JSON</h2>
+                <p>JSON is great for saving structured data.</p>
+                <div class="code-container">
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python">import json
+
+# Save data to JSON
+data = {"name": "Alice", "scores": [90, 85, 88]}
+
+with open("data.json", "w") as file:
+    json.dump(data, file, indent=2)
+
+# Load data from JSON
+with open("data.json", "r") as file:
+    loaded = json.load(file)
+    print(loaded["name"])  # Alice</code></pre>
+                </div>
+            </section>
+
+            <section class="lesson">
+                <h2>Handling Exceptions</h2>
+                <p>Errors happen! Handle them gracefully with try/except.</p>
+                <div class="code-container">
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python"># Basic try/except
+try:
+    number = int(input("Enter a number: "))
+    result = 10 / number
+    print(result)
+except ValueError:
+    print("That's not a valid number!")
+except ZeroDivisionError:
+    print("Can't divide by zero!")
+
+# Catch multiple exceptions
+try:
+    risky_operation()
+except (TypeError, ValueError) as e:
+    print(f"Error: {e}")
+
+# try/except/else/finally
+try:
+    file = open("data.txt")
+except FileNotFoundError:
+    print("File not found!")
+else:
+    print(file.read())  # Only if no error
+    file.close()
+finally:
+    print("This always runs")</code></pre>
+                </div>
+            </section>
+
+            <section class="lesson">
+                <h2>Common Exceptions</h2>
+                <div class="data-types-grid">
+                    <div class="type-card">
+                        <h4>ValueError</h4>
+                        <p>Wrong value type</p>
+                        <code>int("abc")</code>
+                    </div>
+                    <div class="type-card">
+                        <h4>TypeError</h4>
+                        <p>Wrong operation for type</p>
+                        <code>"2" + 2</code>
+                    </div>
+                    <div class="type-card">
+                        <h4>KeyError</h4>
+                        <p>Dict key not found</p>
+                        <code>d["missing"]</code>
+                    </div>
+                    <div class="type-card">
+                        <h4>IndexError</h4>
+                        <p>List index out of range</p>
+                        <code>lst[100]</code>
+                    </div>
+                </div>
+            </section>
+
+            <section class="quiz-section" id="quiz">
+                <h2>📝 Quiz</h2>
+                <div class="quiz-question" data-question="1">
+                    <p><strong>Q1:</strong> Which mode appends to a file?</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> "r"</label>
+                        <label><input type="radio" name="q1" value="b"> "w"</label>
+                        <label><input type="radio" name="q1" value="c"> "a"</label>
+                    </div>
+                </div>
+                <div class="quiz-question" data-question="2">
+                    <p><strong>Q2:</strong> What catches errors in Python?</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> catch/throw</label>
+                        <label><input type="radio" name="q2" value="b"> try/except</label>
+                        <label><input type="radio" name="q2" value="c"> if/else</label>
+                    </div>
+                </div>
+                <button id="check-quiz" class="btn btn-primary">Check Answers</button>
+                <div id="quiz-result" class="quiz-result"></div>
+            </section>
+
+            <nav class="module-nav">
+                <a href="module-4.html" class="btn btn-secondary">← Data Structures</a>
+                <button id="mark-complete" class="btn btn-primary">Mark Complete ✓</button>
+                <a href="module-6.html" class="btn btn-secondary">OOP →</a>
+            </nav>
+        </article>
+    </main>
+
+    <div id="tutor-panel" class="tutor-panel" aria-hidden="true">
+        <div class="tutor-header"><h2>🤖 Tutor</h2><div class="tutor-status"><span class="status-dot"></span><span class="status-text">Loading...</span></div><button id="close-tutor" class="tutor-close">×</button></div>
+        <div class="tutor-messages" id="tutor-messages" role="log"><div class="message bot-message"><p>File handling and exceptions - essential skills! Ask away.</p></div></div>
+        <div class="tutor-input-area">
+            <div id="model-loading" class="model-loading"><div class="loading-spinner"></div><span id="loading-text">Initializing...</span><div class="loading-progress"><div class="loading-bar" id="loading-bar"></div></div></div>
+            <form id="tutor-form" class="tutor-form"><input type="text" id="tutor-input" placeholder="Ask about files..." disabled><button type="submit" id="tutor-submit" disabled>→</button></form>
+        </div>
+    </div>
+    <button id="tutor-fab" class="tutor-fab"><span class="fab-icon">🤖</span><span class="fab-text">Ask AI</span></button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/tutor-flow.js"></script>
+    <script src="../js/tutor-ui.js"></script>
+    <script>
+        const answers = { q1: 'c', q2: 'b' };
+        document.getElementById('check-quiz')?.addEventListener('click', () => {
+            let correct = 0;
+            for (const [q, ans] of Object.entries(answers)) { if (document.querySelector(`input[name="${q}"]:checked`)?.value === ans) correct++; }
+            document.getElementById('quiz-result').innerHTML = `<p>${correct}/2 (${Math.round(correct/2*100)}%)</p>`;
+            document.getElementById('quiz-result').className = 'quiz-result ' + (correct >= 1 ? 'pass' : 'fail');
+        });
+        document.getElementById('mark-complete')?.addEventListener('click', () => { window.PyLearn?.Progress?.completeModule(5); alert('Module 5 complete!'); });
+        function explainCode(btn) { const code = btn.nextElementSibling?.querySelector('code')?.textContent; if (code) window.TutorUI?.askAboutCode(code); }
+    </script>
+</body>
+</html>

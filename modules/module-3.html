@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 3: Functions | PyLearn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/tutor.css">
+    <link rel="stylesheet" href="../css/module.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <header class="site-header">
+        <div class="header-content">
+            <a href="../index.html" class="logo"><span class="logo-icon">🐍</span><span class="logo-text">PyLearn</span></a>
+            <nav><ul class="nav-links">
+                <li><a href="../index.html" class="nav-link">Home</a></li>
+                <li><a href="../index.html#modules" class="nav-link active">Modules</a></li>
+                <li><a href="../projects.html" class="nav-link">Build More</a></li>
+            </ul></nav>
+            <div class="header-actions">
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+                    <span class="theme-icon-light">☀️</span><span class="theme-icon-dark">🌙</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content" class="module-content">
+        <nav class="breadcrumb"><a href="../index.html">Home</a><span>→</span><a href="../index.html#modules">Modules</a><span>→</span><span>Module 3</span></nav>
+
+        <article class="module-article">
+            <header class="module-header">
+                <span class="module-badge">Module 3 of 6</span>
+                <h1>Functions & Modules</h1>
+                <p class="module-meta"><span class="tag">PCEP 3.1-3.3</span><span class="tag">Google Week 2-3</span></p>
+            </header>
+
+            <section class="lesson">
+                <h2>What Are Functions?</h2>
+                <p>Functions are reusable blocks of code with a name. Define once, use many times!</p>
+                <div class="code-container">
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python"># Define a function with def
+def greet():
+    print("Hello!")
+
+# Call the function
+greet()  # Output: Hello!
+greet()  # Can call it again!
+
+# Function with a parameter
+def greet_person(name):
+    print(f"Hello, {name}!")
+
+greet_person("Alice")  # Hello, Alice!
+greet_person("Bob")    # Hello, Bob!</code></pre>
+                </div>
+            </section>
+
+            <section class="lesson">
+                <h2>Return Values</h2>
+                <p>Functions can send back a result with <code>return</code>.</p>
+                <div class="code-container">
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python"># Function that returns a value
+def add(a, b):
+    return a + b
+
+result = add(5, 3)
+print(result)  # 8
+
+# Use returned value directly
+print(add(10, 20))  # 30
+
+# Multiple returns (tuple)
+def get_name_age():
+    return "Alice", 25
+
+name, age = get_name_age()
+print(name, age)  # Alice 25</code></pre>
+                </div>
+            </section>
+
+            <section class="lesson">
+                <h2>Default & Keyword Arguments</h2>
+                <div class="code-container">
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python"># Default parameter values
+def greet(name, greeting="Hello"):
+    print(f"{greeting}, {name}!")
+
+greet("Alice")           # Hello, Alice!
+greet("Bob", "Hi")       # Hi, Bob!
+
+# Keyword arguments (named)
+def describe(name, age, city):
+    print(f"{name}, {age}, from {city}")
+
+# Can pass in any order with names
+describe(age=30, city="NYC", name="Eve")</code></pre>
+                </div>
+            </section>
+
+            <section class="lesson">
+                <h2>*args and **kwargs</h2>
+                <p>Accept any number of arguments.</p>
+                <div class="code-container">
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python"># *args: any number of positional args
+def sum_all(*numbers):
+    return sum(numbers)
+
+print(sum_all(1, 2, 3))      # 6
+print(sum_all(1, 2, 3, 4, 5)) # 15
+
+# **kwargs: any number of keyword args
+def print_info(**data):
+    for key, value in data.items():
+        print(f"{key}: {value}")
+
+print_info(name="Alice", age=25, city="NYC")</code></pre>
+                </div>
+            </section>
+
+            <section class="lesson">
+                <h2>Importing Modules</h2>
+                <p>Modules are files with reusable code. Python has many built-in!</p>
+                <div class="code-container">
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python"># Import entire module
+import math
+print(math.sqrt(16))  # 4.0
+print(math.pi)        # 3.14159...
+
+# Import specific items
+from random import randint, choice
+print(randint(1, 10))  # Random 1-10
+print(choice(["a", "b", "c"]))
+
+# Import with alias
+import datetime as dt
+print(dt.date.today())</code></pre>
+                </div>
+            </section>
+
+            <section class="quiz-section" id="quiz">
+                <h2>📝 Quiz</h2>
+                <div class="quiz-question" data-question="1">
+                    <p><strong>Q1:</strong> What keyword defines a function?</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> function</label>
+                        <label><input type="radio" name="q1" value="b"> def</label>
+                        <label><input type="radio" name="q1" value="c"> fn</label>
+                    </div>
+                </div>
+                <div class="quiz-question" data-question="2">
+                    <p><strong>Q2:</strong> What does <code>return</code> do?</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> Prints a value</label>
+                        <label><input type="radio" name="q2" value="b"> Sends a value back to the caller</label>
+                        <label><input type="radio" name="q2" value="c"> Restarts the function</label>
+                    </div>
+                </div>
+                <button id="check-quiz" class="btn btn-primary">Check Answers</button>
+                <div id="quiz-result" class="quiz-result"></div>
+            </section>
+
+            <nav class="module-nav">
+                <a href="module-2.html" class="btn btn-secondary">← Control Flow</a>
+                <button id="mark-complete" class="btn btn-primary">Mark Complete ✓</button>
+                <a href="module-4.html" class="btn btn-secondary">Data Structures →</a>
+            </nav>
+        </article>
+    </main>
+
+    <div id="tutor-panel" class="tutor-panel" aria-hidden="true">
+        <div class="tutor-header"><h2>🤖 Tutor</h2><div class="tutor-status"><span class="status-dot"></span><span class="status-text">Loading...</span></div><button id="close-tutor" class="tutor-close">×</button></div>
+        <div class="tutor-messages" id="tutor-messages" role="log"><div class="message bot-message"><p>Functions are the building blocks of good code! Ask me anything.</p></div></div>
+        <div class="tutor-input-area">
+            <div id="model-loading" class="model-loading"><div class="loading-spinner"></div><span id="loading-text">Initializing...</span><div class="loading-progress"><div class="loading-bar" id="loading-bar"></div></div></div>
+            <form id="tutor-form" class="tutor-form"><input type="text" id="tutor-input" placeholder="Ask about functions..." disabled><button type="submit" id="tutor-submit" disabled>→</button></form>
+        </div>
+    </div>
+    <button id="tutor-fab" class="tutor-fab"><span class="fab-icon">🤖</span><span class="fab-text">Ask AI</span></button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/tutor-flow.js"></script>
+    <script src="../js/tutor-ui.js"></script>
+    <script>
+        const answers = { q1: 'b', q2: 'b' };
+        document.getElementById('check-quiz')?.addEventListener('click', () => {
+            let correct = 0;
+            for (const [q, ans] of Object.entries(answers)) { if (document.querySelector(`input[name="${q}"]:checked`)?.value === ans) correct++; }
+            document.getElementById('quiz-result').innerHTML = `<p>${correct}/2 (${Math.round(correct/2*100)}%)</p>`;
+            document.getElementById('quiz-result').className = 'quiz-result ' + (correct >= 1 ? 'pass' : 'fail');
+        });
+        document.getElementById('mark-complete')?.addEventListener('click', () => { window.PyLearn?.Progress?.completeModule(3); alert('Module 3 complete!'); });
+        function explainCode(btn) { const code = btn.nextElementSibling?.querySelector('code')?.textContent; if (code) window.TutorUI?.askAboutCode(code); }
+    </script>
+</body>
+</html>

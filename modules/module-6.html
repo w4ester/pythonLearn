@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 6: OOP Basics | PyLearn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/tutor.css">
+    <link rel="stylesheet" href="../css/module.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <header class="site-header">
+        <div class="header-content">
+            <a href="../index.html" class="logo"><span class="logo-icon">🐍</span><span class="logo-text">PyLearn</span></a>
+            <nav><ul class="nav-links">
+                <li><a href="../index.html" class="nav-link">Home</a></li>
+                <li><a href="../index.html#modules" class="nav-link active">Modules</a></li>
+                <li><a href="../projects.html" class="nav-link">Build More</a></li>
+            </ul></nav>
+            <div class="header-actions">
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+                    <span class="theme-icon-light">☀️</span><span class="theme-icon-dark">🌙</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content" class="module-content">
+        <nav class="breadcrumb"><a href="../index.html">Home</a><span>→</span><a href="../index.html#modules">Modules</a><span>→</span><span>Module 6</span></nav>
+
+        <article class="module-article">
+            <header class="module-header">
+                <span class="module-badge">Module 6 of 6</span>
+                <h1>OOP Basics</h1>
+                <p class="module-meta"><span class="tag">PCEP 6.1-6.3</span><span class="tag">Google Week 4-5</span></p>
+            </header>
+
+            <section class="lesson">
+                <h2>What is OOP?</h2>
+                <p>Object-Oriented Programming organizes code around "objects" - things with data (attributes) and behaviors (methods).</p>
+                <div class="code-container">
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python"># Define a class (blueprint)
+class Dog:
+    # __init__ runs when you create an object
+    def __init__(self, name, age):
+        self.name = name  # Attribute
+        self.age = age    # Attribute
+    
+    # Method (function inside a class)
+    def bark(self):
+        print(f"{self.name} says Woof!")
+    
+    def birthday(self):
+        self.age += 1
+        print(f"{self.name} is now {self.age}!")
+
+# Create objects (instances)
+my_dog = Dog("Buddy", 3)
+your_dog = Dog("Max", 5)
+
+# Use attributes and methods
+print(my_dog.name)    # Buddy
+my_dog.bark()         # Buddy says Woof!
+my_dog.birthday()     # Buddy is now 4!</code></pre>
+                </div>
+            </section>
+
+            <section class="lesson">
+                <h2>The self Parameter</h2>
+                <p><code>self</code> refers to the current object. It's how methods access the object's data.</p>
+                <div class="code-container">
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python">class BankAccount:
+    def __init__(self, owner, balance=0):
+        self.owner = owner
+        self.balance = balance
+    
+    def deposit(self, amount):
+        self.balance += amount
+        return self.balance
+    
+    def withdraw(self, amount):
+        if amount <= self.balance:
+            self.balance -= amount
+            return amount
+        else:
+            print("Insufficient funds!")
+            return 0
+
+# Using the class
+account = BankAccount("Alice", 100)
+account.deposit(50)      # balance: 150
+account.withdraw(30)     # balance: 120
+print(account.balance)   # 120</code></pre>
+                </div>
+            </section>
+
+            <section class="lesson">
+                <h2>Inheritance</h2>
+                <p>Create new classes based on existing ones. The child inherits from the parent.</p>
+                <div class="code-container">
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python"># Parent class
+class Animal:
+    def __init__(self, name):
+        self.name = name
+    
+    def speak(self):
+        print(f"{self.name} makes a sound")
+
+# Child classes inherit from Animal
+class Dog(Animal):
+    def speak(self):  # Override parent method
+        print(f"{self.name} says Woof!")
+
+class Cat(Animal):
+    def speak(self):
+        print(f"{self.name} says Meow!")
+    
+    def purr(self):   # New method only for Cat
+        print(f"{self.name} purrs...")
+
+# Using inheritance
+dog = Dog("Buddy")
+cat = Cat("Whiskers")
+
+dog.speak()   # Buddy says Woof!
+cat.speak()   # Whiskers says Meow!
+cat.purr()    # Whiskers purrs...</code></pre>
+                </div>
+            </section>
+
+            <section class="lesson">
+                <h2>Class vs Instance Attributes</h2>
+                <div class="code-container">
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python">class Player:
+    # Class attribute (shared by all instances)
+    game_name = "Adventure Quest"
+    player_count = 0
+    
+    def __init__(self, username):
+        # Instance attributes (unique to each object)
+        self.username = username
+        self.score = 0
+        Player.player_count += 1  # Update class attribute
+
+# All players share game_name
+p1 = Player("Alice")
+p2 = Player("Bob")
+
+print(Player.game_name)    # Adventure Quest
+print(Player.player_count) # 2
+print(p1.username)         # Alice (instance-specific)</code></pre>
+                </div>
+            </section>
+
+            <section class="lesson">
+                <h2>Special Methods (Dunder Methods)</h2>
+                <div class="code-container">
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python">class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+    
+    def __str__(self):
+        # Called by print() and str()
+        return f"Point({self.x}, {self.y})"
+    
+    def __add__(self, other):
+        # Called by + operator
+        return Point(self.x + other.x, self.y + other.y)
+    
+    def __eq__(self, other):
+        # Called by == operator
+        return self.x == other.x and self.y == other.y
+
+p1 = Point(1, 2)
+p2 = Point(3, 4)
+
+print(p1)           # Point(1, 2)
+p3 = p1 + p2        # Uses __add__
+print(p3)           # Point(4, 6)
+print(p1 == p2)     # False</code></pre>
+                </div>
+            </section>
+
+            <section class="quiz-section" id="quiz">
+                <h2>📝 Final Quiz</h2>
+                <div class="quiz-question" data-question="1">
+                    <p><strong>Q1:</strong> What does <code>__init__</code> do?</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> Destroys an object</label>
+                        <label><input type="radio" name="q1" value="b"> Initializes a new object</label>
+                        <label><input type="radio" name="q1" value="c"> Imports a module</label>
+                    </div>
+                </div>
+                <div class="quiz-question" data-question="2">
+                    <p><strong>Q2:</strong> What does <code>self</code> refer to?</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> The class definition</label>
+                        <label><input type="radio" name="q2" value="b"> The current object instance</label>
+                        <label><input type="radio" name="q2" value="c"> The parent class</label>
+                    </div>
+                </div>
+                <button id="check-quiz" class="btn btn-primary">Check Answers</button>
+                <div id="quiz-result" class="quiz-result"></div>
+            </section>
+
+            <section class="lesson" style="text-align: center; padding: 2rem; background: var(--color-bg-alt); border-radius: var(--border-radius-lg);">
+                <h2>🎉 Congratulations!</h2>
+                <p>You've completed all 6 modules! You now know the fundamentals of Python.</p>
+                <p><strong>Next step:</strong> Build real projects to solidify your skills!</p>
+                <a href="../projects.html" class="btn btn-primary" style="margin-top: 1rem;">See Project Ideas →</a>
+            </section>
+
+            <nav class="module-nav">
+                <a href="module-5.html" class="btn btn-secondary">← Files & Exceptions</a>
+                <button id="mark-complete" class="btn btn-primary">Mark Complete ✓</button>
+                <a href="../projects.html" class="btn btn-secondary">Build Projects →</a>
+            </nav>
+        </article>
+    </main>
+
+    <div id="tutor-panel" class="tutor-panel" aria-hidden="true">
+        <div class="tutor-header"><h2>🤖 Tutor</h2><div class="tutor-status"><span class="status-dot"></span><span class="status-text">Loading...</span></div><button id="close-tutor" class="tutor-close">×</button></div>
+        <div class="tutor-messages" id="tutor-messages" role="log"><div class="message bot-message"><p>OOP is a big topic! Ask me to explain classes, inheritance, or any concept here.</p></div></div>
+        <div class="tutor-input-area">
+            <div id="model-loading" class="model-loading"><div class="loading-spinner"></div><span id="loading-text">Initializing...</span><div class="loading-progress"><div class="loading-bar" id="loading-bar"></div></div></div>
+            <form id="tutor-form" class="tutor-form"><input type="text" id="tutor-input" placeholder="Ask about OOP..." disabled><button type="submit" id="tutor-submit" disabled>→</button></form>
+        </div>
+    </div>
+    <button id="tutor-fab" class="tutor-fab"><span class="fab-icon">🤖</span><span class="fab-text">Ask AI</span></button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/tutor-flow.js"></script>
+    <script src="../js/tutor-ui.js"></script>
+    <script>
+        const answers = { q1: 'b', q2: 'b' };
+        document.getElementById('check-quiz')?.addEventListener('click', () => {
+            let correct = 0;
+            for (const [q, ans] of Object.entries(answers)) { if (document.querySelector(`input[name="${q}"]:checked`)?.value === ans) correct++; }
+            document.getElementById('quiz-result').innerHTML = `<p>${correct}/2 (${Math.round(correct/2*100)}%)</p>`;
+            document.getElementById('quiz-result').className = 'quiz-result ' + (correct >= 1 ? 'pass' : 'fail');
+        });
+        document.getElementById('mark-complete')?.addEventListener('click', () => { window.PyLearn?.Progress?.completeModule(6); alert('🎉 All modules complete! Check out the projects page!'); });
+        function explainCode(btn) { const code = btn.nextElementSibling?.querySelector('code')?.textContent; if (code) window.TutorUI?.askAboutCode(code); }
+    </script>
+</body>
+</html>

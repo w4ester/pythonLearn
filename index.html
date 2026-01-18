@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn Python programming with an AI tutor. Free, accessible, certification-aligned.">
+    <title>Python Learning Site - Your AI-Powered Journey</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Prism.js for code highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/tutor.css">
+</head>
+<body>
+    <!-- Skip link for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <header class="site-header">
+        <div class="header-content">
+            <div class="logo">
+                <span class="logo-icon" aria-hidden="true">🐍</span>
+                <span class="logo-text">PyLearn</span>
+            </div>
+            <nav aria-label="Main navigation">
+                <ul class="nav-links">
+                    <li><a href="index.html" class="nav-link active">Home</a></li>
+                    <li><a href="#modules" class="nav-link">Modules</a></li>
+                    <li><a href="projects.html" class="nav-link">Build More</a></li>
+                    <li><a href="how-it-works.html" class="nav-link">How It Works</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode (Press 'd')">
+                    <span class="theme-icon-light" aria-hidden="true">☀️</span>
+                    <span class="theme-icon-dark" aria-hidden="true">🌙</span>
+                </button>
+                <button id="keyboard-help" class="icon-btn" aria-label="Keyboard shortcuts" title="Keyboard shortcuts (Press '?')">
+                    <span aria-hidden="true">⌨️</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Learn Python by <em>Building</em></h1>
+                <p class="hero-subtitle">
+                    Free. Accessible. AI-powered. No account needed.
+                    <br>Your progress saves locally in your browser.
+                </p>
+                <div class="hero-cta">
+                    <a href="#modules" class="btn btn-primary">Start Learning</a>
+                    <button id="open-tutor" class="btn btn-secondary">
+                        <span aria-hidden="true">🤖</span> Ask the AI Tutor
+                    </button>
+                </div>
+                <p class="hero-note">
+                    <strong>Producer Mindset:</strong> After learning, you'll rebuild this entire site yourself.
+                </p>
+            </div>
+            <div class="hero-visual" aria-hidden="true">
+                <pre class="hero-code"><code class="language-python"># Your first Python program
+print("Hello, World!")
+
+# You'll be writing this soon:
+def learn_python(curiosity):
+    skills = []
+    while curiosity > 0:
+        skills.append("new concept")
+        curiosity += 1  # It grows!
+    return skills</code></pre>
+            </div>
+        </section>
+
+        <!-- Progress Overview -->
+        <section id="progress" class="progress-section">
+            <h2>Your Progress</h2>
+            <div class="progress-overview">
+                <div class="progress-stat">
+                    <span class="stat-number" id="modules-completed">0</span>
+                    <span class="stat-label">Modules Done</span>
+                </div>
+                <div class="progress-stat">
+                    <span class="stat-number" id="quiz-score">-</span>
+                    <span class="stat-label">Avg Quiz Score</span>
+                </div>
+                <div class="progress-stat">
+                    <span class="stat-number" id="practice-problems">0</span>
+                    <span class="stat-label">Practice Done</span>
+                </div>
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="overall-progress" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                    <span class="progress-fill"></span>
+                </div>
+                <span class="progress-text" id="progress-text">0% Complete</span>
+            </div>
+        </section>
+
+        <!-- Modules Grid -->
+        <section id="modules" class="modules-section">
+            <h2>Learning Modules</h2>
+            <p class="section-subtitle">Mapped to PCEP &amp; Google IT Automation certifications</p>
+            
+            <div class="modules-grid">
+                <article class="module-card" data-module="1">
+                    <div class="module-header">
+                        <span class="module-number">01</span>
+                        <span class="module-status" id="status-1" aria-label="Not started">○</span>
+                    </div>
+                    <h3>Python Basics</h3>
+                    <p>Variables, data types, operators, and your first programs.</p>
+                    <div class="module-tags">
+                        <span class="tag">PCEP 1.1-1.4</span>
+                        <span class="tag">Google Week 1</span>
+                    </div>
+                    <a href="modules/module-1.html" class="module-link">Start Module →</a>
+                </article>
+
+                <article class="module-card" data-module="2">
+                    <div class="module-header">
+                        <span class="module-number">02</span>
+                        <span class="module-status" id="status-2" aria-label="Not started">○</span>
+                    </div>
+                    <h3>Control Flow</h3>
+                    <p>If/else statements, loops, and list comprehensions.</p>
+                    <div class="module-tags">
+                        <span class="tag">PCEP 2.1-2.4</span>
+                        <span class="tag">Google Week 2</span>
+                    </div>
+                    <a href="modules/module-2.html" class="module-link">Start Module →</a>
+                </article>
+
+                <article class="module-card" data-module="3">
+                    <div class="module-header">
+                        <span class="module-number">03</span>
+                        <span class="module-status" id="status-3" aria-label="Not started">○</span>
+                    </div>
+                    <h3>Functions &amp; Modules</h3>
+                    <p>Writing reusable code, parameters, return values, imports.</p>
+                    <div class="module-tags">
+                        <span class="tag">PCEP 3.1-3.3</span>
+                        <span class="tag">Google Week 2-3</span>
+                    </div>
+                    <a href="modules/module-3.html" class="module-link">Start Module →</a>
+                </article>
+
+                <article class="module-card" data-module="4">
+                    <div class="module-header">
+                        <span class="module-number">04</span>
+                        <span class="module-status" id="status-4" aria-label="Not started">○</span>
+                    </div>
+                    <h3>Data Structures</h3>
+                    <p>Lists, tuples, dictionaries, and sets.</p>
+                    <div class="module-tags">
+                        <span class="tag">PCEP 4.1-4.4</span>
+                        <span class="tag">Google Week 3</span>
+                    </div>
+                    <a href="modules/module-4.html" class="module-link">Start Module →</a>
+                </article>
+
+                <article class="module-card" data-module="5">
+                    <div class="module-header">
+                        <span class="module-number">05</span>
+                        <span class="module-status" id="status-5" aria-label="Not started">○</span>
+                    </div>
+                    <h3>Files &amp; Exceptions</h3>
+                    <p>Reading/writing files, handling errors gracefully.</p>
+                    <div class="module-tags">
+                        <span class="tag">PCEP 5.1-5.2</span>
+                        <span class="tag">Google Week 4</span>
+                    </div>
+                    <a href="modules/module-5.html" class="module-link">Start Module →</a>
+                </article>
+
+                <article class="module-card" data-module="6">
+                    <div class="module-header">
+                        <span class="module-number">06</span>
+                        <span class="module-status" id="status-6" aria-label="Not started">○</span>
+                    </div>
+                    <h3>OOP Basics</h3>
+                    <p>Classes, objects, methods, and inheritance.</p>
+                    <div class="module-tags">
+                        <span class="tag">PCEP 6.1-6.3</span>
+                        <span class="tag">Google Week 4-5</span>
+                    </div>
+                    <a href="modules/module-6.html" class="module-link">Start Module →</a>
+                </article>
+            </div>
+        </section>
+
+        <!-- What's Next -->
+        <section class="next-section">
+            <h2>After You Learn Python...</h2>
+            <p>Use your new skills to build real projects - starting with rebuilding this site!</p>
+            <a href="projects.html" class="btn btn-primary">See 10 Project Ideas →</a>
+        </section>
+    </main>
+
+    <!-- Keyboard Shortcuts Modal -->
+    <div id="keyboard-modal" class="modal" role="dialog" aria-labelledby="keyboard-modal-title" aria-hidden="true">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Close">×</button>
+            <h2 id="keyboard-modal-title">Keyboard Shortcuts</h2>
+            <dl class="shortcuts-list">
+                <dt><kbd>d</kbd></dt><dd>Toggle dark/light mode</dd>
+                <dt><kbd>t</kbd></dt><dd>Open AI tutor</dd>
+                <dt><kbd>1</kbd>-<kbd>6</kbd></dt><dd>Jump to module</dd>
+                <dt><kbd>?</kbd></dt><dd>Show this help</dd>
+                <dt><kbd>Esc</kbd></dt><dd>Close dialogs</dd>
+            </dl>
+        </div>
+    </div>
+
+    <!-- AI Tutor Chat Panel -->
+    <div id="tutor-panel" class="tutor-panel" aria-hidden="true">
+        <div class="tutor-header">
+            <h2>🤖 Python Tutor</h2>
+            <div class="tutor-status" id="tutor-status">
+                <span class="status-dot"></span>
+                <span class="status-text">Loading...</span>
+            </div>
+            <button id="close-tutor" class="tutor-close" aria-label="Close tutor">×</button>
+        </div>
+        
+        <div class="tutor-messages" id="tutor-messages" role="log" aria-live="polite">
+            <div class="message bot-message">
+                <p><strong>Hi! I'm your Python tutor.</strong></p>
+                <p>I run entirely in your browser using WebLLM - no API keys, no data sent anywhere!</p>
+                <p>⏳ <strong>First time?</strong> I'll download a small AI model (~500MB). This happens once and takes 1-2 minutes.</p>
+                <p>Try asking:</p>
+                <ul>
+                    <li>"Explain variables simply"</li>
+                    <li>"Quiz me on loops"</li>
+                    <li>"What's the difference between a list and tuple?"</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="tutor-input-area">
+            <div id="model-loading" class="model-loading">
+                <div class="loading-spinner"></div>
+                <span id="loading-text">Initializing WebLLM...</span>
+                <div class="loading-progress">
+                    <div class="loading-bar" id="loading-bar"></div>
+                </div>
+            </div>
+            <form id="tutor-form" class="tutor-form">
+                <label for="tutor-input" class="visually-hidden">Ask a question</label>
+                <input type="text" id="tutor-input" placeholder="Ask about Python..." autocomplete="off" disabled>
+                <button type="submit" id="tutor-submit" disabled aria-label="Send">→</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Floating Tutor Button -->
+    <button id="tutor-fab" class="tutor-fab" aria-label="Open AI tutor (Press 't')">
+        <span class="fab-icon">🤖</span>
+        <span class="fab-text">Ask AI</span>
+    </button>
+
+    <footer class="site-footer">
+        <p>Built with the <strong>Producer Mindset</strong> 🚀</p>
+        <p class="footer-note">No data leaves your browser. Everything runs locally.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/tutor-flow.js"></script>
+    <script src="js/tutor-ui.js"></script>
+</body>
+</html>

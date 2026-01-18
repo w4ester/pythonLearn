@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Build More Projects | PyLearn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/tutor.css">
+    <style>
+        .projects-hero {
+            text-align: center;
+            padding: var(--space-3xl) var(--space-lg);
+            background: linear-gradient(135deg, var(--color-bg-alt) 0%, var(--color-bg) 100%);
+        }
+        
+        .projects-hero h1 {
+            margin: 0 0 var(--space-md);
+        }
+        
+        .projects-hero p {
+            color: var(--color-text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .projects-grid {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: var(--space-2xl) var(--space-lg);
+            display: grid;
+            gap: var(--space-xl);
+        }
+        
+        .project-card {
+            background: var(--color-bg-elevated);
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-lg);
+            padding: var(--space-xl);
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: var(--space-lg);
+        }
+        
+        .project-number {
+            font-size: var(--font-size-3xl);
+            font-weight: 700;
+            color: var(--color-primary);
+            opacity: 0.3;
+            line-height: 1;
+        }
+        
+        .project-content h3 {
+            margin: 0 0 var(--space-sm);
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+        
+        .difficulty {
+            font-size: var(--font-size-sm);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        
+        .difficulty-beginner {
+            background: rgba(45, 106, 79, 0.15);
+            color: var(--color-success);
+        }
+        
+        .difficulty-intermediate {
+            background: rgba(180, 83, 9, 0.15);
+            color: var(--color-warning);
+        }
+        
+        .difficulty-advanced {
+            background: rgba(185, 28, 28, 0.15);
+            color: var(--color-error);
+        }
+        
+        .project-content p {
+            color: var(--color-text-muted);
+            margin: 0 0 var(--space-md);
+        }
+        
+        .project-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-xs);
+            margin-bottom: var(--space-md);
+        }
+        
+        .skill-tag {
+            font-size: var(--font-size-sm);
+            background: var(--color-bg-alt);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        
+        .project-prompt {
+            background: var(--color-code-bg);
+            color: #e8e8f0;
+            padding: var(--space-md);
+            border-radius: var(--border-radius);
+            font-family: var(--font-mono);
+            font-size: var(--font-size-sm);
+            margin-top: var(--space-md);
+            white-space: pre-wrap;
+        }
+        
+        .project-prompt::before {
+            content: "📋 Claude Code Prompt:";
+            display: block;
+            color: var(--color-accent);
+            margin-bottom: var(--space-sm);
+            font-weight: 600;
+        }
+        
+        .featured-project {
+            border-color: var(--color-primary);
+            border-width: 2px;
+        }
+        
+        .featured-badge {
+            background: var(--color-primary);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: var(--font-size-sm);
+            font-weight: 600;
+        }
+        
+        #rebuild {
+            scroll-margin-top: 100px;
+        }
+        
+        @media (max-width: 600px) {
+            .project-card {
+                grid-template-columns: 1fr;
+            }
+            
+            .project-number {
+                font-size: var(--font-size-xl);
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <header class="site-header">
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">🐍</span>
+                <span class="logo-text">PyLearn</span>
+            </a>
+            <nav aria-label="Main navigation">
+                <ul class="nav-links">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="index.html#modules" class="nav-link">Modules</a></li>
+                    <li><a href="projects.html" class="nav-link active">Build More</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+                    <span class="theme-icon-light">☀️</span>
+                    <span class="theme-icon-dark">🌙</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <section class="projects-hero">
+            <h1>🚀 Build Real Projects</h1>
+            <p>You've learned Python. Now use it! Each project includes a ready-to-use Claude Code prompt to get you started.</p>
+        </section>
+
+        <div class="projects-grid">
+            <!-- Project 1: Rebuild This Site -->
+            <article class="project-card featured-project" id="rebuild">
+                <span class="project-number">01</span>
+                <div class="project-content">
+                    <h3>
+                        <span class="featured-badge">Start Here</span>
+                        Rebuild This Learning Site
+                    </h3>
+                    <p>Recreate this entire website from scratch using what you've learned. You already know how it works - now build your own version!</p>
+                    <div class="project-skills">
+                        <span class="skill-tag">HTML/CSS</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">WebLLM</span>
+                        <span class="skill-tag">localStorage</span>
+                    </div>
+                    <span class="difficulty difficulty-intermediate">Intermediate</span>
+                    <div class="project-prompt">Create a Python learning website with these features:
+
+1. 6 module pages covering Python basics through OOP
+2. Dark/light mode toggle with localStorage persistence
+3. Progress tracking saved in localStorage  
+4. An AI tutor chatbot using WebLLM (free, runs in browser)
+5. Quiz functionality with score tracking
+6. WCAG 2.1 AA accessibility compliance
+7. Deployable to GitHub Pages (static files only)
+
+Use the PocketFlow pattern for the chatbot: nodes connected by actions with a shared store. Include detailed comments explaining how everything works.</div>
+                </div>
+            </article>
+
+            <!-- Project 2: Flashcard App -->
+            <article class="project-card">
+                <span class="project-number">02</span>
+                <div class="project-content">
+                    <h3>Spaced Repetition Flashcards</h3>
+                    <p>Build a flashcard app that uses spaced repetition to help you memorize Python concepts. Cards you struggle with appear more often.</p>
+                    <div class="project-skills">
+                        <span class="skill-tag">Python logic</span>
+                        <span class="skill-tag">Algorithms</span>
+                        <span class="skill-tag">localStorage</span>
+                    </div>
+                    <span class="difficulty difficulty-beginner">Beginner</span>
+                    <div class="project-prompt">Create a spaced repetition flashcard web app:
+
+1. Add/edit/delete flashcards (question + answer)
+2. Implement SM-2 algorithm for scheduling reviews
+3. Track correct/incorrect answers per card
+4. Show cards due for review today
+5. Statistics dashboard showing progress
+6. Import/export cards as JSON
+7. Dark mode support
+
+Use localStorage to persist all data. No backend needed.</div>
+                </div>
+            </article>
+
+            <!-- Project 3: Code Snippet Manager -->
+            <article class="project-card">
+                <span class="project-number">03</span>
+                <div class="project-content">
+                    <h3>Personal Code Snippet Manager</h3>
+                    <p>Save and organize code snippets you want to remember. Search, tag, and copy with one click.</p>
+                    <div class="project-skills">
+                        <span class="skill-tag">CRUD operations</span>
+                        <span class="skill-tag">Search</span>
+                        <span class="skill-tag">Syntax highlighting</span>
+                    </div>
+                    <span class="difficulty difficulty-beginner">Beginner</span>
+                    <div class="project-prompt">Create a code snippet manager web app:
+
+1. Add snippets with title, code, language, and tags
+2. Syntax highlighting using Prism.js
+3. Search by title, code content, or tags
+4. Filter by programming language
+5. One-click copy to clipboard
+6. Export all snippets as JSON/Markdown
+7. Responsive design, works on mobile
+
+Store in localStorage. Include sample Python snippets.</div>
+                </div>
+            </article>
+
+            <!-- Project 4: Pomodoro Timer -->
+            <article class="project-card">
+                <span class="project-number">04</span>
+                <div class="project-content">
+                    <h3>Pomodoro Study Timer</h3>
+                    <p>A productivity timer with 25-minute focus sessions, breaks, and statistics on your study habits.</p>
+                    <div class="project-skills">
+                        <span class="skill-tag">Timers</span>
+                        <span class="skill-tag">Notifications</span>
+                        <span class="skill-tag">Charts</span>
+                    </div>
+                    <span class="difficulty difficulty-beginner">Beginner</span>
+                    <div class="project-prompt">Create a Pomodoro timer web app:
+
+1. 25-min focus / 5-min break / 15-min long break cycles
+2. Customizable durations
+3. Browser notifications when timer ends
+4. Audio alert option
+5. Daily/weekly statistics with charts (use Chart.js)
+6. Track what you studied each session
+7. Streak counter for consecutive days
+
+Include motivational messages. Make it visually appealing!</div>
+                </div>
+            </article>
+
+            <!-- Project 5: Weather Dashboard -->
+            <article class="project-card">
+                <span class="project-number">05</span>
+                <div class="project-content">
+                    <h3>Weather Dashboard</h3>
+                    <p>Fetch real weather data from a free API and display it beautifully. Learn to work with external APIs.</p>
+                    <div class="project-skills">
+                        <span class="skill-tag">Fetch API</span>
+                        <span class="skill-tag">JSON parsing</span>
+                        <span class="skill-tag">Async/await</span>
+                    </div>
+                    <span class="difficulty difficulty-intermediate">Intermediate</span>
+                    <div class="project-prompt">Create a weather dashboard using OpenWeatherMap free API:
+
+1. Search by city name
+2. Show current weather: temp, humidity, wind, conditions
+3. 5-day forecast with icons
+4. Save favorite cities in localStorage
+5. Geolocation to detect user's city
+6. Unit toggle (Celsius/Fahrenheit)
+7. Weather-appropriate background images or colors
+
+Handle API errors gracefully. Show loading states.</div>
+                </div>
+            </article>
+
+            <!-- Project 6: Markdown Note App -->
+            <article class="project-card">
+                <span class="project-number">06</span>
+                <div class="project-content">
+                    <h3>Markdown Notes App</h3>
+                    <p>Write notes in Markdown with live preview. Like a mini Notion you control.</p>
+                    <div class="project-skills">
+                        <span class="skill-tag">Markdown parsing</span>
+                        <span class="skill-tag">Live preview</span>
+                        <span class="skill-tag">File organization</span>
+                    </div>
+                    <span class="difficulty difficulty-intermediate">Intermediate</span>
+                    <div class="project-prompt">Create a Markdown note-taking app:
+
+1. Split-pane editor: Markdown on left, preview on right
+2. Use marked.js for Markdown rendering
+3. Syntax highlighting in code blocks
+4. Organize notes in folders
+5. Search across all notes
+6. Auto-save as you type
+7. Export notes as .md files
+8. Keyboard shortcuts (Ctrl+S to save, etc.)
+
+Store in localStorage. Include a welcome note explaining Markdown.</div>
+                </div>
+            </article>
+
+            <!-- Project 7: Quiz Builder -->
+            <article class="project-card">
+                <span class="project-number">07</span>
+                <div class="project-content">
+                    <h3>Interactive Quiz Builder</h3>
+                    <p>Create quizzes for yourself or others. Support multiple question types and track scores.</p>
+                    <div class="project-skills">
+                        <span class="skill-tag">Forms</span>
+                        <span class="skill-tag">State management</span>
+                        <span class="skill-tag">Scoring logic</span>
+                    </div>
+                    <span class="difficulty difficulty-intermediate">Intermediate</span>
+                    <div class="project-prompt">Create a quiz builder and player:
+
+Builder mode:
+- Add multiple choice, true/false, and fill-in-blank questions
+- Set correct answers and point values
+- Reorder questions with drag-and-drop
+- Save/load quizzes as JSON
+
+Player mode:
+- Take quizzes with timer option
+- Immediate or end-of-quiz feedback
+- Score breakdown by question
+- High score leaderboard
+
+Include sample Python quiz to demonstrate.</div>
+                </div>
+            </article>
+
+            <!-- Project 8: Habit Tracker -->
+            <article class="project-card">
+                <span class="project-number">08</span>
+                <div class="project-content">
+                    <h3>Habit Tracker with Streaks</h3>
+                    <p>Track daily habits and build streaks. Visualize your consistency over time.</p>
+                    <div class="project-skills">
+                        <span class="skill-tag">Date handling</span>
+                        <span class="skill-tag">Data visualization</span>
+                        <span class="skill-tag">Streak logic</span>
+                    </div>
+                    <span class="difficulty difficulty-intermediate">Intermediate</span>
+                    <div class="project-prompt">Create a habit tracking app:
+
+1. Add habits with custom names and icons
+2. Check off habits each day
+3. GitHub-style contribution graph (green squares)
+4. Current streak and best streak per habit
+5. Weekly and monthly completion percentages
+6. Reminder notifications at custom times
+7. Archive completed or abandoned habits
+
+Use localStorage. Make the UI motivating and celebratory!</div>
+                </div>
+            </article>
+
+            <!-- Project 9: AI Chat with RAG -->
+            <article class="project-card">
+                <span class="project-number">09</span>
+                <div class="project-content">
+                    <h3>Chat with Your Documents (RAG)</h3>
+                    <p>Upload documents and ask questions about them. Learn RAG (Retrieval Augmented Generation) pattern.</p>
+                    <div class="project-skills">
+                        <span class="skill-tag">WebLLM</span>
+                        <span class="skill-tag">Text chunking</span>
+                        <span class="skill-tag">Vector search</span>
+                    </div>
+                    <span class="difficulty difficulty-advanced">Advanced</span>
+                    <div class="project-prompt">Create a "Chat with PDF" web app using RAG:
+
+1. Upload text/markdown files (PDF parsing is complex, start simple)
+2. Chunk documents into ~500 character pieces
+3. Simple keyword-based retrieval (or use transformers.js for embeddings)
+4. Use WebLLM to answer questions with retrieved context
+5. Show which chunks were used to answer
+6. Chat history with follow-up questions
+
+Implement the PocketFlow pattern:
+- ChunkNode: splits document
+- RetrieveNode: finds relevant chunks
+- PromptNode: builds context + question
+- LLMNode: generates answer</div>
+                </div>
+            </article>
+
+            <!-- Project 10: Personal Dashboard -->
+            <article class="project-card">
+                <span class="project-number">10</span>
+                <div class="project-content">
+                    <h3>Personal Start Page Dashboard</h3>
+                    <p>Replace your browser's new tab page with a custom dashboard showing weather, todos, quotes, and quick links.</p>
+                    <div class="project-skills">
+                        <span class="skill-tag">Multiple APIs</span>
+                        <span class="skill-tag">Layout design</span>
+                        <span class="skill-tag">Browser extension</span>
+                    </div>
+                    <span class="difficulty difficulty-advanced">Advanced</span>
+                    <div class="project-prompt">Create a personal dashboard start page:
+
+Widgets to include:
+- Current time and date with greeting
+- Local weather (OpenWeatherMap API)
+- Quick todo list
+- Daily inspirational quote (free quotes API)
+- Customizable quick links grid
+- Google search bar
+- Focus mode that hides distractions
+
+Features:
+- Drag-and-drop widget arrangement
+- Customizable background (solid color, gradient, or image URL)
+- Multiple themes/color schemes
+- Works offline with cached data
+
+Bonus: Package as a browser extension for Chrome/Firefox.</div>
+                </div>
+            </article>
+        </div>
+
+        <!-- How to Use Section -->
+        <section class="next-section">
+            <h2>How to Use These Prompts</h2>
+            <p style="max-width: 600px; margin: 0 auto var(--space-xl);">
+                Copy any prompt above and paste it into Claude Code. The AI will build the entire project for you - then study the code to understand how it works!
+            </p>
+            <div style="background: var(--color-code-bg); color: #e8e8f0; padding: var(--space-lg); border-radius: var(--border-radius); max-width: 500px; margin: 0 auto; text-align: left; font-family: var(--font-mono);">
+                <div style="color: var(--color-text-muted); margin-bottom: var(--space-sm);">$ Terminal</div>
+                <div>npm install -g @anthropic-ai/claude-code</div>
+                <div>cd my-project</div>
+                <div>claude</div>
+                <div style="color: var(--color-accent);">> [paste prompt here]</div>
+            </div>
+        </section>
+    </main>
+
+    <button id="tutor-fab" class="tutor-fab" aria-label="Open AI tutor">
+        <span class="fab-icon">🤖</span>
+        <span class="fab-text">Ask AI</span>
+    </button>
+
+    <!-- Tutor panel same as other pages -->
+    <div id="tutor-panel" class="tutor-panel" aria-hidden="true">
+        <div class="tutor-header">
+            <h2>🤖 Python Tutor</h2>
+            <div class="tutor-status"><span class="status-dot"></span><span class="status-text">Loading...</span></div>
+            <button id="close-tutor" class="tutor-close" aria-label="Close">×</button>
+        </div>
+        <div class="tutor-messages" id="tutor-messages" role="log" aria-live="polite">
+            <div class="message bot-message">
+                <p>Need help choosing a project or understanding how to build one? Ask me!</p>
+            </div>
+        </div>
+        <div class="tutor-input-area">
+            <div id="model-loading" class="model-loading">
+                <div class="loading-spinner"></div>
+                <span id="loading-text">Initializing...</span>
+                <div class="loading-progress"><div class="loading-bar" id="loading-bar"></div></div>
+            </div>
+            <form id="tutor-form" class="tutor-form">
+                <label for="tutor-input" class="visually-hidden">Ask a question</label>
+                <input type="text" id="tutor-input" placeholder="Ask about projects..." autocomplete="off" disabled>
+                <button type="submit" id="tutor-submit" disabled>→</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <p>Built with the <strong>Producer Mindset</strong> 🚀</p>
+        <p class="footer-note">Now go build something amazing!</p>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script src="js/tutor-flow.js"></script>
+    <script src="js/tutor-ui.js"></script>
+</body>
+</html>

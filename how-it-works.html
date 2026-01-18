@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How This Site Works | PyLearn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .docs-content { max-width: 800px; margin: 0 auto; padding: 2rem; }
+        .docs-content h1 { margin-bottom: 0.5rem; }
+        .docs-content h2 { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--color-border); }
+        .docs-content h3 { margin-top: 2rem; color: var(--color-primary); }
+        .file-tree { background: var(--color-bg-alt); padding: 1.5rem; border-radius: 8px; font-family: var(--font-mono); font-size: 0.9rem; }
+        .file-tree .folder { color: var(--color-primary); }
+        .file-tree .file { color: var(--color-text-muted); }
+        .architecture { background: var(--color-code-bg); color: #e8e8f0; padding: 1.5rem; border-radius: 8px; font-family: var(--font-mono); white-space: pre; overflow-x: auto; }
+        .concept-box { background: var(--color-bg-alt); border-left: 4px solid var(--color-primary); padding: 1rem 1.5rem; margin: 1.5rem 0; border-radius: 0 8px 8px 0; }
+        .step-number { display: inline-block; width: 32px; height: 32px; background: var(--color-primary); color: white; border-radius: 50%; text-align: center; line-height: 32px; font-weight: bold; margin-right: 0.5rem; }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <header class="site-header">
+        <div class="header-content">
+            <a href="index.html" class="logo"><span class="logo-icon">🐍</span><span class="logo-text">PyLearn</span></a>
+            <nav><ul class="nav-links">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="index.html#modules" class="nav-link">Modules</a></li>
+                <li><a href="projects.html" class="nav-link">Build More</a></li>
+            </ul></nav>
+            <div class="header-actions">
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+                    <span class="theme-icon-light">☀️</span><span class="theme-icon-dark">🌙</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content" class="docs-content">
+        <h1>🔧 How This Site Was Built</h1>
+        <p>Learn the architecture so you can rebuild it yourself - and make it better!</p>
+
+        <h2>File Structure</h2>
+        <div class="file-tree">
+<span class="folder">python-learning-site/</span>
+├── <span class="file">index.html</span>          ← Homepage & dashboard
+├── <span class="file">projects.html</span>       ← Project ideas
+├── <span class="file">how-it-works.html</span>   ← This page!
+├── <span class="folder">css/</span>
+│   ├── <span class="file">styles.css</span>      ← Main styles + dark mode
+│   ├── <span class="file">tutor.css</span>       ← Chat panel styles
+│   └── <span class="file">module.css</span>      ← Module page styles
+├── <span class="folder">js/</span>
+│   ├── <span class="file">app.js</span>          ← Theme, progress, shortcuts
+│   ├── <span class="file">tutor-flow.js</span>   ← AI architecture (PocketFlow)
+│   └── <span class="file">tutor-ui.js</span>     ← Chat interface
+└── <span class="folder">modules/</span>
+    ├── <span class="file">module-1.html</span>   ← Python Basics
+    ├── <span class="file">module-2.html</span>   ← Control Flow
+    └── <span class="file">...</span>
+        </div>
+
+        <h2>Key Technologies</h2>
+        
+        <h3>1. No Build Tools Required</h3>
+        <p>This site uses vanilla HTML, CSS, and JavaScript. No React, no Webpack, no npm install. Just open <code>index.html</code> in a browser!</p>
+        <p>Why? Simplicity. Beginners shouldn't need to learn build tools before building a website.</p>
+
+        <h3>2. WebLLM for Free AI</h3>
+        <div class="concept-box">
+            <strong>What is WebLLM?</strong><br>
+            A library that runs AI models directly in your browser using WebGPU. No API keys, no server costs, no data sent anywhere. The model downloads once (~500MB) and runs locally.
+        </div>
+        <pre><code class="language-javascript">// How we load the AI model
+import { CreateMLCEngine } from 'https://esm.run/@mlc-ai/web-llm';
+
+const engine = await CreateMLCEngine('Llama-3.2-1B-Instruct-q4f16_1-MLC', {
+    initProgressCallback: (progress) => {
+        console.log(progress.text);  // "Loading model: 45%"
+    }
+});
+
+// Then use it like any LLM API
+const response = await engine.chat.completions.create({
+    messages: [
+        { role: 'system', content: 'You are a Python tutor.' },
+        { role: 'user', content: 'Explain variables' }
+    ]
+});</code></pre>
+
+        <h3>3. PocketFlow Architecture</h3>
+        <p>The AI tutor uses a graph-based architecture inspired by <a href="https://github.com/The-Pocket/PocketFlow">PocketFlow</a> - a 100-line LLM framework.</p>
+        
+        <div class="architecture">
+┌─────────────┐     ┌─────────────┐     ┌─────────────┐
+│ GetContext  │ ──▶ │ BuildPrompt │ ──▶ │   CallLLM   │
+└─────────────┘     └─────────────┘     └─────────────┘
+                                              │
+                                         ┌────┴────┐
+                                      success    error
+                                         │         │
+                                         ▼         ▼
+                                   ┌──────────┐ ┌───────────┐
+                                   │ Format   │ │ Fallback  │
+                                   └──────────┘ └───────────┘
+        </div>
+        
+        <p>Each "node" does one thing:</p>
+        <ul>
+            <li><strong>GetContextNode</strong> - Reads user's progress and current page</li>
+            <li><strong>BuildPromptNode</strong> - Creates the system prompt with context</li>
+            <li><strong>CallLLMNode</strong> - Sends the message to WebLLM</li>
+            <li><strong>FormatResponseNode</strong> - Converts markdown to HTML</li>
+            <li><strong>ErrorHandlerNode</strong> - Provides fallback if AI fails</li>
+        </ul>
+
+        <h3>4. localStorage for Persistence</h3>
+        <p>All user data stays in the browser:</p>
+        <pre><code class="language-javascript">// Save progress
+localStorage.setItem('pylearn_progress', JSON.stringify({
+    modules: { 1: { completed: true, quizScore: 85 } },
+    practiceCount: 12
+}));
+
+// Load progress
+const progress = JSON.parse(localStorage.getItem('pylearn_progress'));</code></pre>
+
+        <h3>5. CSS Custom Properties for Theming</h3>
+        <pre><code class="language-css">/* Light theme (default) */
+:root {
+    --color-bg: #fafafa;
+    --color-text: #1a1a2e;
+    --color-primary: #2d6a4f;
+}
+
+/* Dark theme */
+[data-theme="dark"] {
+    --color-bg: #0f0f1a;
+    --color-text: #e8e8f0;
+    --color-primary: #74c69d;
+}
+
+/* Toggle with JavaScript */
+document.documentElement.setAttribute('data-theme', 'dark');</code></pre>
+
+        <h2>Accessibility (WCAG 2.1 AA)</h2>
+        <p>This site follows accessibility guidelines:</p>
+        <ul>
+            <li><strong>Skip links</strong> - Let keyboard users skip navigation</li>
+            <li><strong>Focus indicators</strong> - Visible outline on focused elements</li>
+            <li><strong>Color contrast</strong> - 4.5:1 ratio for text</li>
+            <li><strong>ARIA labels</strong> - Screen readers understand the UI</li>
+            <li><strong>Keyboard navigation</strong> - Everything works without a mouse</li>
+        </ul>
+
+        <h2>How to Rebuild This</h2>
+        
+        <p><span class="step-number">1</span> <strong>Start with structure</strong></p>
+        <p>Create your HTML files first. Get the navigation and layout working.</p>
+        
+        <p><span class="step-number">2</span> <strong>Add styles with CSS variables</strong></p>
+        <p>Define your colors, fonts, and spacing as CSS custom properties. This makes theming easy.</p>
+        
+        <p><span class="step-number">3</span> <strong>Build the progress system</strong></p>
+        <p>Use localStorage to track completed modules and quiz scores.</p>
+        
+        <p><span class="step-number">4</span> <strong>Add the AI tutor</strong></p>
+        <p>Study <code>js/tutor-flow.js</code> - it's heavily commented. The PocketFlow pattern is reusable for any LLM app.</p>
+        
+        <p><span class="step-number">5</span> <strong>Deploy to GitHub Pages</strong></p>
+        <pre><code class="language-bash">git init
+git add .
+git commit -m "My learning site"
+git remote add origin https://github.com/YOU/YOUR-REPO.git
+git push -u origin main
+# Then enable Pages in repo settings</code></pre>
+
+        <h2>Extend It!</h2>
+        <p>Ideas to make it your own:</p>
+        <ul>
+            <li>Add more modules (regex, web scraping, etc.)</li>
+            <li>Create a "challenge mode" with timed quizzes</li>
+            <li>Add code execution with <a href="https://pyodide.org">Pyodide</a> (Python in the browser)</li>
+            <li>Build a leaderboard using a free backend like Supabase</li>
+            <li>Add spaced repetition for flashcards</li>
+            <li>Create a study streak tracker</li>
+        </ul>
+
+        <h2>Resources</h2>
+        <ul>
+            <li><a href="https://webllm.mlc.ai/">WebLLM Documentation</a> - Run LLMs in browser</li>
+            <li><a href="https://github.com/The-Pocket/PocketFlow">PocketFlow</a> - 100-line LLM framework</li>
+            <li><a href="https://www.w3.org/WAI/WCAG21/quickref/">WCAG 2.1 Quick Reference</a> - Accessibility guidelines</li>
+            <li><a href="https://pages.github.com/">GitHub Pages</a> - Free hosting</li>
+        </ul>
+
+        <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: var(--color-bg-alt); border-radius: 12px;">
+            <h3>Ready to Build?</h3>
+            <p>You've learned Python. You understand how this site works. Now make your own!</p>
+            <a href="projects.html" class="btn btn-primary">See More Project Ideas →</a>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <p>Built with the <strong>Producer Mindset</strong> 🚀</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

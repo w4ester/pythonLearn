@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 4: Data Structures | PyLearn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/tutor.css">
+    <link rel="stylesheet" href="../css/module.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <header class="site-header">
+        <div class="header-content">
+            <a href="../index.html" class="logo"><span class="logo-icon">🐍</span><span class="logo-text">PyLearn</span></a>
+            <nav><ul class="nav-links">
+                <li><a href="../index.html" class="nav-link">Home</a></li>
+                <li><a href="../index.html#modules" class="nav-link active">Modules</a></li>
+                <li><a href="../projects.html" class="nav-link">Build More</a></li>
+            </ul></nav>
+            <div class="header-actions">
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+                    <span class="theme-icon-light">☀️</span><span class="theme-icon-dark">🌙</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content" class="module-content">
+        <nav class="breadcrumb"><a href="../index.html">Home</a><span>→</span><a href="../index.html#modules">Modules</a><span>→</span><span>Module 4</span></nav>
+
+        <article class="module-article">
+            <header class="module-header">
+                <span class="module-badge">Module 4 of 6</span>
+                <h1>Data Structures</h1>
+                <p class="module-meta"><span class="tag">PCEP 4.1-4.4</span><span class="tag">Google Week 3</span></p>
+            </header>
+
+            <section class="lesson">
+                <h2>Lists: Ordered Collections</h2>
+                <p>Lists hold multiple items in order. They're mutable (changeable).</p>
+                <div class="code-container">
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python"># Creating lists
+fruits = ["apple", "banana", "cherry"]
+numbers = [1, 2, 3, 4, 5]
+mixed = [1, "hello", True, 3.14]
+
+# Accessing items (0-indexed)
+print(fruits[0])   # apple
+print(fruits[-1])  # cherry (last item)
+
+# Slicing
+print(fruits[0:2])  # ['apple', 'banana']
+
+# Modifying
+fruits[0] = "mango"
+fruits.append("orange")    # Add to end
+fruits.insert(1, "grape")  # Insert at position
+fruits.remove("banana")    # Remove by value
+popped = fruits.pop()      # Remove & return last</code></pre>
+                </div>
+            </section>
+
+            <section class="lesson">
+                <h2>Tuples: Immutable Lists</h2>
+                <p>Like lists but cannot be changed after creation.</p>
+                <div class="code-container">
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python"># Creating tuples
+point = (10, 20)
+rgb = (255, 128, 0)
+single = (42,)  # Note the comma!
+
+# Accessing (same as lists)
+print(point[0])  # 10
+x, y = point     # Unpacking
+
+# Tuples are immutable
+# point[0] = 5   # Error!
+
+# Good for data that shouldn't change
+DAYS = ("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")</code></pre>
+                </div>
+            </section>
+
+            <section class="lesson">
+                <h2>Dictionaries: Key-Value Pairs</h2>
+                <p>Store data with meaningful keys instead of numeric indexes.</p>
+                <div class="code-container">
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python"># Creating dictionaries
+person = {
+    "name": "Alice",
+    "age": 25,
+    "city": "NYC"
+}
+
+# Accessing values
+print(person["name"])      # Alice
+print(person.get("age"))   # 25
+print(person.get("job", "Unknown"))  # Default value
+
+# Modifying
+person["age"] = 26         # Update
+person["job"] = "Engineer" # Add new key
+del person["city"]         # Delete
+
+# Looping
+for key, value in person.items():
+    print(f"{key}: {value}")</code></pre>
+                </div>
+            </section>
+
+            <section class="lesson">
+                <h2>Sets: Unique Items Only</h2>
+                <p>Collections with no duplicates, great for membership testing.</p>
+                <div class="code-container">
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python"># Creating sets
+colors = {"red", "green", "blue"}
+nums = set([1, 2, 2, 3, 3, 3])  # {1, 2, 3}
+
+# No duplicates!
+colors.add("red")   # Still just 3 items
+colors.add("yellow") # Now 4
+
+# Fast membership check
+print("red" in colors)  # True
+
+# Set operations
+a = {1, 2, 3}
+b = {2, 3, 4}
+print(a | b)  # Union: {1, 2, 3, 4}
+print(a & b)  # Intersection: {2, 3}
+print(a - b)  # Difference: {1}</code></pre>
+                </div>
+            </section>
+
+            <section class="lesson">
+                <h2>When to Use What?</h2>
+                <div class="data-types-grid">
+                    <div class="type-card">
+                        <h4>List</h4>
+                        <p>Ordered, changeable, allows duplicates</p>
+                        <code>["a", "b", "c"]</code>
+                    </div>
+                    <div class="type-card">
+                        <h4>Tuple</h4>
+                        <p>Ordered, unchangeable</p>
+                        <code>(1, 2, 3)</code>
+                    </div>
+                    <div class="type-card">
+                        <h4>Dict</h4>
+                        <p>Key-value pairs, fast lookup</p>
+                        <code>{"a": 1}</code>
+                    </div>
+                    <div class="type-card">
+                        <h4>Set</h4>
+                        <p>Unique items, fast membership</p>
+                        <code>{1, 2, 3}</code>
+                    </div>
+                </div>
+            </section>
+
+            <section class="quiz-section" id="quiz">
+                <h2>📝 Quiz</h2>
+                <div class="quiz-question" data-question="1">
+                    <p><strong>Q1:</strong> Which data structure uses key-value pairs?</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> List</label>
+                        <label><input type="radio" name="q1" value="b"> Dictionary</label>
+                        <label><input type="radio" name="q1" value="c"> Tuple</label>
+                    </div>
+                </div>
+                <div class="quiz-question" data-question="2">
+                    <p><strong>Q2:</strong> Which cannot be modified after creation?</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> List</label>
+                        <label><input type="radio" name="q2" value="b"> Dictionary</label>
+                        <label><input type="radio" name="q2" value="c"> Tuple</label>
+                    </div>
+                </div>
+                <button id="check-quiz" class="btn btn-primary">Check Answers</button>
+                <div id="quiz-result" class="quiz-result"></div>
+            </section>
+
+            <nav class="module-nav">
+                <a href="module-3.html" class="btn btn-secondary">← Functions</a>
+                <button id="mark-complete" class="btn btn-primary">Mark Complete ✓</button>
+                <a href="module-5.html" class="btn btn-secondary">Files & Exceptions →</a>
+            </nav>
+        </article>
+    </main>
+
+    <div id="tutor-panel" class="tutor-panel" aria-hidden="true">
+        <div class="tutor-header"><h2>🤖 Tutor</h2><div class="tutor-status"><span class="status-dot"></span><span class="status-text">Loading...</span></div><button id="close-tutor" class="tutor-close">×</button></div>
+        <div class="tutor-messages" id="tutor-messages" role="log"><div class="message bot-message"><p>Data structures are fundamental! Ask me when to use lists vs dicts, etc.</p></div></div>
+        <div class="tutor-input-area">
+            <div id="model-loading" class="model-loading"><div class="loading-spinner"></div><span id="loading-text">Initializing...</span><div class="loading-progress"><div class="loading-bar" id="loading-bar"></div></div></div>
+            <form id="tutor-form" class="tutor-form"><input type="text" id="tutor-input" placeholder="Ask about data structures..." disabled><button type="submit" id="tutor-submit" disabled>→</button></form>
+        </div>
+    </div>
+    <button id="tutor-fab" class="tutor-fab"><span class="fab-icon">🤖</span><span class="fab-text">Ask AI</span></button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/tutor-flow.js"></script>
+    <script src="../js/tutor-ui.js"></script>
+    <script>
+        const answers = { q1: 'b', q2: 'c' };
+        document.getElementById('check-quiz')?.addEventListener('click', () => {
+            let correct = 0;
+            for (const [q, ans] of Object.entries(answers)) { if (document.querySelector(`input[name="${q}"]:checked`)?.value === ans) correct++; }
+            document.getElementById('quiz-result').innerHTML = `<p>${correct}/2 (${Math.round(correct/2*100)}%)</p>`;
+            document.getElementById('quiz-result').className = 'quiz-result ' + (correct >= 1 ? 'pass' : 'fail');
+        });
+        document.getElementById('mark-complete')?.addEventListener('click', () => { window.PyLearn?.Progress?.completeModule(4); alert('Module 4 complete!'); });
+        function explainCode(btn) { const code = btn.nextElementSibling?.querySelector('code')?.textContent; if (code) window.TutorUI?.askAboutCode(code); }
+    </script>
+</body>
+</html>
