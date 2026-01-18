@@ -1,14 +1,73 @@
 /* ===========================================
    PocketFlow-Style AI Tutor Architecture
-   
+
    This implements the core patterns from PocketFlow:
    - Graph: Nodes connected by actions
    - Shared Store: State that flows between nodes
    - Nodes: prep() -> exec() -> post()
-   
-   The magic of PocketFlow in ~100 lines:
-   Graph + Shared Store = LLM Framework
+
+   ENHANCED with:
+   - Multiple LLM backends (WebLLM, Ollama, OpenAI-compatible)
+   - Learning modes (Guide/Socratic vs Solution)
    =========================================== */
+
+// ===========================================
+// CONFIGURATION
+// ===========================================
+const TutorConfig = {
+    // Current mode: 'guide' (Socratic) or 'solution' (direct answers)
+    mode: localStorage.getItem('tutorMode') || 'guide',
+
+    // Current backend: 'webllm', 'ollama', or 'openai'
+    backend: localStorage.getItem('tutorBackend') || 'webllm',
+
+    // Backend-specific settings
+    backends: {
+        webllm: {
+            modelId: 'Llama-3.2-1B-Instruct-q4f16_1-MLC',
+            name: 'WebLLM (Browser)',
+            description: 'Runs locally in your browser. ~500MB download, works offline after.',
+            requiresSetup: false
+        },
+        ollama: {
+            baseUrl: localStorage.getItem('ollamaUrl') || 'http://localhost:11434',
+            model: localStorage.getItem('ollamaModel') || 'llama3.2:1b',
+            name: 'Ollama (Local)',
+            description: 'Connect to Ollama running on your computer.',
+            requiresSetup: true
+        },
+        openai: {
+            baseUrl: localStorage.getItem('openaiUrl') || 'http://localhost:8080/v1',
+            model: localStorage.getItem('openaiModel') || 'default',
+            apiKey: localStorage.getItem('openaiKey') || '',
+            name: 'OpenAI-Compatible (MLX/llama.cpp)',
+            description: 'Connect to any OpenAI-compatible API (MLX-server, llama.cpp, etc.)',
+            requiresSetup: true
+        }
+    },
+
+    setMode(mode) {
+        this.mode = mode;
+        localStorage.setItem('tutorMode', mode);
+    },
+
+    setBackend(backend) {
+        this.backend = backend;
+        localStorage.setItem('tutorBackend', backend);
+    },
+
+    setBackendConfig(backend, config) {
+        Object.assign(this.backends[backend], config);
+        if (backend === 'ollama') {
+            localStorage.setItem('ollamaUrl', config.baseUrl || this.backends.ollama.baseUrl);
+            localStorage.setItem('ollamaModel', config.model || this.backends.ollama.model);
+        } else if (backend === 'openai') {
+            localStorage.setItem('openaiUrl', config.baseUrl || this.backends.openai.baseUrl);
+            localStorage.setItem('openaiModel', config.model || this.backends.openai.model);
+            if (config.apiKey) localStorage.setItem('openaiKey', config.apiKey);
+        }
+    }
+};
 
 // ===========================================
 // CORE: Node Base Class (from PocketFlow)
@@ -17,24 +76,19 @@ class Node {
     constructor(name) {
         this.name = name;
     }
-    
-    // Prepare data from shared store
+
     prep(shared) {
         return null;
     }
-    
-    // Execute the node's task
+
     async exec(prepResult) {
         return null;
     }
-    
-    // Post-process and update shared store
-    // Returns the next action (edge) to follow
+
     post(shared, prepResult, execResult) {
         return 'default';
     }
-    
-    // Run the full node cycle
+
     async run(shared) {
         const prepResult = this.prep(shared);
         const execResult = await this.exec(prepResult);
@@ -49,16 +103,14 @@ class Flow {
     constructor(startNode) {
         this.startNode = startNode;
         this.nodes = new Map();
-        this.edges = new Map(); // node -> { action: nextNode }
+        this.edges = new Map();
     }
-    
-    // Add a node to the flow
+
     addNode(node) {
         this.nodes.set(node.name, node);
         return this;
     }
-    
-    // Connect nodes with an action (edge)
+
     connect(fromNode, toNode, action = 'default') {
         const from = fromNode.name;
         if (!this.edges.has(from)) {
@@ -67,30 +119,28 @@ class Flow {
         this.edges.get(from)[action] = toNode.name;
         return this;
     }
-    
-    // Run the flow
+
     async run(shared) {
         let currentNode = this.startNode;
-        
+
         while (currentNode) {
             const node = this.nodes.get(currentNode.name) || currentNode;
             const action = await node.run(shared);
-            
-            // Get next node from edges
+
             const nodeEdges = this.edges.get(node.name);
             if (nodeEdges && nodeEdges[action]) {
                 currentNode = this.nodes.get(nodeEdges[action]);
             } else {
-                currentNode = null; // End of flow
+                currentNode = null;
             }
         }
-        
+
         return shared;
     }
 }
 
 // ===========================================
-// TUTOR NODES: Implementing the Python Tutor
+// TUTOR NODES
 // ===========================================
 
 /**
@@ -101,30 +151,27 @@ class GetContextNode extends Node {
     constructor() {
         super('GetContext');
     }
-    
+
     prep(shared) {
-        // Get user's progress from app state
         const progress = window.PyLearn?.Progress?.get() || {};
         const currentPage = window.location.pathname;
-        
         return { progress, currentPage };
     }
-    
+
     async exec({ progress, currentPage }) {
-        // Determine current module from URL
         const moduleMatch = currentPage.match(/module-(\d)/);
         const currentModule = moduleMatch ? parseInt(moduleMatch[1]) : null;
-        
-        // Build context object
+
         return {
             currentModule,
             completedModules: Object.entries(progress.modules || {})
                 .filter(([_, m]) => m.completed)
                 .map(([num, _]) => parseInt(num)),
-            practiceCount: progress.practiceCount || 0
+            practiceCount: progress.practiceCount || 0,
+            tutorMode: TutorConfig.mode
         };
     }
-    
+
     post(shared, prepResult, execResult) {
         shared.context = execResult;
         return 'default';
@@ -133,36 +180,29 @@ class GetContextNode extends Node {
 
 /**
  * Node 2: BuildPromptNode
- * Constructs the system prompt with context
+ * Constructs the system prompt based on mode
  */
 class BuildPromptNode extends Node {
     constructor() {
         super('BuildPrompt');
     }
-    
+
     prep(shared) {
         return {
             question: shared.question,
             context: shared.context
         };
     }
-    
-    async exec({ question, context }) {
-        // System prompt that makes the tutor helpful
-        const systemPrompt = `You are a friendly Python tutor helping a complete beginner learn programming.
 
+    async exec({ question, context }) {
+        const isGuideMode = context.tutorMode === 'guide';
+
+        // Base context info
+        const contextInfo = `
 CURRENT CONTEXT:
 - User is viewing: ${context.currentModule ? `Module ${context.currentModule}` : 'Home page'}
 - Completed modules: ${context.completedModules.length > 0 ? context.completedModules.join(', ') : 'None yet'}
 - Practice problems done: ${context.practiceCount}
-
-YOUR RULES:
-1. Explain concepts simply, like you're talking to a smart 12-year-old
-2. Always include a small code example when relevant
-3. Keep responses SHORT (under 150 words unless they ask for more detail)
-4. Be encouraging - learning to code is hard!
-5. If they ask to be quizzed, give ONE question and wait for their answer
-6. Use concepts only from modules they've completed or are currently viewing
 
 MODULE TOPICS FOR REFERENCE:
 - Module 1: Variables, data types (int, float, str, bool), basic operators
@@ -170,16 +210,53 @@ MODULE TOPICS FOR REFERENCE:
 - Module 3: Functions, parameters, return values, importing modules
 - Module 4: Lists, tuples, dictionaries, sets
 - Module 5: File reading/writing, try/except, error handling
-- Module 6: Classes, objects, methods, inheritance
+- Module 6: Classes, objects, methods, inheritance`;
 
-If they haven't completed a module, don't use concepts from it unless explaining what they'll learn.`;
+        // Mode-specific instructions
+        const modeInstructions = isGuideMode ? `
+YOU ARE IN GUIDE MODE (Socratic Learning):
+Your goal is to help the learner discover answers themselves. Follow these rules:
+
+1. NEVER give the full answer immediately
+2. Start by asking what they already know or think
+3. Give hints and leading questions instead of solutions
+4. When they're stuck, break it into smaller steps
+5. Celebrate their attempts even if wrong: "Good thinking! Let's adjust..."
+6. Ask "What do you think will happen if...?" before showing output
+7. If they explicitly say "just tell me" or "I give up", then switch to explaining
+
+Example responses:
+- "What do you think a variable is for? Have you seen any examples?"
+- "You're close! What if we changed line 3 - what would happen?"
+- "Great question! Before I explain, what's your guess?"
+- "I see you're working with loops. What pattern do you notice?"
+
+Be encouraging, patient, and make learning feel like a conversation.` : `
+YOU ARE IN SOLUTION MODE (Direct Teaching):
+The learner wants clear, direct explanations. Follow these rules:
+
+1. Explain concepts clearly and simply, like talking to a smart 12-year-old
+2. Always include working code examples
+3. Show the expected output
+4. Explain WHY things work, not just HOW
+5. Keep responses focused (under 200 words unless they ask for more)
+6. Use analogies to make concepts stick`;
+
+        const systemPrompt = `You are a friendly Python tutor helping a complete beginner learn programming.
+${modeInstructions}
+${contextInfo}
+
+UNIVERSAL RULES:
+- Be encouraging - learning to code is hard!
+- Use only concepts from modules they've completed or are currently viewing
+- If they ask about advanced topics, acknowledge it and suggest focusing on current material first`;
 
         return {
             systemPrompt,
             userMessage: question
         };
     }
-    
+
     post(shared, prepResult, execResult) {
         shared.prompt = execResult;
         return 'default';
@@ -188,43 +265,39 @@ If they haven't completed a module, don't use concepts from it unless explaining
 
 /**
  * Node 3: CallLLMNode
- * Calls the WebLLM model running in the browser
+ * Calls the appropriate LLM backend
  */
 class CallLLMNode extends Node {
     constructor() {
         super('CallLLM');
     }
-    
+
     prep(shared) {
         return shared.prompt;
     }
-    
+
     async exec({ systemPrompt, userMessage }) {
-        // Get the LLM engine from global state
-        const engine = window.TutorLLM?.engine;
-        
-        if (!engine) {
-            return {
-                success: false,
-                error: 'Model not loaded yet. Please wait for the model to finish loading.'
-            };
-        }
-        
+        const backend = TutorConfig.backend;
+
         try {
-            // Call the model
-            const response = await engine.chat.completions.create({
-                messages: [
-                    { role: 'system', content: systemPrompt },
-                    { role: 'user', content: userMessage }
-                ],
-                temperature: 0.7,
-                max_tokens: 500
-            });
-            
-            return {
-                success: true,
-                response: response.choices[0].message.content
-            };
+            let response;
+
+            switch (backend) {
+                case 'webllm':
+                    response = await this.callWebLLM(systemPrompt, userMessage);
+                    break;
+                case 'ollama':
+                    response = await this.callOllama(systemPrompt, userMessage);
+                    break;
+                case 'openai':
+                    response = await this.callOpenAI(systemPrompt, userMessage);
+                    break;
+                default:
+                    throw new Error(`Unknown backend: ${backend}`);
+            }
+
+            return { success: true, response };
+
         } catch (error) {
             console.error('LLM call error:', error);
             return {
@@ -233,7 +306,84 @@ class CallLLMNode extends Node {
             };
         }
     }
-    
+
+    async callWebLLM(systemPrompt, userMessage) {
+        const engine = window.TutorLLM?.engine;
+
+        if (!engine) {
+            throw new Error('WebLLM model not loaded yet. Please wait for it to finish loading.');
+        }
+
+        const response = await engine.chat.completions.create({
+            messages: [
+                { role: 'system', content: systemPrompt },
+                { role: 'user', content: userMessage }
+            ],
+            temperature: 0.7,
+            max_tokens: 500
+        });
+
+        return response.choices[0].message.content;
+    }
+
+    async callOllama(systemPrompt, userMessage) {
+        const config = TutorConfig.backends.ollama;
+
+        const response = await fetch(`${config.baseUrl}/api/chat`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                model: config.model,
+                messages: [
+                    { role: 'system', content: systemPrompt },
+                    { role: 'user', content: userMessage }
+                ],
+                stream: false
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error(`Ollama error: ${response.status}. Is Ollama running?`);
+        }
+
+        const data = await response.json();
+        return data.message.content;
+    }
+
+    async callOpenAI(systemPrompt, userMessage) {
+        const config = TutorConfig.backends.openai;
+
+        const headers = {
+            'Content-Type': 'application/json'
+        };
+
+        if (config.apiKey) {
+            headers['Authorization'] = `Bearer ${config.apiKey}`;
+        }
+
+        const response = await fetch(`${config.baseUrl}/chat/completions`, {
+            method: 'POST',
+            headers,
+            body: JSON.stringify({
+                model: config.model,
+                messages: [
+                    { role: 'system', content: systemPrompt },
+                    { role: 'user', content: userMessage }
+                ],
+                temperature: 0.7,
+                max_tokens: 500
+            })
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`API error: ${response.status}. ${errorText}`);
+        }
+
+        const data = await response.json();
+        return data.choices[0].message.content;
+    }
+
     post(shared, prepResult, execResult) {
         shared.llmResult = execResult;
         return execResult.success ? 'success' : 'error';
@@ -242,17 +392,16 @@ class CallLLMNode extends Node {
 
 /**
  * Node 4: FormatResponseNode
- * Formats the LLM response for display
  */
 class FormatResponseNode extends Node {
     constructor() {
         super('FormatResponse');
     }
-    
+
     prep(shared) {
         return shared.llmResult;
     }
-    
+
     async exec(llmResult) {
         if (!llmResult.success) {
             return {
@@ -260,28 +409,22 @@ class FormatResponseNode extends Node {
                 isError: true
             };
         }
-        
-        // Convert markdown-style code blocks to HTML
+
         let html = llmResult.response
-            // Code blocks
             .replace(/```python\n([\s\S]*?)```/g, '<pre><code class="language-python">$1</code></pre>')
             .replace(/```\n?([\s\S]*?)```/g, '<pre><code>$1</code></pre>')
-            // Inline code
             .replace(/`([^`]+)`/g, '<code>$1</code>')
-            // Bold
             .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
-            // Line breaks
             .replace(/\n\n/g, '</p><p>')
             .replace(/\n/g, '<br>');
-        
-        // Wrap in paragraph if needed
+
         if (!html.startsWith('<')) {
             html = `<p>${html}</p>`;
         }
-        
+
         return { html, isError: false };
     }
-    
+
     post(shared, prepResult, execResult) {
         shared.formattedResponse = execResult;
         return 'default';
@@ -290,45 +433,42 @@ class FormatResponseNode extends Node {
 
 /**
  * Node 5: ErrorHandlerNode
- * Provides helpful fallback when LLM fails
  */
 class ErrorHandlerNode extends Node {
     constructor() {
         super('ErrorHandler');
     }
-    
+
     prep(shared) {
         return { error: shared.llmResult?.error, question: shared.question };
     }
-    
+
     async exec({ error, question }) {
-        // Provide a helpful fallback response
         const fallbackResponses = {
-            'variable': 'A <strong>variable</strong> is like a labeled box that stores a value. Example: <code>name = "Python"</code> creates a box labeled "name" containing the text "Python".',
-            'loop': 'A <strong>loop</strong> repeats code multiple times. <code>for i in range(3): print(i)</code> prints 0, 1, 2.',
-            'function': 'A <strong>function</strong> is reusable code with a name. <code>def greet(): print("Hello!")</code> then call it with <code>greet()</code>',
-            'list': 'A <strong>list</strong> holds multiple items in order: <code>fruits = ["apple", "banana", "cherry"]</code>',
-            'dictionary': 'A <strong>dictionary</strong> stores key-value pairs: <code>person = {"name": "Ada", "age": 25}</code>',
-            'class': 'A <strong>class</strong> is a blueprint for creating objects with shared properties and behaviors.'
+            'variable': 'A <strong>variable</strong> is like a labeled box that stores a value. Example: <code>name = "Python"</code>',
+            'loop': 'A <strong>loop</strong> repeats code multiple times. <code>for i in range(3): print(i)</code>',
+            'function': 'A <strong>function</strong> is reusable code with a name. <code>def greet(): print("Hello!")</code>',
+            'list': 'A <strong>list</strong> holds multiple items: <code>fruits = ["apple", "banana"]</code>',
+            'dictionary': 'A <strong>dictionary</strong> stores key-value pairs: <code>person = {"name": "Ada"}</code>',
+            'class': 'A <strong>class</strong> is a blueprint for creating objects with shared properties.'
         };
-        
-        // Check if question matches any fallback
+
         const lowerQ = question.toLowerCase();
         for (const [keyword, response] of Object.entries(fallbackResponses)) {
             if (lowerQ.includes(keyword)) {
                 return {
-                    html: `<p>While the AI loads, here's a quick answer:</p><p>${response}</p>`,
+                    html: `<p>While connecting to the AI, here's a quick answer:</p><p>${response}</p>`,
                     isError: false
                 };
             }
         }
-        
+
         return {
-            html: `<p>⚠️ ${error}</p><p>The AI model is still loading. Try again in a moment, or check out the module content directly!</p>`,
+            html: `<p>⚠️ ${error}</p><p>Check your AI backend settings or try a different one.</p>`,
             isError: true
         };
     }
-    
+
     post(shared, prepResult, execResult) {
         shared.formattedResponse = execResult;
         return 'default';
@@ -339,28 +479,25 @@ class ErrorHandlerNode extends Node {
 // BUILD THE FLOW
 // ===========================================
 function createTutorFlow() {
-    // Create nodes
     const getContext = new GetContextNode();
     const buildPrompt = new BuildPromptNode();
     const callLLM = new CallLLMNode();
     const formatResponse = new FormatResponseNode();
     const errorHandler = new ErrorHandlerNode();
-    
-    // Build the flow
+
     const flow = new Flow(getContext);
-    
+
     flow.addNode(getContext)
         .addNode(buildPrompt)
         .addNode(callLLM)
         .addNode(formatResponse)
         .addNode(errorHandler);
-    
-    // Connect nodes
+
     flow.connect(getContext, buildPrompt, 'default');
     flow.connect(buildPrompt, callLLM, 'default');
     flow.connect(callLLM, formatResponse, 'success');
     flow.connect(callLLM, errorHandler, 'error');
-    
+
     return flow;
 }
 
@@ -371,22 +508,18 @@ const TutorLLM = {
     engine: null,
     isLoading: false,
     isReady: false,
-    
+
     async init(onProgress) {
         if (this.isLoading || this.isReady) return;
         this.isLoading = true;
-        
+
         try {
-            // Import WebLLM from CDN
             const { CreateMLCEngine } = await import(
                 'https://esm.run/@mlc-ai/web-llm'
             );
-            
-            // Use a small, fast model
-            // Phi-3-mini or Llama-3.2-1B are good choices
-            const modelId = 'Llama-3.2-1B-Instruct-q4f16_1-MLC';
-            
-            // Create engine with progress callback
+
+            const modelId = TutorConfig.backends.webllm.modelId;
+
             this.engine = await CreateMLCEngine(modelId, {
                 initProgressCallback: (progress) => {
                     if (onProgress) {
@@ -397,11 +530,11 @@ const TutorLLM = {
                     }
                 }
             });
-            
+
             this.isReady = true;
             this.isLoading = false;
             console.log('🤖 WebLLM model loaded successfully!');
-            
+
         } catch (error) {
             console.error('WebLLM init error:', error);
             this.isLoading = false;
@@ -411,57 +544,82 @@ const TutorLLM = {
 };
 
 // ===========================================
+// BACKEND CONNECTIVITY TEST
+// ===========================================
+async function testBackend(backend) {
+    try {
+        if (backend === 'webllm') {
+            return { success: true, message: 'WebLLM ready (loads on first use)' };
+        }
+
+        if (backend === 'ollama') {
+            const config = TutorConfig.backends.ollama;
+            const response = await fetch(`${config.baseUrl}/api/tags`);
+            if (response.ok) {
+                const data = await response.json();
+                const models = data.models?.map(m => m.name) || [];
+                return {
+                    success: true,
+                    message: `Connected! Models: ${models.slice(0, 3).join(', ')}${models.length > 3 ? '...' : ''}`
+                };
+            }
+            throw new Error('Cannot connect');
+        }
+
+        if (backend === 'openai') {
+            const config = TutorConfig.backends.openai;
+            const headers = { 'Content-Type': 'application/json' };
+            if (config.apiKey) headers['Authorization'] = `Bearer ${config.apiKey}`;
+
+            const response = await fetch(`${config.baseUrl}/models`, { headers });
+            if (response.ok) {
+                return { success: true, message: 'Connected to API!' };
+            }
+            throw new Error('Cannot connect');
+        }
+
+        return { success: false, message: 'Unknown backend' };
+    } catch (error) {
+        return { success: false, message: error.message };
+    }
+}
+
+// ===========================================
 // MAIN CHAT FUNCTION
 // ===========================================
 async function askTutor(question) {
-    // Create shared store
-    const shared = {
-        question: question
-    };
-    
-    // Create and run the flow
+    const shared = { question };
     const flow = createTutorFlow();
     await flow.run(shared);
-    
-    // Return the formatted response
     return shared.formattedResponse;
 }
 
 // Export for use
 window.TutorLLM = TutorLLM;
+window.TutorConfig = TutorConfig;
 window.askTutor = askTutor;
+window.testBackend = testBackend;
 
 /* ===========================================
-   FLOW VISUALIZATION
-   
-   Here's how the tutor flow works:
-   
-   ┌─────────────────┐
-   │  GetContext     │ ← Reads user progress & current page
-   └────────┬────────┘
-            │
-            ▼
-   ┌─────────────────┐
-   │  BuildPrompt    │ ← Constructs system prompt with context
-   └────────┬────────┘
-            │
-            ▼
-   ┌─────────────────┐
-   │   CallLLM       │ ← Calls WebLLM (runs in browser!)
-   └────────┬────────┘
-            │
-       ┌────┴────┐
-       │         │
-    success    error
-       │         │
-       ▼         ▼
-   ┌────────┐ ┌────────────┐
-   │ Format │ │ ErrorHandler│
-   └────────┘ └────────────┘
-            │
-            ▼
-      [Display Response]
-   
-   This is the same pattern used in production
-   AI apps - just simplified to learn from!
+   LEARNING MODES EXPLAINED
+
+   GUIDE MODE (Socratic):
+   Learner: "What is a variable?"
+   Tutor: "Great question! Before I explain,
+          what do you think a variable might
+          be used for?"
+   -> Encourages active thinking
+   -> Builds deeper understanding
+
+   SOLUTION MODE (Direct):
+   Learner: "What is a variable?"
+   Tutor: "A variable is like a labeled box
+          that stores a value: name = 'Python'"
+   -> Quick, clear answers
+   -> Good when stuck or reviewing
+
+   BACKEND OPTIONS:
+   - WebLLM: Runs in browser, ~500MB download
+   - Ollama: ollama run llama3.2:1b
+   - OpenAI-API: MLX-server, llama.cpp, etc.
    =========================================== */

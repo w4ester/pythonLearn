@@ -16,6 +16,7 @@ const TutorUI = {
     statusDot: null,
     statusText: null,
     isOpen: false,
+    settingsOpen: false,
     
     // Initialize the UI
     init() {
@@ -33,10 +34,13 @@ const TutorUI = {
         this.statusText = document.querySelector('.status-text');
         
         if (!this.panel) return;
-        
+
         // Bind events
         this.bindEvents();
-        
+
+        // Initialize settings panel
+        this.initSettings();
+
         console.log('🤖 Tutor UI initialized');
     },
     
@@ -176,7 +180,7 @@ const TutorUI = {
             
         } catch (error) {
             this.hideTyping(typingId);
-            this.addMessage('bot', `<p>⚠️ Error: ${error.message}</p>`, true);
+            this.addMessage('bot', 'Error: ' + error.message);
         }
         
         // Re-enable input
@@ -189,18 +193,26 @@ const TutorUI = {
     addMessage(type, content, isHTML = false) {
         const div = document.createElement('div');
         div.className = `message ${type}-message`;
-        
+
         if (isHTML) {
-            div.innerHTML = content;
+            // Parse HTML safely using DOMParser
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(content, 'text/html');
+            // Move parsed nodes to our div
+            Array.from(doc.body.childNodes).forEach(node => {
+                div.appendChild(node.cloneNode(true));
+            });
         } else {
-            div.innerHTML = `<p>${this.escapeHTML(content)}</p>`;
+            const p = document.createElement('p');
+            p.textContent = content;
+            div.appendChild(p);
         }
-        
+
         this.messages?.appendChild(div);
-        
+
         // Scroll to bottom
         this.messages.scrollTop = this.messages.scrollHeight;
-        
+
         // Highlight any code blocks
         div.querySelectorAll('pre code').forEach(block => {
             if (window.Prism) {
@@ -215,7 +227,10 @@ const TutorUI = {
         const div = document.createElement('div');
         div.id = id;
         div.className = 'typing-indicator';
-        div.innerHTML = '<span></span><span></span><span></span>';
+        // Use DOM methods instead of innerHTML
+        for (let i = 0; i < 3; i++) {
+            div.appendChild(document.createElement('span'));
+        }
         div.setAttribute('aria-label', 'Tutor is typing');
         this.messages?.appendChild(div);
         this.messages.scrollTop = this.messages.scrollHeight;
@@ -241,6 +256,236 @@ const TutorUI = {
             this.input.value = `Can you explain this code step by step?\n\n${code}`;
             this.sendMessage();
         }, 300);
+    },
+
+    // Toggle settings panel
+    toggleSettings() {
+        this.settingsOpen = !this.settingsOpen;
+        const settingsPanel = document.getElementById('tutor-settings');
+        if (settingsPanel) {
+            settingsPanel.classList.toggle('hidden', !this.settingsOpen);
+        }
+    },
+
+    // Initialize settings panel
+    initSettings() {
+        const tutorHeader = this.panel?.querySelector('.tutor-header');
+        if (!tutorHeader) return;
+
+        // Add settings button
+        const settingsBtn = document.createElement('button');
+        settingsBtn.id = 'tutor-settings-btn';
+        settingsBtn.className = 'tutor-settings-btn';
+        settingsBtn.textContent = '\u2699\uFE0F';
+        settingsBtn.title = 'Tutor Settings';
+        settingsBtn.addEventListener('click', () => this.toggleSettings());
+
+        const closeBtn = tutorHeader.querySelector('.tutor-close');
+        tutorHeader.insertBefore(settingsBtn, closeBtn);
+
+        // Create settings panel
+        const settingsPanel = document.createElement('div');
+        settingsPanel.id = 'tutor-settings';
+        settingsPanel.className = 'tutor-settings hidden';
+        this.populateSettingsPanel(settingsPanel);
+        tutorHeader.insertAdjacentElement('afterend', settingsPanel);
+
+        this.bindSettingsEvents();
+        this.updateModeIndicator();
+    },
+
+    // Populate settings panel with controls
+    populateSettingsPanel(panel) {
+        const config = window.TutorConfig;
+        if (!config) return;
+
+        // Title
+        const title = document.createElement('h3');
+        title.textContent = 'Tutor Settings';
+        panel.appendChild(title);
+
+        // Mode section
+        const modeGroup = document.createElement('div');
+        modeGroup.className = 'setting-group';
+
+        const modeLabel = document.createElement('label');
+        modeLabel.textContent = 'Learning Mode';
+        modeGroup.appendChild(modeLabel);
+
+        const modeToggle = document.createElement('div');
+        modeToggle.className = 'mode-toggle';
+
+        ['guide', 'solution'].forEach(mode => {
+            const btn = document.createElement('button');
+            btn.className = 'mode-btn' + (config.mode === mode ? ' active' : '');
+            btn.dataset.mode = mode;
+            const strong = document.createElement('strong');
+            strong.textContent = mode === 'guide' ? 'Guide Mode' : 'Solution Mode';
+            const small = document.createElement('small');
+            small.textContent = mode === 'guide' ? 'Socratic - asks questions to help you discover' : 'Direct explanations with code examples';
+            btn.appendChild(strong);
+            btn.appendChild(document.createElement('br'));
+            btn.appendChild(small);
+            modeToggle.appendChild(btn);
+        });
+        modeGroup.appendChild(modeToggle);
+        panel.appendChild(modeGroup);
+
+        // Backend section
+        const backendGroup = document.createElement('div');
+        backendGroup.className = 'setting-group';
+
+        const backendLabel = document.createElement('label');
+        backendLabel.textContent = 'AI Backend';
+        backendGroup.appendChild(backendLabel);
+
+        const backendOptions = document.createElement('div');
+        backendOptions.className = 'backend-options';
+
+        const backends = [
+            { value: 'webllm', name: 'WebLLM (Browser)', desc: '~500MB download, works offline' },
+            { value: 'ollama', name: 'Ollama (Local)', desc: 'Requires Ollama running locally' },
+            { value: 'openai', name: 'OpenAI-Compatible', desc: 'MLX, llama.cpp, or any compatible API' }
+        ];
+
+        backends.forEach(b => {
+            const label = document.createElement('label');
+            label.className = 'backend-option';
+            const radio = document.createElement('input');
+            radio.type = 'radio';
+            radio.name = 'backend';
+            radio.value = b.value;
+            radio.checked = config.backend === b.value;
+            const span = document.createElement('span');
+            span.className = 'backend-info';
+            const strong = document.createElement('strong');
+            strong.textContent = b.name;
+            const small = document.createElement('small');
+            small.textContent = b.desc;
+            span.appendChild(strong);
+            span.appendChild(document.createElement('br'));
+            span.appendChild(small);
+            label.appendChild(radio);
+            label.appendChild(span);
+            backendOptions.appendChild(label);
+        });
+        backendGroup.appendChild(backendOptions);
+        panel.appendChild(backendGroup);
+
+        // Backend config section
+        const configSection = document.createElement('div');
+        configSection.id = 'backend-config';
+        configSection.className = 'backend-config' + (config.backend === 'webllm' ? ' hidden' : '');
+
+        // Ollama fields
+        const ollamaFields = document.createElement('div');
+        ollamaFields.className = 'config-fields ollama-fields' + (config.backend !== 'ollama' ? ' hidden' : '');
+        this.addConfigField(ollamaFields, 'ollama-url', 'Ollama URL', config.backends.ollama.baseUrl, 'http://localhost:11434');
+        this.addConfigField(ollamaFields, 'ollama-model', 'Model', config.backends.ollama.model, 'llama3.2:1b');
+        configSection.appendChild(ollamaFields);
+
+        // OpenAI fields
+        const openaiFields = document.createElement('div');
+        openaiFields.className = 'config-fields openai-fields' + (config.backend !== 'openai' ? ' hidden' : '');
+        this.addConfigField(openaiFields, 'openai-url', 'API URL', config.backends.openai.baseUrl, 'http://localhost:8080/v1');
+        this.addConfigField(openaiFields, 'openai-model', 'Model', config.backends.openai.model, 'default');
+        this.addConfigField(openaiFields, 'openai-key', 'API Key (optional)', config.backends.openai.apiKey, 'sk-...', 'password');
+        configSection.appendChild(openaiFields);
+
+        // Test button
+        const testBtn = document.createElement('button');
+        testBtn.id = 'test-backend';
+        testBtn.className = 'btn-test';
+        testBtn.textContent = 'Test Connection';
+        configSection.appendChild(testBtn);
+
+        const testResult = document.createElement('span');
+        testResult.id = 'test-result';
+        configSection.appendChild(testResult);
+
+        panel.appendChild(configSection);
+    },
+
+    // Helper to add config input field
+    addConfigField(container, id, labelText, value, placeholder, type = 'text') {
+        const label = document.createElement('label');
+        label.textContent = labelText;
+        const input = document.createElement('input');
+        input.type = type;
+        input.id = id;
+        input.value = value || '';
+        input.placeholder = placeholder;
+        label.appendChild(input);
+        container.appendChild(label);
+    },
+
+    // Bind settings panel events
+    bindSettingsEvents() {
+        document.querySelectorAll('.mode-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const mode = btn.dataset.mode;
+                window.TutorConfig?.setMode(mode);
+                document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                this.updateModeIndicator();
+                this.addMessage('bot', 'Switched to ' + (mode === 'guide' ? 'Guide' : 'Solution') + ' mode.');
+            });
+        });
+
+        document.querySelectorAll('input[name="backend"]').forEach(radio => {
+            radio.addEventListener('change', () => {
+                const backend = radio.value;
+                window.TutorConfig?.setBackend(backend);
+
+                const configEl = document.getElementById('backend-config');
+                configEl?.classList.toggle('hidden', backend === 'webllm');
+
+                document.querySelector('.ollama-fields')?.classList.toggle('hidden', backend !== 'ollama');
+                document.querySelector('.openai-fields')?.classList.toggle('hidden', backend !== 'openai');
+
+                if (backend !== 'webllm') {
+                    window.TutorLLM.isReady = false;
+                    window.TutorLLM.engine = null;
+                }
+            });
+        });
+
+        document.getElementById('test-backend')?.addEventListener('click', async () => {
+            const resultEl = document.getElementById('test-result');
+            resultEl.textContent = 'Testing...';
+            this.saveBackendConfig();
+            const result = await window.testBackend?.(window.TutorConfig.backend);
+            resultEl.textContent = result?.message || 'Unknown result';
+            resultEl.className = result?.success ? 'success' : 'error';
+        });
+
+        ['ollama-url', 'ollama-model', 'openai-url', 'openai-model', 'openai-key'].forEach(id => {
+            document.getElementById(id)?.addEventListener('change', () => this.saveBackendConfig());
+        });
+    },
+
+    saveBackendConfig() {
+        const config = window.TutorConfig;
+        if (!config) return;
+
+        config.setBackendConfig('ollama', {
+            baseUrl: document.getElementById('ollama-url')?.value,
+            model: document.getElementById('ollama-model')?.value
+        });
+
+        config.setBackendConfig('openai', {
+            baseUrl: document.getElementById('openai-url')?.value,
+            model: document.getElementById('openai-model')?.value,
+            apiKey: document.getElementById('openai-key')?.value
+        });
+    },
+
+    updateModeIndicator() {
+        const mode = window.TutorConfig?.mode || 'guide';
+        const statusText = this.statusText;
+        if (statusText && window.TutorLLM?.isReady) {
+            statusText.textContent = 'Ready (' + (mode === 'guide' ? 'Guide' : 'Solution') + ')';
+        }
     }
 };
 

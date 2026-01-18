@@ -319,6 +319,206 @@
     cursor: not-allowed;
 }
 
+/* Settings Button */
+.tutor-settings-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.25rem;
+    cursor: pointer;
+    padding: 0;
+    opacity: 0.8;
+    transition: opacity var(--transition-fast);
+}
+
+.tutor-settings-btn:hover {
+    opacity: 1;
+}
+
+/* Settings Panel */
+.tutor-settings {
+    background: var(--color-bg-alt);
+    border-bottom: 1px solid var(--color-border);
+    padding: var(--space-md);
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.tutor-settings.hidden {
+    display: none;
+}
+
+.tutor-settings h3 {
+    margin: 0 0 var(--space-md);
+    font-size: var(--font-size-base);
+    color: var(--color-text);
+}
+
+.setting-group {
+    margin-bottom: var(--space-md);
+}
+
+.setting-group > label {
+    display: block;
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-sm);
+}
+
+/* Mode Toggle */
+.mode-toggle {
+    display: flex;
+    gap: var(--space-sm);
+}
+
+.mode-btn {
+    flex: 1;
+    padding: var(--space-sm);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    text-align: left;
+    transition: all var(--transition-fast);
+}
+
+.mode-btn:hover {
+    border-color: var(--color-primary);
+}
+
+.mode-btn.active {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: white;
+}
+
+.mode-btn strong {
+    display: block;
+    font-size: var(--font-size-sm);
+}
+
+.mode-btn small {
+    font-size: 0.7rem;
+    opacity: 0.8;
+}
+
+/* Backend Options */
+.backend-options {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+}
+
+.backend-option {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    padding: var(--space-sm);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: border-color var(--transition-fast);
+}
+
+.backend-option:hover {
+    border-color: var(--color-primary);
+}
+
+.backend-option input[type="radio"] {
+    margin-top: 4px;
+}
+
+.backend-info {
+    flex: 1;
+}
+
+.backend-info strong {
+    font-size: var(--font-size-sm);
+    color: var(--color-text);
+}
+
+.backend-info small {
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+}
+
+/* Backend Config Fields */
+.backend-config {
+    margin-top: var(--space-md);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--color-border);
+}
+
+.backend-config.hidden {
+    display: none;
+}
+
+.config-fields {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.config-fields.hidden {
+    display: none;
+}
+
+.config-fields label {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+.config-fields input {
+    padding: var(--space-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-size: var(--font-size-sm);
+}
+
+.config-fields input:focus {
+    border-color: var(--color-primary);
+    outline: none;
+}
+
+/* Test Button */
+.btn-test {
+    margin-top: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    color: var(--color-text);
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.btn-test:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+#test-result {
+    display: inline-block;
+    margin-left: var(--space-sm);
+    font-size: var(--font-size-sm);
+}
+
+#test-result.success {
+    color: #34d399;
+}
+
+#test-result.error {
+    color: #f87171;
+}
+
 /* Mobile adjustments */
 @media (max-width: 480px) {
     .tutor-panel {
@@ -330,9 +530,13 @@
         max-height: 100vh;
         border-radius: 0;
     }
-    
+
     .tutor-fab {
         bottom: var(--space-md);
         right: var(--space-md);
+    }
+
+    .mode-toggle {
+        flex-direction: column;
     }
 }

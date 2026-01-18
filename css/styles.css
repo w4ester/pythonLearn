@@ -20,6 +20,8 @@
     --color-success: #2d6a4f;
     --color-warning: #b45309;
     --color-error: #b91c1c;
+    --color-link: #1d6fb3;
+    --color-link-visited: #5a4fb3;
     
     /* Typography */
     --font-body: 'Outfit', system-ui, sans-serif;
@@ -66,6 +68,8 @@
     --color-accent: #40916c;
     --color-border: #3a3a5c;
     --color-code-bg: #1e1e2e;
+    --color-link: #6cb8ff;
+    --color-link-visited: #b8a0ff;
 }
 
 /* ===========================================
@@ -88,6 +92,21 @@ body {
     margin: 0;
     padding: 0;
     transition: background-color var(--transition-base), color var(--transition-base);
+}
+
+/* Links - WCAG compliant contrast */
+a {
+    color: var(--color-link);
+    text-decoration: underline;
+    transition: color var(--transition-fast);
+}
+
+a:visited {
+    color: var(--color-link-visited);
+}
+
+a:hover, a:focus {
+    color: var(--color-primary);
 }
 
 /* ===========================================

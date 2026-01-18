@@ -59,7 +59,7 @@
                 <div class="hero-cta">
                     <a href="#modules" class="btn btn-primary">Start Learning</a>
                     <button id="open-tutor" class="btn btn-secondary">
-                        <span aria-hidden="true">🤖</span> Ask the AI Tutor
+                        <span aria-hidden="true">💬</span> Ask the Tutor
                     </button>
                 </div>
                 <p class="hero-note">
@@ -223,7 +223,7 @@ def learn_python(curiosity):
     <!-- AI Tutor Chat Panel -->
     <div id="tutor-panel" class="tutor-panel" aria-hidden="true">
         <div class="tutor-header">
-            <h2>🤖 Python Tutor</h2>
+            <h2>Python Tutor</h2>
             <div class="tutor-status" id="tutor-status">
                 <span class="status-dot"></span>
                 <span class="status-text">Loading...</span>
@@ -234,8 +234,8 @@ def learn_python(curiosity):
         <div class="tutor-messages" id="tutor-messages" role="log" aria-live="polite">
             <div class="message bot-message">
                 <p><strong>Hi! I'm your Python tutor.</strong></p>
-                <p>I run entirely in your browser using WebLLM - no API keys, no data sent anywhere!</p>
-                <p>⏳ <strong>First time?</strong> I'll download a small AI model (~500MB). This happens once and takes 1-2 minutes.</p>
+                <p>I run entirely in your browser - no API keys, no data sent anywhere!</p>
+                <p><strong>First time?</strong> I'll download a small model (~500MB). This happens once.</p>
                 <p>Try asking:</p>
                 <ul>
                     <li>"Explain variables simply"</li>
@@ -262,9 +262,9 @@ def learn_python(curiosity):
     </div>
 
     <!-- Floating Tutor Button -->
-    <button id="tutor-fab" class="tutor-fab" aria-label="Open AI tutor (Press 't')">
-        <span class="fab-icon">🤖</span>
-        <span class="fab-text">Ask AI</span>
+    <button id="tutor-fab" class="tutor-fab" aria-label="Open tutor (Press 't')">
+        <span class="fab-icon">💬</span>
+        <span class="fab-text">Ask Tutor</span>
     </button>
 
     <footer class="site-footer">
