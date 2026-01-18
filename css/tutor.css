@@ -574,4 +574,11 @@
     .mode-toggle {
         flex-direction: column;
     }
+
+    .tutor-settings {
+        position: relative;
+        z-index: 10;
+        max-height: none;
+        flex-shrink: 0;
+    }
 }
