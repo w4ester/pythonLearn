@@ -153,7 +153,7 @@ After learning Python with this site, check out `projects.html` for 10 project i
 4. **Weather Dashboard** - Learn APIs
 5. **Chat with Documents (RAG)** - Advanced AI patterns
 
-Each project includes a ready-to-use Claude Code prompt!
+Each project includes a ready-to-use prompt!
 
 ---
 
