@@ -323,6 +323,14 @@ a:hover, a:focus {
     border-left: 3px solid var(--color-primary);
 }
 
+.hero-mascot {
+    width: 180px;
+    height: auto;
+    float: right;
+    margin: 0 0 var(--space-md) var(--space-lg);
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
+}
+
 .hero-visual {
     background: var(--color-code-bg);
     border-radius: var(--border-radius-lg);
@@ -684,6 +692,13 @@ kbd {
 
     .hero-visual {
         display: none;
+    }
+
+    .hero-mascot {
+        float: none;
+        display: block;
+        margin: 0 auto var(--space-lg);
+        width: 140px;
     }
 
     /* Mobile Navigation */
