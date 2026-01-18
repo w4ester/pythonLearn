@@ -270,7 +270,7 @@ print(p1 == p2)     # False</code></pre>
             document.getElementById('quiz-result').className = 'quiz-result ' + (correct >= 1 ? 'pass' : 'fail');
         });
         document.getElementById('mark-complete')?.addEventListener('click', () => { window.PyLearn?.Progress?.completeModule(6); alert('🎉 All modules complete! Check out the projects page!'); });
-        function explainCode(btn) { const code = btn.nextElementSibling?.querySelector('code')?.textContent; if (code) window.TutorUI?.askAboutCode(code); }
+        function explainCode(btn) { const code = btn.closest('.code-container')?.querySelector('pre code')?.textContent; if (code) window.TutorUI?.askAboutCode(code); }
     </script>
 </body>
 </html>

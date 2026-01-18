@@ -237,7 +237,7 @@ finally:
             document.getElementById('quiz-result').className = 'quiz-result ' + (correct >= 1 ? 'pass' : 'fail');
         });
         document.getElementById('mark-complete')?.addEventListener('click', () => { window.PyLearn?.Progress?.completeModule(5); alert('Module 5 complete!'); });
-        function explainCode(btn) { const code = btn.nextElementSibling?.querySelector('code')?.textContent; if (code) window.TutorUI?.askAboutCode(code); }
+        function explainCode(btn) { const code = btn.closest('.code-container')?.querySelector('pre code')?.textContent; if (code) window.TutorUI?.askAboutCode(code); }
     </script>
 </body>
 </html>

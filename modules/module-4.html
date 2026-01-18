@@ -238,7 +238,7 @@ print(a - b)  # Difference: {1}</code></pre>
             document.getElementById('quiz-result').className = 'quiz-result ' + (correct >= 1 ? 'pass' : 'fail');
         });
         document.getElementById('mark-complete')?.addEventListener('click', () => { window.PyLearn?.Progress?.completeModule(4); alert('Module 4 complete!'); });
-        function explainCode(btn) { const code = btn.nextElementSibling?.querySelector('code')?.textContent; if (code) window.TutorUI?.askAboutCode(code); }
+        function explainCode(btn) { const code = btn.closest('.code-container')?.querySelector('pre code')?.textContent; if (code) window.TutorUI?.askAboutCode(code); }
     </script>
 </body>
 </html>

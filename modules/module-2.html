@@ -263,7 +263,7 @@ evens = [x for x in range(10) if x % 2 == 0]
             alert('Module 2 complete!');
         });
         function explainCode(btn) {
-            const code = btn.nextElementSibling?.querySelector('code')?.textContent;
+            const code = btn.closest('.code-container')?.querySelector('pre code')?.textContent;
             if (code) window.TutorUI?.askAboutCode(code);
         }
     </script>

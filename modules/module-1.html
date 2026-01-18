@@ -358,7 +358,7 @@ print("Next year you'll be", next_year)</code></pre>
         
         // Explain This button handler
         function explainCode(btn) {
-            const codeBlock = btn.nextElementSibling.querySelector('code');
+            const codeBlock = btn.closest('.code-container')?.querySelector('pre code');
             if (codeBlock && window.TutorUI) {
                 window.TutorUI.askAboutCode(codeBlock.textContent);
             }
