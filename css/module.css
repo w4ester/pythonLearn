@@ -312,13 +312,58 @@
     border-top: 1px solid var(--color-border);
 }
 
+/* Project Cards (for CS50 AI modules) */
+.project-card {
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-lg);
+    padding: var(--space-lg);
+    margin: var(--space-lg) 0;
+}
+
+.project-card h3 {
+    margin-top: 0;
+    color: var(--color-primary);
+}
+
+.project-card ul {
+    margin-bottom: var(--space-lg);
+}
+
+/* Navigation Buttons at end of modules */
+.nav-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    justify-content: space-between;
+    margin-top: var(--space-2xl);
+    padding-top: var(--space-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+/* Callout info variant */
+.callout-info {
+    background: var(--color-bg-alt);
+    border-left: 4px solid var(--color-primary);
+}
+
 /* Responsive */
 @media (max-width: 600px) {
     .module-nav {
         flex-direction: column;
     }
-    
+
     .module-nav .btn {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+    }
+
+    .nav-buttons {
+        flex-direction: column;
+    }
+
+    .nav-buttons .btn {
         width: 100%;
         text-align: center;
         justify-content: center;

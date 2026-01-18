@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 0: Search | CS50 AI | PyLearn</title>
+    <link rel="icon" type="image/png" href="../sluggy.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/tutor.css">
+    <link rel="stylesheet" href="../css/module.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <header class="site-header">
+        <div class="header-content">
+            <a href="../index.html" class="logo">
+                <span class="logo-icon">🐍</span>
+                <span class="logo-text">PyLearn</span>
+            </a>
+            <button class="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            <nav aria-label="Main navigation">
+                <ul class="nav-links">
+                    <li><a href="../index.html" class="nav-link">Home</a></li>
+                    <li><a href="../index.html#modules" class="nav-link">Python Basics</a></li>
+                    <li><a href="../cs50-ai.html" class="nav-link active">CS50 AI</a></li>
+                    <li><a href="../how-it-works.html" class="nav-link">How It Works</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode (Press 'd')">
+                    <span class="theme-icon-light" aria-hidden="true">☀️</span>
+                    <span class="theme-icon-dark" aria-hidden="true">🌙</span>
+                </button>
+                <button id="keyboard-help" class="icon-btn" aria-label="Keyboard shortcuts" title="Keyboard shortcuts (Press '?')">
+                    <span aria-hidden="true">⌨️</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content" class="module-content">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="../index.html">Home</a>
+            <span aria-hidden="true">→</span>
+            <a href="../cs50-ai.html">CS50 AI</a>
+            <span aria-hidden="true">→</span>
+            <span aria-current="page">Week 0: Search</span>
+        </nav>
+
+        <article class="module-article">
+            <header class="module-header">
+                <span class="module-badge">Week 0 of 6</span>
+                <h1>Search</h1>
+                <p class="module-meta">
+                    <span class="tag">DFS</span>
+                    <span class="tag">BFS</span>
+                    <span class="tag">A*</span>
+                    <span class="tag">Minimax</span>
+                    <span class="reading-time">~45 min read</span>
+                </p>
+            </header>
+
+            <section class="lesson" id="intro">
+                <h2>Introduction to Search</h2>
+                <p>Search is fundamental to AI. When an agent needs to find a solution - whether it's finding the shortest route, winning a game, or solving a puzzle - it's performing <strong>search</strong>.</p>
+                <p>In this week, you'll learn how to represent problems as search problems, and explore algorithms that find solutions efficiently.</p>
+
+                <div class="callout callout-info">
+                    <strong>Key Concept:</strong> A search problem consists of an <em>initial state</em>, possible <em>actions</em>, a <em>transition model</em>, a <em>goal test</em>, and a <em>path cost</em>.
+                </div>
+            </section>
+
+            <section class="lesson" id="terminology">
+                <h2>Search Terminology</h2>
+                <p>Before diving into algorithms, let's establish the vocabulary:</p>
+
+                <ul>
+                    <li><strong>Agent:</strong> An entity that perceives and acts (e.g., a game-playing AI)</li>
+                    <li><strong>State:</strong> A configuration of the agent and its environment</li>
+                    <li><strong>Initial State:</strong> Where the agent starts</li>
+                    <li><strong>Actions:</strong> Choices available in any state</li>
+                    <li><strong>Transition Model:</strong> A function that returns the resulting state from taking an action</li>
+                    <li><strong>Goal Test:</strong> A function that checks if a state is the goal</li>
+                    <li><strong>Path Cost:</strong> The numerical cost of a path (sequence of actions)</li>
+                </ul>
+
+                <div class="code-container">
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python"># Representing a search problem in Python
+class SearchProblem:
+    def __init__(self, initial_state):
+        self.initial = initial_state
+
+    def actions(self, state):
+        """Return available actions from this state"""
+        raise NotImplementedError
+
+    def result(self, state, action):
+        """Return the state that results from taking action"""
+        raise NotImplementedError
+
+    def goal_test(self, state):
+        """Return True if state is the goal"""
+        raise NotImplementedError
+
+    def path_cost(self, cost, state1, action, state2):
+        """Return the cost of a path"""
+        return cost + 1  # Default: each step costs 1</code></pre>
+                </div>
+            </section>
+
+            <section class="lesson" id="uninformed">
+                <h2>Uninformed Search</h2>
+                <p><strong>Uninformed search</strong> (or "blind search") algorithms have no additional information about states beyond the problem definition. They don't know which non-goal states are "better" than others.</p>
+
+                <h3>Depth-First Search (DFS)</h3>
+                <p>DFS explores as deep as possible before backtracking. It uses a <strong>stack</strong> (Last-In, First-Out) as its data structure.</p>
+
+                <div class="code-container">
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python">def dfs(problem):
+    """Depth-First Search using a stack"""
+    frontier = [Node(problem.initial)]  # Stack
+    explored = set()
+
+    while frontier:
+        node = frontier.pop()  # LIFO - explore deepest first
+
+        if problem.goal_test(node.state):
+            return node.solution()
+
+        explored.add(node.state)
+
+        for action in problem.actions(node.state):
+            child_state = problem.result(node.state, action)
+            if child_state not in explored:
+                frontier.append(Node(child_state, node, action))
+
+    return None  # No solution found</code></pre>
+                </div>
+
+                <div class="callout callout-tip">
+                    <strong>DFS Properties:</strong>
+                    <ul>
+                        <li>Not guaranteed to find the shortest path</li>
+                        <li>Can get stuck in infinite loops without cycle detection</li>
+                        <li>Memory efficient: O(bm) where b = branching factor, m = max depth</li>
+                    </ul>
+                </div>
+
+                <h3>Breadth-First Search (BFS)</h3>
+                <p>BFS explores all nodes at the current depth before moving deeper. It uses a <strong>queue</strong> (First-In, First-Out).</p>
+
+                <div class="code-container">
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python">from collections import deque
+
+def bfs(problem):
+    """Breadth-First Search using a queue"""
+    frontier = deque([Node(problem.initial)])  # Queue
+    explored = set()
+
+    while frontier:
+        node = frontier.popleft()  # FIFO - explore shallowest first
+
+        if problem.goal_test(node.state):
+            return node.solution()
+
+        explored.add(node.state)
+
+        for action in problem.actions(node.state):
+            child_state = problem.result(node.state, action)
+            if child_state not in explored:
+                frontier.append(Node(child_state, node, action))
+
+    return None</code></pre>
+                </div>
+
+                <div class="callout callout-tip">
+                    <strong>BFS Properties:</strong>
+                    <ul>
+                        <li>Guaranteed to find the shortest path (if all actions have equal cost)</li>
+                        <li>Complete: will find a solution if one exists</li>
+                        <li>Memory intensive: O(b^d) where d = depth of shallowest solution</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="lesson" id="informed">
+                <h2>Informed Search</h2>
+                <p><strong>Informed search</strong> uses a <strong>heuristic function</strong> h(n) that estimates how close a state is to the goal. This allows the algorithm to prioritize more promising paths.</p>
+
+                <h3>Greedy Best-First Search</h3>
+                <p>Expands the node that appears closest to the goal according to h(n).</p>
+
+                <div class="code-container">
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python">import heapq
+
+def greedy_search(problem, h):
+    """Greedy Best-First Search using a priority queue"""
+    start = Node(problem.initial)
+    frontier = [(h(start.state), start)]  # Priority by heuristic
+    explored = set()
+
+    while frontier:
+        _, node = heapq.heappop(frontier)
+
+        if problem.goal_test(node.state):
+            return node.solution()
+
+        explored.add(node.state)
+
+        for action in problem.actions(node.state):
+            child_state = problem.result(node.state, action)
+            if child_state not in explored:
+                child = Node(child_state, node, action)
+                heapq.heappush(frontier, (h(child_state), child))
+
+    return None</code></pre>
+                </div>
+
+                <h3>A* Search</h3>
+                <p>A* combines the path cost g(n) with the heuristic h(n), using f(n) = g(n) + h(n). It's optimal when h(n) is <strong>admissible</strong> (never overestimates).</p>
+
+                <div class="code-container">
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python">def astar_search(problem, h):
+    """A* Search: f(n) = g(n) + h(n)"""
+    start = Node(problem.initial, path_cost=0)
+    frontier = [(h(start.state), start)]
+    explored = set()
+    frontier_states = {start.state: start.path_cost}
+
+    while frontier:
+        _, node = heapq.heappop(frontier)
+
+        if problem.goal_test(node.state):
+            return node.solution()
+
+        explored.add(node.state)
+
+        for action in problem.actions(node.state):
+            child_state = problem.result(node.state, action)
+            new_cost = node.path_cost + problem.step_cost(node.state, action)
+
+            if child_state not in explored:
+                if child_state not in frontier_states or new_cost < frontier_states[child_state]:
+                    child = Node(child_state, node, action, new_cost)
+                    f_value = new_cost + h(child_state)
+                    heapq.heappush(frontier, (f_value, child))
+                    frontier_states[child_state] = new_cost
+
+    return None</code></pre>
+                </div>
+
+                <div class="callout callout-info">
+                    <strong>Admissible Heuristic Example:</strong> For pathfinding on a grid, the <em>Manhattan distance</em> (|x1-x2| + |y1-y2|) never overestimates because you can't travel diagonally.
+                </div>
+            </section>
+
+            <section class="lesson" id="adversarial">
+                <h2>Adversarial Search</h2>
+                <p>When there's an opponent trying to prevent you from reaching your goal, you need <strong>adversarial search</strong>. This is crucial for game-playing AI.</p>
+
+                <h3>Minimax Algorithm</h3>
+                <p>Minimax assumes both players play optimally. The maximizing player tries to maximize the score; the minimizing player tries to minimize it.</p>
+
+                <div class="code-container">
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python">def minimax(state, maximizing):
+    """
+    Minimax algorithm for two-player zero-sum games.
+    Returns the optimal value for the current player.
+    """
+    # Base case: terminal state
+    if terminal(state):
+        return utility(state)
+
+    if maximizing:
+        best = float('-inf')
+        for action in actions(state):
+            value = minimax(result(state, action), False)
+            best = max(best, value)
+        return best
+    else:
+        best = float('inf')
+        for action in actions(state):
+            value = minimax(result(state, action), True)
+            best = min(best, value)
+        return best</code></pre>
+                </div>
+
+                <h3>Alpha-Beta Pruning</h3>
+                <p>Alpha-Beta pruning optimizes Minimax by skipping branches that can't affect the final decision.</p>
+
+                <div class="code-container">
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python">def alphabeta(state, alpha, beta, maximizing):
+    """
+    Minimax with Alpha-Beta pruning.
+    alpha = best value MAX can guarantee
+    beta = best value MIN can guarantee
+    """
+    if terminal(state):
+        return utility(state)
+
+    if maximizing:
+        value = float('-inf')
+        for action in actions(state):
+            value = max(value, alphabeta(result(state, action), alpha, beta, False))
+            alpha = max(alpha, value)
+            if alpha >= beta:
+                break  # Beta cutoff - MIN won't choose this path
+        return value
+    else:
+        value = float('inf')
+        for action in actions(state):
+            value = min(value, alphabeta(result(state, action), alpha, beta, True))
+            beta = min(beta, value)
+            if alpha >= beta:
+                break  # Alpha cutoff - MAX won't choose this path
+        return value
+
+# Initial call:
+# best_value = alphabeta(initial_state, float('-inf'), float('inf'), True)</code></pre>
+                </div>
+
+                <div class="callout callout-tip">
+                    <strong>Performance Gain:</strong> With perfect move ordering, Alpha-Beta can effectively double the search depth compared to plain Minimax!
+                </div>
+            </section>
+
+            <section class="lesson" id="projects">
+                <h2>Week 0 Projects</h2>
+
+                <div class="project-card">
+                    <h3>Project: Degrees (Six Degrees of Kevin Bacon)</h3>
+                    <p>Use BFS to find the shortest path between any two actors through their movie connections.</p>
+                    <ul>
+                        <li><strong>State:</strong> An actor</li>
+                        <li><strong>Actions:</strong> Movies that actor has appeared in</li>
+                        <li><strong>Transition:</strong> Move to a co-star via a shared movie</li>
+                        <li><strong>Goal:</strong> Reach the target actor</li>
+                    </ul>
+                    <a href="https://cs50.harvard.edu/ai/2024/projects/0/degrees/" target="_blank" class="btn btn-secondary">View Project Spec</a>
+                </div>
+
+                <div class="project-card">
+                    <h3>Project: Tic-Tac-Toe</h3>
+                    <p>Implement an unbeatable Tic-Tac-Toe AI using Minimax with Alpha-Beta pruning.</p>
+                    <ul>
+                        <li><strong>State:</strong> The current board configuration</li>
+                        <li><strong>Actions:</strong> Empty cells where a move can be made</li>
+                        <li><strong>Terminal:</strong> Three in a row or full board</li>
+                        <li><strong>Utility:</strong> +1 (X wins), -1 (O wins), 0 (tie)</li>
+                    </ul>
+                    <a href="https://cs50.harvard.edu/ai/2024/projects/0/tictactoe/" target="_blank" class="btn btn-secondary">View Project Spec</a>
+                </div>
+            </section>
+
+            <section class="lesson" id="summary">
+                <h2>Key Takeaways</h2>
+                <ul>
+                    <li><strong>DFS</strong> goes deep first - memory efficient but may not find optimal solution</li>
+                    <li><strong>BFS</strong> goes wide first - finds shortest path but uses more memory</li>
+                    <li><strong>A*</strong> uses heuristics to guide search - optimal with admissible heuristic</li>
+                    <li><strong>Minimax</strong> handles adversarial scenarios - assumes optimal opponent</li>
+                    <li><strong>Alpha-Beta</strong> prunes unnecessary branches - same result, much faster</li>
+                </ul>
+
+                <div class="nav-buttons">
+                    <a href="../cs50-ai.html" class="btn btn-secondary">← Back to CS50 AI</a>
+                    <a href="ai-week-1.html" class="btn btn-primary">Next: Knowledge →</a>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <!-- Keyboard Shortcuts Modal -->
+    <div id="keyboard-modal" class="modal" role="dialog" aria-labelledby="keyboard-modal-title" aria-hidden="true">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Close">×</button>
+            <h2 id="keyboard-modal-title">Keyboard Shortcuts</h2>
+            <dl class="shortcuts-list">
+                <dt><kbd>d</kbd></dt><dd>Toggle dark/light mode</dd>
+                <dt><kbd>t</kbd></dt><dd>Open AI tutor</dd>
+                <dt><kbd>?</kbd></dt><dd>Show this help</dd>
+                <dt><kbd>Esc</kbd></dt><dd>Close dialogs</dd>
+            </dl>
+        </div>
+    </div>
+
+    <!-- AI Tutor Chat Panel -->
+    <div id="tutor-panel" class="tutor-panel" aria-hidden="true">
+        <div class="tutor-header">
+            <h2>AI Tutor</h2>
+            <div class="tutor-status" id="tutor-status">
+                <span class="status-dot"></span>
+                <span class="status-text">Loading...</span>
+            </div>
+            <button id="close-tutor" class="tutor-close" aria-label="Close tutor">×</button>
+        </div>
+
+        <div class="tutor-messages" id="tutor-messages" role="log" aria-live="polite">
+            <div class="message bot-message">
+                <img src="../sluggy.png" alt="Sluggy" class="sluggy-avatar">
+                <div class="message-content">
+                    <p><strong>Week 0: Search</strong></p>
+                    <p>I can help you understand search algorithms! Try asking:</p>
+                    <ul>
+                        <li>"What's the difference between DFS and BFS?"</li>
+                        <li>"Why is A* better than greedy search?"</li>
+                        <li>"Explain alpha-beta pruning simply"</li>
+                        <li>"How would I implement Minimax for Tic-Tac-Toe?"</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="tutor-input-area">
+            <div id="model-loading" class="model-loading">
+                <div class="loading-spinner"></div>
+                <span id="loading-text">Initializing WebLLM...</span>
+                <div class="loading-progress">
+                    <div class="loading-bar" id="loading-bar"></div>
+                </div>
+            </div>
+            <form id="tutor-form" class="tutor-form">
+                <label for="tutor-input" class="visually-hidden">Ask a question</label>
+                <input type="text" id="tutor-input" placeholder="Ask about search algorithms..." autocomplete="off" disabled>
+                <button type="submit" id="tutor-submit" disabled aria-label="Send">→</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Floating Tutor Button -->
+    <button id="tutor-fab" class="tutor-fab" aria-label="Open tutor (Press 't')">
+        <span class="fab-icon"><img src="../sluggy.png" alt="" class="sluggy-avatar"></span>
+        <span class="fab-text">Ask Sluggy</span>
+    </button>
+
+    <footer class="site-footer">
+        <p>Based on <a href="https://cs50.harvard.edu/ai/" target="_blank">CS50 AI</a> by Harvard University</p>
+        <p class="footer-note">Content adapted for PyLearn. No data leaves your browser.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/tutor-flow.js"></script>
+    <script src="../js/tutor-ui.js"></script>
+</body>
+</html>

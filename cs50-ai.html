@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CS50 AI with Python - Learn artificial intelligence concepts through hands-on Python projects.">
+    <title>CS50 AI with Python - PyLearn</title>
+    <link rel="icon" type="image/png" href="sluggy.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Prism.js for code highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/tutor.css">
+</head>
+<body>
+    <!-- Skip link for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <header class="site-header">
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <span class="logo-icon" aria-hidden="true">🐍</span>
+                <span class="logo-text">PyLearn</span>
+            </a>
+            <button class="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            <nav aria-label="Main navigation">
+                <ul class="nav-links">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="index.html#modules" class="nav-link">Python Basics</a></li>
+                    <li><a href="cs50-ai.html" class="nav-link active">CS50 AI</a></li>
+                    <li><a href="how-it-works.html" class="nav-link">How It Works</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode (Press 'd')">
+                    <span class="theme-icon-light" aria-hidden="true">☀️</span>
+                    <span class="theme-icon-dark" aria-hidden="true">🌙</span>
+                </button>
+                <button id="keyboard-help" class="icon-btn" aria-label="Keyboard shortcuts" title="Keyboard shortcuts (Press '?')">
+                    <span aria-hidden="true">⌨️</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <span class="hero-badge">Advanced Track</span>
+                <h1>CS50 AI with <em>Python</em></h1>
+                <p class="hero-subtitle">
+                    Harvard's introduction to AI - Search, Knowledge, Uncertainty, Optimization, Learning, Neural Networks, and Language.
+                    <br>Based on the official <a href="https://cs50.harvard.edu/ai/" target="_blank" rel="noopener">CS50 AI course</a>.
+                </p>
+                <div class="hero-cta">
+                    <a href="#weeks" class="btn btn-primary">Start Learning</a>
+                    <button id="open-tutor" class="btn btn-secondary">
+                        <img src="sluggy.png" alt="" class="btn-mascot" aria-hidden="true"> AI Questions
+                    </button>
+                </div>
+                <div class="callout callout-info" style="margin-top: 1.5rem; text-align: left;">
+                    <strong>Prerequisites:</strong> Complete <a href="index.html#modules">Python Basics (Modules 1-6)</a> first, or have equivalent Python experience.
+                </div>
+            </div>
+            <div class="hero-visual" aria-hidden="true">
+                <pre class="hero-code"><code class="language-python"># AI in action: Minimax for Tic-Tac-Toe
+def minimax(board, maximizing):
+    if terminal(board):
+        return utility(board)
+
+    if maximizing:
+        best = float('-inf')
+        for action in actions(board):
+            best = max(best, minimax(
+                result(board, action), False
+            ))
+        return best
+    else:
+        best = float('inf')
+        for action in actions(board):
+            best = min(best, minimax(
+                result(board, action), True
+            ))
+        return best</code></pre>
+            </div>
+        </section>
+
+        <!-- Course Overview -->
+        <section class="info-section">
+            <h2>What You'll Learn</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <span class="info-icon">🔍</span>
+                    <h3>Search Algorithms</h3>
+                    <p>DFS, BFS, A*, and adversarial search with Minimax and Alpha-Beta pruning.</p>
+                </div>
+                <div class="info-card">
+                    <span class="info-icon">🧠</span>
+                    <h3>Knowledge & Logic</h3>
+                    <p>Propositional logic, inference engines, and knowledge-based agents.</p>
+                </div>
+                <div class="info-card">
+                    <span class="info-icon">🎲</span>
+                    <h3>Probability & Uncertainty</h3>
+                    <p>Bayes' Rule, Markov chains, and Hidden Markov Models.</p>
+                </div>
+                <div class="info-card">
+                    <span class="info-icon">📈</span>
+                    <h3>Optimization</h3>
+                    <p>Hill climbing, simulated annealing, and constraint satisfaction.</p>
+                </div>
+                <div class="info-card">
+                    <span class="info-icon">🤖</span>
+                    <h3>Machine Learning</h3>
+                    <p>k-NN, perceptrons, SVMs, regression, and overfitting prevention.</p>
+                </div>
+                <div class="info-card">
+                    <span class="info-icon">🧬</span>
+                    <h3>Neural Networks</h3>
+                    <p>Backpropagation, CNNs, RNNs, and deep learning fundamentals.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Weekly Modules Grid -->
+        <section id="weeks" class="modules-section">
+            <h2>Course Modules</h2>
+            <p class="section-subtitle">7 weeks of AI concepts with hands-on projects</p>
+
+            <div class="modules-grid">
+                <article class="module-card" data-module="ai-0">
+                    <div class="module-header">
+                        <span class="module-number">W0</span>
+                        <span class="module-status" id="status-ai-0" aria-label="Not started">○</span>
+                    </div>
+                    <h3>Search</h3>
+                    <p>DFS, BFS, greedy search, A*, Minimax, Alpha-Beta pruning.</p>
+                    <div class="module-tags">
+                        <span class="tag">Degrees</span>
+                        <span class="tag">Tic-Tac-Toe</span>
+                    </div>
+                    <a href="modules/ai-week-0.html" class="module-link">Start Module →</a>
+                </article>
+
+                <article class="module-card" data-module="ai-1">
+                    <div class="module-header">
+                        <span class="module-number">W1</span>
+                        <span class="module-status" id="status-ai-1" aria-label="Not started">○</span>
+                    </div>
+                    <h3>Knowledge</h3>
+                    <p>Propositional logic, inference, knowledge engineering.</p>
+                    <div class="module-tags">
+                        <span class="tag">Knights</span>
+                        <span class="tag">Minesweeper</span>
+                    </div>
+                    <a href="modules/ai-week-1.html" class="module-link">Start Module →</a>
+                </article>
+
+                <article class="module-card" data-module="ai-2">
+                    <div class="module-header">
+                        <span class="module-number">W2</span>
+                        <span class="module-status" id="status-ai-2" aria-label="Not started">○</span>
+                    </div>
+                    <h3>Uncertainty</h3>
+                    <p>Probability, Bayes' Rule, Markov models, HMMs.</p>
+                    <div class="module-tags">
+                        <span class="tag">PageRank</span>
+                        <span class="tag">Heredity</span>
+                    </div>
+                    <a href="modules/ai-week-2.html" class="module-link">Start Module →</a>
+                </article>
+
+                <article class="module-card" data-module="ai-3">
+                    <div class="module-header">
+                        <span class="module-number">W3</span>
+                        <span class="module-status" id="status-ai-3" aria-label="Not started">○</span>
+                    </div>
+                    <h3>Optimization</h3>
+                    <p>Local search, hill climbing, simulated annealing, CSPs.</p>
+                    <div class="module-tags">
+                        <span class="tag">Crossword</span>
+                    </div>
+                    <a href="modules/ai-week-3.html" class="module-link">Start Module →</a>
+                </article>
+
+                <article class="module-card" data-module="ai-4">
+                    <div class="module-header">
+                        <span class="module-number">W4</span>
+                        <span class="module-status" id="status-ai-4" aria-label="Not started">○</span>
+                    </div>
+                    <h3>Learning</h3>
+                    <p>k-NN, perceptron, SVM, regression, loss functions.</p>
+                    <div class="module-tags">
+                        <span class="tag">Shopping</span>
+                        <span class="tag">Nim</span>
+                    </div>
+                    <a href="modules/ai-week-4.html" class="module-link">Start Module →</a>
+                </article>
+
+                <article class="module-card" data-module="ai-5">
+                    <div class="module-header">
+                        <span class="module-number">W5</span>
+                        <span class="module-status" id="status-ai-5" aria-label="Not started">○</span>
+                    </div>
+                    <h3>Neural Networks</h3>
+                    <p>Activation functions, backpropagation, CNNs, RNNs.</p>
+                    <div class="module-tags">
+                        <span class="tag">Traffic</span>
+                        <span class="tag tag-warning">TensorFlow</span>
+                    </div>
+                    <a href="modules/ai-week-5.html" class="module-link">Start Module →</a>
+                </article>
+
+                <article class="module-card" data-module="ai-6">
+                    <div class="module-header">
+                        <span class="module-number">W6</span>
+                        <span class="module-status" id="status-ai-6" aria-label="Not started">○</span>
+                    </div>
+                    <h3>Language</h3>
+                    <p>NLP, n-grams, bag of words, TF-IDF, transformers, attention.</p>
+                    <div class="module-tags">
+                        <span class="tag">Parser</span>
+                        <span class="tag">Questions</span>
+                    </div>
+                    <a href="modules/ai-week-6.html" class="module-link">Start Module →</a>
+                </article>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section class="info-section">
+            <h2>Course Projects</h2>
+            <p class="section-subtitle">Build real AI systems with these hands-on projects</p>
+
+            <div class="projects-list">
+                <div class="project-item">
+                    <span class="project-week">W0</span>
+                    <div class="project-info">
+                        <h4>Degrees</h4>
+                        <p>Six Degrees of Kevin Bacon - find shortest path between actors using BFS.</p>
+                    </div>
+                </div>
+                <div class="project-item">
+                    <span class="project-week">W0</span>
+                    <div class="project-info">
+                        <h4>Tic-Tac-Toe</h4>
+                        <p>Build an unbeatable AI using Minimax with Alpha-Beta pruning.</p>
+                    </div>
+                </div>
+                <div class="project-item">
+                    <span class="project-week">W1</span>
+                    <div class="project-info">
+                        <h4>Minesweeper</h4>
+                        <p>AI agent that uses logical inference to safely play Minesweeper.</p>
+                    </div>
+                </div>
+                <div class="project-item">
+                    <span class="project-week">W2</span>
+                    <div class="project-info">
+                        <h4>PageRank</h4>
+                        <p>Implement Google's PageRank algorithm using probability distributions.</p>
+                    </div>
+                </div>
+                <div class="project-item">
+                    <span class="project-week">W3</span>
+                    <div class="project-info">
+                        <h4>Crossword</h4>
+                        <p>Generate crossword puzzles using constraint satisfaction.</p>
+                    </div>
+                </div>
+                <div class="project-item">
+                    <span class="project-week">W4</span>
+                    <div class="project-info">
+                        <h4>Shopping</h4>
+                        <p>Predict customer purchases using k-nearest neighbors classifier.</p>
+                    </div>
+                </div>
+                <div class="project-item">
+                    <span class="project-week">W4</span>
+                    <div class="project-info">
+                        <h4>Nim</h4>
+                        <p>Train an AI to play Nim using reinforcement learning (Q-learning).</p>
+                    </div>
+                </div>
+                <div class="project-item">
+                    <span class="project-week">W5</span>
+                    <div class="project-info">
+                        <h4>Traffic</h4>
+                        <p>CNN to classify road signs - requires TensorFlow (run locally).</p>
+                    </div>
+                </div>
+                <div class="project-item">
+                    <span class="project-week">W6</span>
+                    <div class="project-info">
+                        <h4>Parser</h4>
+                        <p>Parse sentences using context-free grammar with NLTK.</p>
+                    </div>
+                </div>
+                <div class="project-item">
+                    <span class="project-week">W6</span>
+                    <div class="project-info">
+                        <h4>Questions</h4>
+                        <p>TF-IDF based question answering system.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Libraries Section -->
+        <section class="info-section">
+            <h2>Libraries You'll Use</h2>
+            <div class="libraries-grid">
+                <div class="library-card">
+                    <h4>pygame</h4>
+                    <p>Visualizations for search algorithms and games</p>
+                    <span class="library-badge browser">In-Browser</span>
+                </div>
+                <div class="library-card">
+                    <h4>scikit-learn</h4>
+                    <p>Machine learning classifiers and utilities</p>
+                    <span class="library-badge browser">In-Browser*</span>
+                </div>
+                <div class="library-card">
+                    <h4>nltk</h4>
+                    <p>Natural language processing toolkit</p>
+                    <span class="library-badge browser">In-Browser</span>
+                </div>
+                <div class="library-card">
+                    <h4>tensorflow / keras</h4>
+                    <p>Deep learning and neural networks</p>
+                    <span class="library-badge local">Local Only</span>
+                </div>
+                <div class="library-card">
+                    <h4>PIL / opencv</h4>
+                    <p>Image processing for computer vision</p>
+                    <span class="library-badge local">Local Only</span>
+                </div>
+            </div>
+            <p class="section-note">* Some libraries run in-browser via Pyodide. Others require local Python setup or Google Colab.</p>
+        </section>
+
+        <!-- Resources Section -->
+        <section class="info-section">
+            <h2>Official Resources</h2>
+            <div class="resources-grid">
+                <a href="https://cs50.harvard.edu/ai/" class="resource-link" target="_blank" rel="noopener">
+                    <span class="resource-icon">🎓</span>
+                    <span>CS50 AI Course</span>
+                </a>
+                <a href="https://www.edx.org/course/cs50s-introduction-to-artificial-intelligence-with-python" class="resource-link" target="_blank" rel="noopener">
+                    <span class="resource-icon">📚</span>
+                    <span>EdX (Free Audit)</span>
+                </a>
+                <a href="https://github.com/cs50/ai50" class="resource-link" target="_blank" rel="noopener">
+                    <span class="resource-icon">💻</span>
+                    <span>GitHub Repo</span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Keyboard Shortcuts Modal -->
+    <div id="keyboard-modal" class="modal" role="dialog" aria-labelledby="keyboard-modal-title" aria-hidden="true">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Close">×</button>
+            <h2 id="keyboard-modal-title">Keyboard Shortcuts</h2>
+            <dl class="shortcuts-list">
+                <dt><kbd>d</kbd></dt><dd>Toggle dark/light mode</dd>
+                <dt><kbd>t</kbd></dt><dd>Open AI tutor</dd>
+                <dt><kbd>?</kbd></dt><dd>Show this help</dd>
+                <dt><kbd>Esc</kbd></dt><dd>Close dialogs</dd>
+            </dl>
+        </div>
+    </div>
+
+    <!-- AI Tutor Chat Panel -->
+    <div id="tutor-panel" class="tutor-panel" aria-hidden="true">
+        <div class="tutor-header">
+            <h2>AI Tutor</h2>
+            <div class="tutor-status" id="tutor-status">
+                <span class="status-dot"></span>
+                <span class="status-text">Loading...</span>
+            </div>
+            <button id="close-tutor" class="tutor-close" aria-label="Close tutor">×</button>
+        </div>
+
+        <div class="tutor-messages" id="tutor-messages" role="log" aria-live="polite">
+            <div class="message bot-message">
+                <img src="sluggy.png" alt="Sluggy" class="sluggy-avatar">
+                <div class="message-content">
+                    <p><strong>Welcome to CS50 AI!</strong></p>
+                    <p>I can help you understand AI concepts like search algorithms, machine learning, and neural networks.</p>
+                    <p>Try asking:</p>
+                    <ul>
+                        <li>"Explain Minimax simply"</li>
+                        <li>"What's the difference between BFS and DFS?"</li>
+                        <li>"How does backpropagation work?"</li>
+                        <li>"Explain Bayes' Rule with an example"</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="tutor-input-area">
+            <div id="model-loading" class="model-loading">
+                <div class="loading-spinner"></div>
+                <span id="loading-text">Initializing WebLLM...</span>
+                <div class="loading-progress">
+                    <div class="loading-bar" id="loading-bar"></div>
+                </div>
+            </div>
+            <form id="tutor-form" class="tutor-form">
+                <label for="tutor-input" class="visually-hidden">Ask a question</label>
+                <input type="text" id="tutor-input" placeholder="Ask about AI concepts..." autocomplete="off" disabled>
+                <button type="submit" id="tutor-submit" disabled aria-label="Send">→</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Floating Tutor Button -->
+    <button id="tutor-fab" class="tutor-fab" aria-label="Open tutor (Press 't')">
+        <span class="fab-icon"><img src="sluggy.png" alt="" class="sluggy-avatar"></span>
+        <span class="fab-text">AI Questions</span>
+    </button>
+
+    <footer class="site-footer">
+        <p>Built with the <strong>Producer Mindset</strong></p>
+        <p class="footer-note">No data leaves your browser. Everything runs locally.</p>
+        <p class="footer-whisper">sluggy is building a world model <a href="https://ai.meta.com/blog/v-jepa-yann-lecun-ai-model-video-joint-embedding-predictive-architecture/" target="_blank" rel="noopener">vjepa style</a> (hence the visor)</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/tutor-flow.js"></script>
+    <script src="js/tutor-ui.js"></script>
+</body>
+</html>

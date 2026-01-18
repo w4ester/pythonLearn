@@ -162,8 +162,15 @@ class GetContextNode extends Node {
         const moduleMatch = currentPage.match(/module-(\d)/);
         const currentModule = moduleMatch ? parseInt(moduleMatch[1]) : null;
 
+        // Detect AI track pages
+        const isAITrack = currentPage.includes('cs50-ai') || currentPage.includes('ai-week-');
+        const aiWeekMatch = currentPage.match(/ai-week-(\d)/);
+        const currentAIWeek = aiWeekMatch ? parseInt(aiWeekMatch[1]) : null;
+
         return {
             currentModule,
+            isAITrack,
+            currentAIWeek,
             completedModules: Object.entries(progress.modules || {})
                 .filter(([_, m]) => m.completed)
                 .map(([num, _]) => parseInt(num)),
@@ -196,9 +203,41 @@ class BuildPromptNode extends Node {
 
     async exec({ question, context }) {
         const isGuideMode = context.tutorMode === 'guide';
+        const isAITrack = context.isAITrack;
 
-        // Base context info
-        const contextInfo = `
+        // Build context info based on track
+        let contextInfo;
+
+        if (isAITrack) {
+            contextInfo = `
+CURRENT CONTEXT:
+- User is viewing: ${context.currentAIWeek !== null ? `CS50 AI Week ${context.currentAIWeek}` : 'CS50 AI Home'}
+- This is the ADVANCED AI TRACK (assumes Python fundamentals are complete)
+
+CS50 AI WEEKLY TOPICS FOR REFERENCE:
+- Week 0 (Search): DFS, BFS, greedy search, A*, Minimax, Alpha-Beta pruning
+  Projects: Degrees (Six Degrees of Kevin Bacon), Tic-Tac-Toe AI
+- Week 1 (Knowledge): Propositional logic, inference, knowledge engineering, model checking
+  Projects: Knights puzzle, Minesweeper AI
+- Week 2 (Uncertainty): Probability, conditional probability, Bayes' Rule, joint probability, Bayesian networks, Markov chains, Hidden Markov Models
+  Projects: PageRank, Heredity (genetic inheritance)
+- Week 3 (Optimization): Local search, hill climbing, simulated annealing, linear programming, constraint satisfaction problems (CSPs), backtracking, arc consistency
+  Projects: Crossword puzzle generator
+- Week 4 (Learning): Supervised learning, k-nearest neighbors, perceptrons, SVMs, regression, loss functions, overfitting, regularization, reinforcement learning, Q-learning
+  Projects: Shopping (purchase prediction), Nim (RL agent)
+- Week 5 (Neural Networks): Activation functions (ReLU, sigmoid), gradient descent, backpropagation, multilayer networks, CNNs, image convolution, pooling, RNNs
+  Projects: Traffic sign recognition (CNN)
+- Week 6 (Language): NLP, syntax vs semantics, context-free grammars, n-grams, bag of words, TF-IDF, word embeddings, transformers, attention mechanism
+  Projects: Parser (CFG), Questions (TF-IDF QA system)
+
+LIBRARIES COMMONLY USED:
+- pygame: Game visualizations
+- scikit-learn: ML classifiers (k-NN, SVM)
+- tensorflow/keras: Neural networks (CNNs, RNNs)
+- nltk: NLP tasks (tokenization, parsing)
+- PIL/opencv: Image processing`;
+        } else {
+            contextInfo = `
 CURRENT CONTEXT:
 - User is viewing: ${context.currentModule ? `Module ${context.currentModule}` : 'Home page'}
 - Completed modules: ${context.completedModules.length > 0 ? context.completedModules.join(', ') : 'None yet'}
@@ -211,6 +250,7 @@ MODULE TOPICS FOR REFERENCE:
 - Module 4: Lists, tuples, dictionaries, sets
 - Module 5: File reading/writing, try/except, error handling
 - Module 6: Classes, objects, methods, inheritance`;
+        }
 
         // Mode-specific instructions
         const modeInstructions = isGuideMode ? `
@@ -242,14 +282,28 @@ The learner wants clear, direct explanations. Follow these rules:
 5. Keep responses focused (under 200 words unless they ask for more)
 6. Use analogies to make concepts stick`;
 
-        const systemPrompt = `You are a friendly Python tutor helping a complete beginner learn programming.
-${modeInstructions}
-${contextInfo}
+        const baseRole = isAITrack
+            ? `You are Sluggy, a knowledgeable AI tutor helping a Python programmer learn artificial intelligence concepts from CS50 AI.`
+            : `You are a friendly Python tutor helping a complete beginner learn programming.`;
 
-UNIVERSAL RULES:
+        const universalRules = isAITrack
+            ? `UNIVERSAL RULES:
+- Assume the learner knows Python basics (variables, loops, functions, classes)
+- Be encouraging - AI concepts can be challenging!
+- Use concrete examples and visualizations when explaining algorithms
+- When discussing math (probability, calculus), explain intuitively first, then formally
+- For projects, guide them toward the CS50 AI approach but encourage experimentation
+- If they ask about cutting-edge topics (GPT, diffusion models), acknowledge them but redirect to course fundamentals first`
+            : `UNIVERSAL RULES:
 - Be encouraging - learning to code is hard!
 - Use only concepts from modules they've completed or are currently viewing
 - If they ask about advanced topics, acknowledge it and suggest focusing on current material first`;
+
+        const systemPrompt = `${baseRole}
+${modeInstructions}
+${contextInfo}
+
+${universalRules}`;
 
         return {
             systemPrompt,
