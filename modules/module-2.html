@@ -214,7 +214,12 @@ evens = [x for x in range(10) if x % 2 == 0]
             <button id="close-tutor" class="tutor-close">×</button>
         </div>
         <div class="tutor-messages" id="tutor-messages" role="log" aria-live="polite">
-            <div class="message bot-message"><p>Ask me about loops, conditions, or anything in Module 2!</p></div>
+            <div class="message bot-message">
+                <img src="../sluggy.png" alt="Sluggy" class="sluggy-avatar">
+                <div class="message-content">
+                    <p><strong>Hi! I'm Sluggy.</strong> Ask me about loops, conditions, or anything in Module 2!</p>
+                </div>
+            </div>
         </div>
         <div class="tutor-input-area">
             <div id="model-loading" class="model-loading">
@@ -228,7 +233,7 @@ evens = [x for x in range(10) if x % 2 == 0]
             </form>
         </div>
     </div>
-    <button id="tutor-fab" class="tutor-fab"><span class="fab-icon"><img src="../sluggy.png" alt="" class="sluggy-avatar"></span><span class="fab-text">Ask Sluggy</span></button>
+    <button id="tutor-fab" class="tutor-fab"><span class="fab-icon"><img src="../sluggy.png" alt="" class="sluggy-avatar"></span><span class="fab-text">Python Questions - Ask Sluggy</span></button>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>

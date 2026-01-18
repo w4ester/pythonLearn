@@ -64,7 +64,7 @@
                 <div class="hero-cta">
                     <a href="#modules" class="btn btn-primary">Start Learning</a>
                     <button id="open-tutor" class="btn btn-secondary">
-                        <img src="sluggy.png" alt="" class="btn-mascot" aria-hidden="true"> Ask Sluggy
+                        <img src="sluggy.png" alt="" class="btn-mascot" aria-hidden="true"> Python Questions - Ask Sluggy
                     </button>
                 </div>
                 <p class="hero-note">
@@ -238,15 +238,18 @@ def learn_python(curiosity):
         
         <div class="tutor-messages" id="tutor-messages" role="log" aria-live="polite">
             <div class="message bot-message">
-                <p><strong>Hi! I'm your Python tutor.</strong></p>
-                <p>I run entirely in your browser - no API keys, no data sent anywhere!</p>
-                <p><strong>First time?</strong> I'll download a small model (~500MB). This happens once.</p>
-                <p>Try asking:</p>
-                <ul>
-                    <li>"Explain variables simply"</li>
-                    <li>"Quiz me on loops"</li>
-                    <li>"What's the difference between a list and tuple?"</li>
-                </ul>
+                <img src="sluggy.png" alt="Sluggy" class="sluggy-avatar">
+                <div class="message-content">
+                    <p><strong>Hi! I'm Sluggy, your Python tutor.</strong></p>
+                    <p>I run entirely in your browser - no API keys, no data sent anywhere!</p>
+                    <p><strong>First time?</strong> I'll download a small model (~500MB). This happens once.</p>
+                    <p>Try asking:</p>
+                    <ul>
+                        <li>"Explain variables simply"</li>
+                        <li>"Quiz me on loops"</li>
+                        <li>"What's the difference between a list and tuple?"</li>
+                    </ul>
+                </div>
             </div>
         </div>
         
@@ -269,7 +272,7 @@ def learn_python(curiosity):
     <!-- Floating Tutor Button -->
     <button id="tutor-fab" class="tutor-fab" aria-label="Open tutor (Press 't')">
         <span class="fab-icon"><img src="sluggy.png" alt="" class="sluggy-avatar"></span>
-        <span class="fab-text">Ask Sluggy</span>
+        <span class="fab-text">Python Questions - Ask Sluggy</span>
     </button>
 
     <footer class="site-footer">
