@@ -194,20 +194,34 @@ const TutorUI = {
         const div = document.createElement('div');
         div.className = `message ${type}-message`;
 
+        // Add Sluggy avatar for bot messages
+        if (type === 'bot') {
+            const avatar = document.createElement('img');
+            avatar.className = 'sluggy-avatar';
+            avatar.alt = 'Sluggy';
+            // Detect if we're in a subdirectory
+            avatar.src = window.location.pathname.includes('/modules/') ? '../sluggy.png' : 'sluggy.png';
+            div.appendChild(avatar);
+        }
+
+        const contentWrapper = document.createElement('div');
+        contentWrapper.className = 'message-content';
+
         if (isHTML) {
             // Parse HTML safely using DOMParser
             const parser = new DOMParser();
             const doc = parser.parseFromString(content, 'text/html');
             // Move parsed nodes to our div
             Array.from(doc.body.childNodes).forEach(node => {
-                div.appendChild(node.cloneNode(true));
+                contentWrapper.appendChild(node.cloneNode(true));
             });
         } else {
             const p = document.createElement('p');
             p.textContent = content;
-            div.appendChild(p);
+            contentWrapper.appendChild(p);
         }
 
+        div.appendChild(contentWrapper);
         this.messages?.appendChild(div);
 
         // Scroll to bottom

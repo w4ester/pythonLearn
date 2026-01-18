@@ -191,9 +191,7 @@ a:hover, a:focus {
 }
 
 .logo-icon {
-    width: 36px;
-    height: 36px;
-    object-fit: contain;
+    font-size: 1.5em;
 }
 
 .nav-links {
@@ -386,6 +384,14 @@ a.btn:visited {
 .btn-secondary:hover {
     background: var(--color-primary);
     color: white;
+}
+
+/* Mascot in buttons */
+.btn-mascot {
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+    margin-right: 4px;
 }
 
 /* ===========================================

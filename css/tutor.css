@@ -37,6 +37,33 @@
     font-size: 1.25em;
 }
 
+/* Sluggy Mascot */
+.sluggy-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.fab-icon .sluggy-avatar {
+    width: 28px;
+    height: 28px;
+    margin: -4px 0;
+}
+
+.tutor-header .sluggy-avatar {
+    width: 36px;
+    height: 36px;
+}
+
+.bot-message .sluggy-avatar {
+    width: 28px;
+    height: 28px;
+    align-self: flex-start;
+    margin-top: 4px;
+}
+
 /* Chat Panel */
 .tutor-panel {
     position: fixed;
@@ -152,6 +179,14 @@
     background: var(--color-bg-alt);
     align-self: flex-start;
     border: 1px solid var(--color-border);
+    display: flex;
+    gap: var(--space-sm);
+    align-items: flex-start;
+}
+
+.message-content {
+    flex: 1;
+    min-width: 0;
 }
 
 .user-message {
