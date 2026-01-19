@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mad Libs Generator | Python Starter</title>
+    <link rel="icon" type="image/png" href="../sluggy.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/tutor.css">
+    <link rel="stylesheet" href="../css/module.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <header class="site-header">
+        <div class="header-content">
+            <a href="../index.html" class="logo">
+                <span class="logo-icon">🐍</span>
+                <span class="logo-text">PyLearn</span>
+            </a>
+            <button class="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            <nav aria-label="Main navigation">
+                <ul class="nav-links">
+                    <li><a href="../index.html" class="nav-link">Home</a></li>
+                    <li><a href="../python-starter.html" class="nav-link active">Python Starter</a></li>
+                    <li><a href="../index.html#modules" class="nav-link">Python Basics</a></li>
+                    <li><a href="../cs50-ai.html" class="nav-link">CS50 AI</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode (Press 'd')">
+                    <span class="theme-icon-light" aria-hidden="true">☀️</span>
+                    <span class="theme-icon-dark" aria-hidden="true">🌙</span>
+                </button>
+                <button id="keyboard-help" class="icon-btn" aria-label="Keyboard shortcuts" title="Keyboard shortcuts (Press '?')">
+                    <span aria-hidden="true">⌨️</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content" class="module-content">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="../index.html">Home</a>
+            <span aria-hidden="true">→</span>
+            <a href="../python-starter.html">Python Starter</a>
+            <span aria-hidden="true">→</span>
+            <span aria-current="page">Mad Libs Generator</span>
+        </nav>
+
+        <article class="module-article">
+            <header class="module-header">
+                <span class="module-badge">Project 1 of 7</span>
+                <h1>Mad Libs Generator</h1>
+                <p class="module-meta">
+                    <span class="tag">15 min</span>
+                    <span class="tag">strings</span>
+                    <span class="tag">input/output</span>
+                </p>
+            </header>
+
+            <!-- Step 0: See the result first! -->
+            <section class="lesson" id="intro">
+                <h2>What We're Building</h2>
+                <p>Remember Mad Libs from road trips? You fill in random words, and they get plugged into a silly story. By the end of this project, you'll have built your own!</p>
+
+                <div class="callout callout-tip">
+                    <strong>Try it first!</strong> Click "Run" to see a finished Mad Libs in action. Enter words when prompted!
+                </div>
+
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python"># A working Mad Libs - try it!
+noun = input("Give me a noun: ")
+verb = input("Give me a verb: ")
+adjective = input("Give me an adjective: ")
+place = input("Give me a place: ")
+
+story = f"""
+Once upon a time, a {adjective} {noun}
+decided to {verb} all the way to {place}.
+Everyone was amazed!
+"""
+print(story)</code></pre>
+                    <div class="code-output hidden"></div>
+                </div>
+
+                <p>Pretty cool, right? Let's build this step by step.</p>
+            </section>
+
+            <!-- Step 1: print() -->
+            <section class="lesson" id="step-1">
+                <h2>Step 1: Say Hello to Python</h2>
+                <p>First, let's get Python to talk. The <code>print()</code> function displays text on screen.</p>
+
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python"># Your first Python program!
+print("Hello, World!")
+print("Welcome to Mad Libs!")</code></pre>
+                    <div class="code-output hidden"></div>
+                </div>
+
+                <div class="callout callout-tip">
+                    <strong>Key concept:</strong> Text inside quotes <code>"like this"</code> is called a <strong>string</strong>. Python treats it as literal text.
+                </div>
+            </section>
+
+            <!-- Step 2: variables -->
+            <section class="lesson" id="step-2">
+                <h2>Step 2: Storing Words in Variables</h2>
+                <p>A <strong>variable</strong> is like a labeled box. You put something in, and you can get it back later using the label.</p>
+
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python"># Creating variables
+animal = "dragon"
+food = "pizza"
+action = "dances"
+
+# Using variables in print
+print(animal)
+print("The", animal, "loves", food)</code></pre>
+                    <div class="code-output hidden"></div>
+                </div>
+
+                <p>Notice: when we type <code>animal</code> without quotes, Python gives us what's <em>inside</em> the box, not the word "animal".</p>
+            </section>
+
+            <!-- Step 3: input() -->
+            <section class="lesson" id="step-3">
+                <h2>Step 3: Getting User Input</h2>
+                <p>Now for the fun part! <code>input()</code> asks the user for something and stores their answer.</p>
+
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python"># Ask for input and store it
+name = input("What's your name? ")
+color = input("What's your favorite color? ")
+
+print("Hello,", name)
+print("I like", color, "too!")</code></pre>
+                    <div class="code-output hidden"></div>
+                </div>
+
+                <p>The text inside <code>input()</code> is the question that gets shown to the user.</p>
+            </section>
+
+            <!-- Step 4: f-strings -->
+            <section class="lesson" id="step-4">
+                <h2>Step 4: Building Sentences (f-strings)</h2>
+                <p>Here's a cleaner way to mix variables with text: <strong>f-strings</strong>. Put an <code>f</code> before the quotes, then use <code>{variable}</code> to insert values.</p>
+
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python"># f-strings make it easy!
+hero = "Captain Python"
+weapon = "keyboard"
+enemy = "bugs"
+
+# The 'f' before the string is the magic part
+battle_cry = f"{hero} fights {enemy} with a mighty {weapon}!"
+print(battle_cry)</code></pre>
+                    <div class="code-output hidden"></div>
+                </div>
+
+                <div class="callout callout-tip">
+                    <strong>Remember:</strong> The <code>f</code> stands for "formatted". Without it, you'd literally see {hero} instead of "Captain Python".
+                </div>
+            </section>
+
+            <!-- Step 5: Put it together! -->
+            <section class="lesson" id="step-5">
+                <h2>Step 5: Your Complete Mad Libs!</h2>
+                <p>Now let's combine everything. This is your Mad Libs generator - run it and have fun!</p>
+
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python"># Your Mad Libs Generator!
+print("=== MAD LIBS: THE SILLY ADVENTURE ===")
+print("Fill in these words:\n")
+
+# Get all the words
+name = input("Your name: ")
+adjective1 = input("An adjective (describes something): ")
+noun1 = input("A noun (person/place/thing): ")
+verb1 = input("A verb (action word): ")
+place = input("A place: ")
+adjective2 = input("Another adjective: ")
+noun2 = input("Another noun: ")
+exclamation = input("An exclamation (Wow! Yikes! Hooray!): ")
+
+# Build the story
+story = f"""
+THE {adjective1.upper()} ADVENTURE OF {name.upper()}!
+
+One day, {name} found a {adjective1} {noun1}
+hiding under the bed. It started to {verb1}!
+
+"Quick! To {place}!" {name} shouted.
+
+But when they got there, a {adjective2} {noun2}
+was waiting for them.
+
+"{exclamation}" everyone yelled.
+
+THE END
+"""
+
+print(story)</code></pre>
+                    <div class="code-output hidden"></div>
+                </div>
+            </section>
+
+            <!-- Challenge -->
+            <section class="lesson" id="challenge">
+                <h2>Challenge: Make Your Own!</h2>
+                <p>You've learned all the pieces. Now create your own Mad Libs story!</p>
+
+                <div class="callout callout-tip">
+                    <strong>Ideas:</strong>
+                    <ul>
+                        <li>A recipe gone wrong</li>
+                        <li>A superhero origin story</li>
+                        <li>A news report about something absurd</li>
+                        <li>A fairy tale remix</li>
+                    </ul>
+                </div>
+
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python"># YOUR TURN! Create your own Mad Libs
+# 1. Ask for at least 5 different words
+# 2. Use f-strings to build a funny story
+# 3. Print it out!
+
+print("=== YOUR AMAZING MAD LIBS ===")
+
+# Start here! Ask for words:
+word1 = input("Give me a noun: ")
+
+# Build your story:
+story = f"The {word1} walked into a bar..."
+
+print(story)</code></pre>
+                    <div class="code-output hidden"></div>
+                </div>
+            </section>
+
+            <!-- What You Learned -->
+            <section class="lesson" id="recap">
+                <h2>What You Just Learned</h2>
+                <ul>
+                    <li><code>print("text")</code> - Display text on screen</li>
+                    <li><code>variable = "value"</code> - Store data in a named container</li>
+                    <li><code>input("prompt")</code> - Get text from the user</li>
+                    <li><code>f"Hello {name}"</code> - f-strings for easy text formatting</li>
+                </ul>
+
+                <div class="callout callout-tip">
+                    <strong>You're already coding!</strong> These same concepts power everything from websites to AI. Nice work!
+                </div>
+            </section>
+
+            <!-- Navigation -->
+            <nav class="module-nav">
+                <a href="../python-starter.html" class="btn btn-secondary">← Back to Projects</a>
+                <button id="mark-complete" class="btn btn-primary">Mark as Complete ✓</button>
+                <a href="starter-guessing-game.html" class="btn btn-secondary">Next: Number Guessing Game →</a>
+            </nav>
+        </article>
+    </main>
+
+    <!-- Keyboard Shortcuts Modal -->
+    <div id="keyboard-modal" class="modal" role="dialog" aria-labelledby="keyboard-modal-title" aria-hidden="true">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Close">×</button>
+            <h2 id="keyboard-modal-title">Keyboard Shortcuts</h2>
+            <dl class="shortcuts-list">
+                <dt><kbd>d</kbd></dt><dd>Toggle dark/light mode</dd>
+                <dt><kbd>t</kbd></dt><dd>Open AI tutor</dd>
+                <dt><kbd>?</kbd></dt><dd>Show this help</dd>
+                <dt><kbd>Esc</kbd></dt><dd>Close dialogs</dd>
+            </dl>
+        </div>
+    </div>
+
+    <!-- AI Tutor Panel -->
+    <div id="tutor-panel" class="tutor-panel" aria-hidden="true">
+        <div class="tutor-header">
+            <h2>Python Helper</h2>
+            <div class="tutor-status" id="tutor-status">
+                <span class="status-dot"></span>
+                <span class="status-text">Loading...</span>
+            </div>
+            <button id="close-tutor" class="tutor-close" aria-label="Close tutor">×</button>
+        </div>
+        <div class="tutor-messages" id="tutor-messages" role="log" aria-live="polite">
+            <div class="message bot-message">
+                <img src="../sluggy.png" alt="Sluggy" class="sluggy-avatar">
+                <div class="message-content">
+                    <p><strong>Hi! I'm Sluggy.</strong> Building your first Mad Libs? Awesome!</p>
+                    <p>Click "Explain This" on any code, or ask me anything like:</p>
+                    <ul>
+                        <li>"What's an f-string?"</li>
+                        <li>"Why do I need quotes around text?"</li>
+                        <li>"My code isn't working - help!"</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="tutor-input-area">
+            <div id="model-loading" class="model-loading">
+                <div class="loading-spinner"></div>
+                <span id="loading-text">Initializing...</span>
+                <div class="loading-progress"><div class="loading-bar" id="loading-bar"></div></div>
+            </div>
+            <form id="tutor-form" class="tutor-form">
+                <label for="tutor-input" class="visually-hidden">Ask a question</label>
+                <input type="text" id="tutor-input" placeholder="Ask about your Mad Libs..." autocomplete="off" disabled>
+                <button type="submit" id="tutor-submit" disabled>→</button>
+            </form>
+        </div>
+    </div>
+
+    <button id="tutor-fab" class="tutor-fab" aria-label="Open AI tutor (Press 't')">
+        <span class="fab-icon"><img src="../sluggy.png" alt="" class="sluggy-avatar"></span>
+        <span class="fab-text">Get Help</span>
+    </button>
+
+    <footer class="site-footer">
+        <p>Built with the <strong>Producer Mindset</strong></p>
+        <p class="footer-note">No data leaves your browser. Everything runs locally.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/tutor-flow.js"></script>
+    <script src="../js/tutor-ui.js"></script>
+    <script src="../js/pyodide-runner.js"></script>
+    <script>
+        // Mark complete button
+        document.getElementById('mark-complete')?.addEventListener('click', () => {
+            // Save to localStorage
+            const progress = JSON.parse(localStorage.getItem('pylearn-starter-progress') || '{}');
+            progress['starter-1'] = { completed: true, completedAt: new Date().toISOString() };
+            localStorage.setItem('pylearn-starter-progress', JSON.stringify(progress));
+
+            // Update UI
+            alert('Project complete! Ready for the next one?');
+        });
+
+        // Explain This button handler
+        function explainCode(btn) {
+            const codeBlock = btn.closest('.code-container')?.querySelector('pre code');
+            if (codeBlock && window.TutorUI) {
+                window.TutorUI.askAboutCode(codeBlock.textContent);
+            }
+        }
+
+        // Run button handler (connects to pyodide-runner.js)
+        async function runCode(btn) {
+            const container = btn.closest('.code-container');
+            const codeBlock = container?.querySelector('pre code');
+            const outputDiv = container?.querySelector('.code-output');
+
+            if (!codeBlock || !outputDiv) return;
+
+            const code = codeBlock.textContent;
+            outputDiv.classList.remove('hidden', 'success', 'error');
+            outputDiv.classList.add('loading');
+            outputDiv.textContent = 'Running...';
+            btn.disabled = true;
+
+            try {
+                if (window.PythonRunner) {
+                    const result = await window.PythonRunner.runCode(code);
+                    outputDiv.classList.remove('loading');
+                    outputDiv.classList.add(result.success ? 'success' : 'error');
+                    outputDiv.textContent = result.output || '(no output)';
+                } else {
+                    outputDiv.textContent = 'Python environment loading... try again in a moment!';
+                    outputDiv.classList.remove('loading');
+                }
+            } catch (err) {
+                outputDiv.classList.remove('loading');
+                outputDiv.classList.add('error');
+                outputDiv.textContent = 'Error: ' + err.message;
+            }
+
+            btn.disabled = false;
+        }
+    </script>
+</body>
+</html>

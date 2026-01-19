@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors | Python Starter</title>
+    <link rel="icon" type="image/png" href="../sluggy.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/tutor.css">
+    <link rel="stylesheet" href="../css/module.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <header class="site-header">
+        <div class="header-content">
+            <a href="../index.html" class="logo">
+                <span class="logo-icon">🐍</span>
+                <span class="logo-text">PyLearn</span>
+            </a>
+            <button class="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            <nav aria-label="Main navigation">
+                <ul class="nav-links">
+                    <li><a href="../index.html" class="nav-link">Home</a></li>
+                    <li><a href="../python-starter.html" class="nav-link active">Python Starter</a></li>
+                    <li><a href="../index.html#modules" class="nav-link">Python Basics</a></li>
+                    <li><a href="../cs50-ai.html" class="nav-link">CS50 AI</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode (Press 'd')">
+                    <span class="theme-icon-light" aria-hidden="true">☀️</span>
+                    <span class="theme-icon-dark" aria-hidden="true">🌙</span>
+                </button>
+                <button id="keyboard-help" class="icon-btn" aria-label="Keyboard shortcuts" title="Keyboard shortcuts (Press '?')">
+                    <span aria-hidden="true">⌨️</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content" class="module-content">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="../index.html">Home</a>
+            <span aria-hidden="true">→</span>
+            <a href="../python-starter.html">Python Starter</a>
+            <span aria-hidden="true">→</span>
+            <span aria-current="page">Rock Paper Scissors</span>
+        </nav>
+
+        <article class="module-article">
+            <header class="module-header">
+                <span class="module-badge">Project 3 of 7</span>
+                <h1>Rock Paper Scissors</h1>
+                <p class="module-meta">
+                    <span class="tag">15 min</span>
+                    <span class="tag">conditionals</span>
+                    <span class="tag">game logic</span>
+                </p>
+            </header>
+
+            <!-- Intro -->
+            <section class="lesson" id="intro">
+                <h2>What We're Building</h2>
+                <p>The classic hand game! You pick rock, paper, or scissors. The computer picks randomly. Who wins?</p>
+
+                <div class="callout callout-tip">
+                    <strong>Game Rules:</strong>
+                    <ul>
+                        <li>Rock crushes Scissors</li>
+                        <li>Scissors cuts Paper</li>
+                        <li>Paper covers Rock</li>
+                    </ul>
+                </div>
+
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python"># Sneak peek: A complete game!
+import random
+
+choices = ["rock", "paper", "scissors"]
+player = "rock"  # Your choice
+computer = random.choice(choices)
+
+print(f"You chose: {player}")
+print(f"Computer chose: {computer}")
+
+if player == computer:
+    print("It's a tie!")
+elif (player == "rock" and computer == "scissors") or \
+     (player == "scissors" and computer == "paper") or \
+     (player == "paper" and computer == "rock"):
+    print("You win!")
+else:
+    print("Computer wins!")</code></pre>
+                    <div class="code-output hidden"></div>
+                </div>
+
+                <p>Let's break this down step by step!</p>
+            </section>
+
+            <!-- Step 1: Lists and random.choice -->
+            <section class="lesson" id="step-1">
+                <h2>Step 1: Making Random Choices</h2>
+                <p>Instead of <code>randint()</code> for numbers, we use <code>random.choice()</code> to pick from a <strong>list</strong> of options.</p>
+
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python">import random
+
+# A list holds multiple items in square brackets
+choices = ["rock", "paper", "scissors"]
+
+# random.choice picks one item randomly
+computer_choice = random.choice(choices)
+print(f"Computer picks: {computer_choice}")
+
+# Run multiple times to see different results!</code></pre>
+                    <div class="code-output hidden"></div>
+                </div>
+
+                <div class="callout callout-tip">
+                    <strong>Lists are powerful!</strong> They can hold any items: <code>["apple", "banana"]</code> or <code>[1, 2, 3]</code> or even mixed: <code>["hello", 42, True]</code>
+                </div>
+            </section>
+
+            <!-- Step 2: Comparing strings -->
+            <section class="lesson" id="step-2">
+                <h2>Step 2: Comparing Text</h2>
+                <p>We compare strings (text) the same way we compare numbers - with <code>==</code>!</p>
+
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python">player = "rock"
+computer = "scissors"
+
+# Check if they're the same
+print(f"Same choice? {player == computer}")
+
+# Check specific values
+print(f"Player chose rock? {player == 'rock'}")
+print(f"Computer chose paper? {computer == 'paper'}")</code></pre>
+                    <div class="code-output hidden"></div>
+                </div>
+            </section>
+
+            <!-- Step 3: Checking for a tie -->
+            <section class="lesson" id="step-3">
+                <h2>Step 3: Detecting a Tie</h2>
+                <p>The easiest case: if both players pick the same thing, it's a tie!</p>
+
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python">player = "paper"
+computer = "paper"
+
+print(f"You: {player}")
+print(f"Computer: {computer}")
+
+if player == computer:
+    print("It's a tie! Same choice.")
+else:
+    print("Different choices - someone wins!")</code></pre>
+                    <div class="code-output hidden"></div>
+                </div>
+            </section>
+
+            <!-- Step 4: Win conditions with 'and' -->
+            <section class="lesson" id="step-4">
+                <h2>Step 4: Win Conditions (Using 'and')</h2>
+                <p>You win when you pick rock AND computer picks scissors. We combine conditions with <code>and</code>.</p>
+
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python">player = "rock"
+computer = "scissors"
+
+print(f"You: {player}, Computer: {computer}")
+
+# 'and' means BOTH must be true
+if player == "rock" and computer == "scissors":
+    print("Rock crushes scissors - You win!")
+
+# Try changing player to "paper" and computer to "rock"</code></pre>
+                    <div class="code-output hidden"></div>
+                </div>
+
+                <div class="callout callout-tip">
+                    <strong>Boolean operators:</strong>
+                    <ul>
+                        <li><code>and</code> - Both must be True</li>
+                        <li><code>or</code> - At least one must be True</li>
+                        <li><code>not</code> - Flips True to False</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Step 5: Multiple win conditions with 'or' -->
+            <section class="lesson" id="step-5">
+                <h2>Step 5: All Win Conditions (Using 'or')</h2>
+                <p>There are THREE ways to win. We combine them with <code>or</code>.</p>
+
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python">player = "scissors"
+computer = "paper"
+
+print(f"You: {player}, Computer: {computer}")
+
+# Check all three win conditions
+rock_beats_scissors = (player == "rock" and computer == "scissors")
+scissors_beats_paper = (player == "scissors" and computer == "paper")
+paper_beats_rock = (player == "paper" and computer == "rock")
+
+# 'or' means ANY of these being True counts as a win
+if rock_beats_scissors or scissors_beats_paper or paper_beats_rock:
+    print("You win!")
+else:
+    print("You don't win (tie or loss)")</code></pre>
+                    <div class="code-output hidden"></div>
+                </div>
+            </section>
+
+            <!-- Step 6: Complete game -->
+            <section class="lesson" id="step-6">
+                <h2>Step 6: The Complete Game!</h2>
+                <p>Let's put it all together with proper if/elif/else logic:</p>
+
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python">import random
+
+choices = ["rock", "paper", "scissors"]
+
+# Simulate player choice (change this to test!)
+player = "rock"
+computer = random.choice(choices)
+
+print("=" * 30)
+print("ROCK PAPER SCISSORS!")
+print("=" * 30)
+print(f"You chose: {player}")
+print(f"Computer chose: {computer}")
+print("-" * 30)
+
+# Determine winner
+if player == computer:
+    print("It's a TIE!")
+elif player == "rock" and computer == "scissors":
+    print("Rock crushes scissors - YOU WIN!")
+elif player == "scissors" and computer == "paper":
+    print("Scissors cuts paper - YOU WIN!")
+elif player == "paper" and computer == "rock":
+    print("Paper covers rock - YOU WIN!")
+else:
+    print("COMPUTER WINS!")
+
+print("=" * 30)</code></pre>
+                    <div class="code-output hidden"></div>
+                </div>
+
+                <div class="callout callout-tip">
+                    <strong>String tricks:</strong> <code>"=" * 30</code> creates a line of 30 equals signs. Great for visual formatting!
+                </div>
+            </section>
+
+            <!-- Step 7: Multiple rounds -->
+            <section class="lesson" id="step-7">
+                <h2>Step 7: Playing Multiple Rounds</h2>
+                <p>Let's simulate a best-of-5 tournament!</p>
+
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python">import random
+
+choices = ["rock", "paper", "scissors"]
+player_moves = ["rock", "paper", "scissors", "rock", "paper"]
+
+player_score = 0
+computer_score = 0
+
+print("BEST OF 5 TOURNAMENT!")
+print("=" * 30)
+
+for round_num, player in enumerate(player_moves, 1):
+    computer = random.choice(choices)
+    print(f"\nRound {round_num}: You={player}, Computer={computer}")
+
+    if player == computer:
+        print("  Tie!")
+    elif (player == "rock" and computer == "scissors") or \
+         (player == "scissors" and computer == "paper") or \
+         (player == "paper" and computer == "rock"):
+        print("  You win this round!")
+        player_score += 1
+    else:
+        print("  Computer wins this round!")
+        computer_score += 1
+
+print("\n" + "=" * 30)
+print(f"FINAL SCORE: You {player_score} - {computer_score} Computer")
+if player_score > computer_score:
+    print("YOU ARE THE CHAMPION!")
+elif computer_score > player_score:
+    print("Computer wins the tournament!")
+else:
+    print("Tournament ends in a tie!")</code></pre>
+                    <div class="code-output hidden"></div>
+                </div>
+            </section>
+
+            <!-- Challenge -->
+            <section class="lesson" id="challenge">
+                <h2>Challenge: Extend the Game!</h2>
+                <p>Try adding these features:</p>
+
+                <div class="callout callout-tip">
+                    <strong>Ideas:</strong>
+                    <ul>
+                        <li>Add "lizard" and "spock" (Rock Paper Scissors Lizard Spock!)</li>
+                        <li>Track win streaks</li>
+                        <li>Add emoji: rock=🪨, paper=📄, scissors=✂️</li>
+                        <li>Stop early if someone gets 3 wins (best of 5)</li>
+                    </ul>
+                </div>
+
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python">import random
+
+# Challenge: Add emoji and track streaks!
+emoji = {"rock": "🪨", "paper": "📄", "scissors": "✂️"}
+choices = list(emoji.keys())
+
+player_moves = ["rock", "scissors", "scissors", "paper"]
+streak = 0
+max_streak = 0
+
+for player in player_moves:
+    computer = random.choice(choices)
+    p_emoji = emoji[player]
+    c_emoji = emoji[computer]
+
+    print(f"You: {p_emoji}  vs  Computer: {c_emoji}")
+
+    if player == computer:
+        print("  Tie! Streak broken.")
+        streak = 0
+    elif (player == "rock" and computer == "scissors") or \
+         (player == "scissors" and computer == "paper") or \
+         (player == "paper" and computer == "rock"):
+        streak += 1
+        max_streak = max(streak, max_streak)
+        print(f"  WIN! Streak: {streak}")
+    else:
+        print("  Loss! Streak broken.")
+        streak = 0
+
+print(f"\nBest streak: {max_streak} wins in a row!")</code></pre>
+                    <div class="code-output hidden"></div>
+                </div>
+            </section>
+
+            <!-- What You Learned -->
+            <section class="lesson" id="recap">
+                <h2>What You Just Learned</h2>
+                <ul>
+                    <li><code>["a", "b", "c"]</code> - Lists hold multiple items</li>
+                    <li><code>random.choice(list)</code> - Pick a random item from a list</li>
+                    <li><code>==</code> works for text too, not just numbers</li>
+                    <li><code>and</code> - Both conditions must be True</li>
+                    <li><code>or</code> - At least one condition must be True</li>
+                    <li>Complex if/elif/else chains for game logic</li>
+                    <li><code>"=" * 30</code> - String multiplication for formatting</li>
+                </ul>
+
+                <div class="callout callout-tip">
+                    <strong>You're mastering conditionals!</strong> This kind of branching logic is the heart of every game and application. Nice work!
+                </div>
+            </section>
+
+            <!-- Navigation -->
+            <nav class="module-nav">
+                <a href="starter-guessing-game.html" class="btn btn-secondary">← Guessing Game</a>
+                <button id="mark-complete" class="btn btn-primary">Mark as Complete ✓</button>
+                <a href="starter-calculator.html" class="btn btn-secondary">Next: Calculator →</a>
+            </nav>
+        </article>
+    </main>
+
+    <!-- Keyboard Shortcuts Modal -->
+    <div id="keyboard-modal" class="modal" role="dialog" aria-labelledby="keyboard-modal-title" aria-hidden="true">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Close">×</button>
+            <h2 id="keyboard-modal-title">Keyboard Shortcuts</h2>
+            <dl class="shortcuts-list">
+                <dt><kbd>d</kbd></dt><dd>Toggle dark/light mode</dd>
+                <dt><kbd>t</kbd></dt><dd>Open AI tutor</dd>
+                <dt><kbd>?</kbd></dt><dd>Show this help</dd>
+                <dt><kbd>Esc</kbd></dt><dd>Close dialogs</dd>
+            </dl>
+        </div>
+    </div>
+
+    <!-- AI Tutor Panel -->
+    <div id="tutor-panel" class="tutor-panel" aria-hidden="true">
+        <div class="tutor-header">
+            <h2>Python Helper</h2>
+            <div class="tutor-status" id="tutor-status">
+                <span class="status-dot"></span>
+                <span class="status-text">Loading...</span>
+            </div>
+            <button id="close-tutor" class="tutor-close" aria-label="Close tutor">×</button>
+        </div>
+        <div class="tutor-messages" id="tutor-messages" role="log" aria-live="polite">
+            <div class="message bot-message">
+                <img src="../sluggy.png" alt="Sluggy" class="sluggy-avatar">
+                <div class="message-content">
+                    <p><strong>Hi! I'm Sluggy.</strong> Rock Paper Scissors is a great way to learn conditionals!</p>
+                    <p>Common questions:</p>
+                    <ul>
+                        <li>"What's the difference between 'and' and 'or'?"</li>
+                        <li>"Why do I need parentheses around conditions?"</li>
+                        <li>"How do I add more choices like lizard/spock?"</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="tutor-input-area">
+            <div id="model-loading" class="model-loading">
+                <div class="loading-spinner"></div>
+                <span id="loading-text">Initializing...</span>
+                <div class="loading-progress"><div class="loading-bar" id="loading-bar"></div></div>
+            </div>
+            <form id="tutor-form" class="tutor-form">
+                <label for="tutor-input" class="visually-hidden">Ask a question</label>
+                <input type="text" id="tutor-input" placeholder="Ask about conditionals, and/or..." autocomplete="off" disabled>
+                <button type="submit" id="tutor-submit" disabled>→</button>
+            </form>
+        </div>
+    </div>
+
+    <button id="tutor-fab" class="tutor-fab" aria-label="Open AI tutor (Press 't')">
+        <span class="fab-icon"><img src="../sluggy.png" alt="" class="sluggy-avatar"></span>
+        <span class="fab-text">Get Help</span>
+    </button>
+
+    <footer class="site-footer">
+        <p>Built with the <strong>Producer Mindset</strong></p>
+        <p class="footer-note">No data leaves your browser. Everything runs locally.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/tutor-flow.js"></script>
+    <script src="../js/tutor-ui.js"></script>
+    <script src="../js/pyodide-runner.js"></script>
+    <script>
+        // Mark complete button
+        document.getElementById('mark-complete')?.addEventListener('click', () => {
+            const progress = JSON.parse(localStorage.getItem('pylearn-starter-progress') || '{}');
+            progress['starter-3'] = { completed: true, completedAt: new Date().toISOString() };
+            localStorage.setItem('pylearn-starter-progress', JSON.stringify(progress));
+            alert('Project complete! Ready to build a calculator?');
+        });
+
+        // Explain This button handler
+        function explainCode(btn) {
+            const codeBlock = btn.closest('.code-container')?.querySelector('pre code');
+            if (codeBlock && window.TutorUI) {
+                window.TutorUI.askAboutCode(codeBlock.textContent);
+            }
+        }
+
+        // Run button handler
+        async function runCode(btn) {
+            const container = btn.closest('.code-container');
+            const codeBlock = container?.querySelector('pre code');
+            const outputDiv = container?.querySelector('.code-output');
+
+            if (!codeBlock || !outputDiv) return;
+
+            const code = codeBlock.textContent;
+            outputDiv.classList.remove('hidden', 'success', 'error');
+            outputDiv.classList.add('loading');
+            outputDiv.textContent = 'Running...';
+            btn.disabled = true;
+
+            try {
+                if (window.PythonRunner) {
+                    const result = await window.PythonRunner.runCode(code);
+                    outputDiv.classList.remove('loading');
+                    outputDiv.classList.add(result.success ? 'success' : 'error');
+                    outputDiv.textContent = result.output || '(no output)';
+                } else {
+                    outputDiv.textContent = 'Python environment loading... try again in a moment!';
+                    outputDiv.classList.remove('loading');
+                }
+            } catch (err) {
+                outputDiv.classList.remove('loading');
+                outputDiv.classList.add('error');
+                outputDiv.textContent = 'Error: ' + err.message;
+            }
+
+            btn.disabled = false;
+        }
+    </script>
+</body>
+</html>

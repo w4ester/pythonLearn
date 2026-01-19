@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Guessing Game | Python Starter</title>
+    <link rel="icon" type="image/png" href="../sluggy.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/tutor.css">
+    <link rel="stylesheet" href="../css/module.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <header class="site-header">
+        <div class="header-content">
+            <a href="../index.html" class="logo">
+                <span class="logo-icon">🐍</span>
+                <span class="logo-text">PyLearn</span>
+            </a>
+            <button class="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            <nav aria-label="Main navigation">
+                <ul class="nav-links">
+                    <li><a href="../index.html" class="nav-link">Home</a></li>
+                    <li><a href="../python-starter.html" class="nav-link active">Python Starter</a></li>
+                    <li><a href="../index.html#modules" class="nav-link">Python Basics</a></li>
+                    <li><a href="../cs50-ai.html" class="nav-link">CS50 AI</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode (Press 'd')">
+                    <span class="theme-icon-light" aria-hidden="true">☀️</span>
+                    <span class="theme-icon-dark" aria-hidden="true">🌙</span>
+                </button>
+                <button id="keyboard-help" class="icon-btn" aria-label="Keyboard shortcuts" title="Keyboard shortcuts (Press '?')">
+                    <span aria-hidden="true">⌨️</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content" class="module-content">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="../index.html">Home</a>
+            <span aria-hidden="true">→</span>
+            <a href="../python-starter.html">Python Starter</a>
+            <span aria-hidden="true">→</span>
+            <span aria-current="page">Number Guessing Game</span>
+        </nav>
+
+        <article class="module-article">
+            <header class="module-header">
+                <span class="module-badge">Project 2 of 7</span>
+                <h1>Number Guessing Game</h1>
+                <p class="module-meta">
+                    <span class="tag">20 min</span>
+                    <span class="tag">loops</span>
+                    <span class="tag">conditionals</span>
+                </p>
+            </header>
+
+            <!-- Step 0: See the result first! -->
+            <section class="lesson" id="intro">
+                <h2>What We're Building</h2>
+                <p>A classic game: the computer picks a secret number, and you try to guess it! After each guess, you get a hint: "Too high!" or "Too low!" until you find it.</p>
+
+                <div class="callout callout-tip">
+                    <strong>In this project you'll learn:</strong> How to make Python repeat things (loops), make decisions (if/else), and pick random numbers!
+                </div>
+
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python"># Sneak peek: the finished game logic!
+import random
+
+secret = random.randint(1, 10)
+guesses = [3, 7, 5]  # Simulated guesses
+
+print(f"Secret number is: {secret}")
+print("---")
+
+for guess in guesses:
+    print(f"Guessing: {guess}")
+    if guess < secret:
+        print("Too low!")
+    elif guess > secret:
+        print("Too high!")
+    else:
+        print("You got it!")
+        break</code></pre>
+                    <div class="code-output hidden"></div>
+                </div>
+
+                <p>Let's learn each piece step by step!</p>
+            </section>
+
+            <!-- Step 1: Random numbers -->
+            <section class="lesson" id="step-1">
+                <h2>Step 1: Picking a Random Number</h2>
+                <p>Python can pick random numbers using the <code>random</code> module. First, we <strong>import</strong> it, then use <code>randint()</code>.</p>
+
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python">import random
+
+# Pick a random number from 1 to 10
+secret = random.randint(1, 10)
+print(f"The secret number is: {secret}")
+
+# Run this multiple times - you'll get different numbers!</code></pre>
+                    <div class="code-output hidden"></div>
+                </div>
+
+                <div class="callout callout-tip">
+                    <strong>Try it:</strong> Click Run several times. Notice how the number changes? That's randomness!
+                </div>
+            </section>
+
+            <!-- Step 2: Comparisons -->
+            <section class="lesson" id="step-2">
+                <h2>Step 2: Comparing Numbers</h2>
+                <p>To give hints, we need to <strong>compare</strong> the guess to the secret. Python uses these symbols:</p>
+
+                <ul>
+                    <li><code>&lt;</code> less than</li>
+                    <li><code>&gt;</code> greater than</li>
+                    <li><code>==</code> equal to (note: TWO equals signs!)</li>
+                </ul>
+
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python"># Comparisons return True or False
+guess = 5
+secret = 7
+
+print(f"Is {guess} less than {secret}?", guess < secret)
+print(f"Is {guess} greater than {secret}?", guess > secret)
+print(f"Is {guess} equal to {secret}?", guess == secret)
+
+# Try changing guess to 7 and run again!</code></pre>
+                    <div class="code-output hidden"></div>
+                </div>
+            </section>
+
+            <!-- Step 3: if/elif/else -->
+            <section class="lesson" id="step-3">
+                <h2>Step 3: Making Decisions (if/elif/else)</h2>
+                <p>Now let's make Python <strong>do different things</strong> based on comparisons. This is called <strong>conditional logic</strong>.</p>
+
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python">guess = 5
+secret = 7
+
+if guess < secret:
+    print("Too low! Guess higher.")
+elif guess > secret:
+    print("Too high! Guess lower.")
+else:
+    print("You got it!")
+
+# Try changing guess to 7, or to 9!</code></pre>
+                    <div class="code-output hidden"></div>
+                </div>
+
+                <div class="callout callout-tip">
+                    <strong>Key insight:</strong> The indented code under <code>if</code> only runs when the condition is True. Python uses indentation (spaces) to know what belongs together!
+                </div>
+            </section>
+
+            <!-- Step 4: while loops -->
+            <section class="lesson" id="step-4">
+                <h2>Step 4: Repeating Until Done (while loops)</h2>
+                <p>A <strong>while loop</strong> keeps running as long as something is True. Perfect for "keep guessing until correct"!</p>
+
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python"># Count from 1 to 5
+count = 1
+
+while count <= 5:
+    print(f"Count is: {count}")
+    count = count + 1  # IMPORTANT: update the counter!
+
+print("Done counting!")</code></pre>
+                    <div class="code-output hidden"></div>
+                </div>
+
+                <div class="callout callout-warning">
+                    <strong>Warning:</strong> If you forget to update the counter, the loop runs forever! This is called an <strong>infinite loop</strong>.
+                </div>
+            </section>
+
+            <!-- Step 5: for loops (simpler alternative) -->
+            <section class="lesson" id="step-5">
+                <h2>Step 5: Looping Through a List (for loops)</h2>
+                <p>A <strong>for loop</strong> goes through items one by one. We can use this to simulate multiple guesses!</p>
+
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python"># Loop through a list of guesses
+guesses = [2, 5, 8, 3]
+
+for guess in guesses:
+    print(f"You guessed: {guess}")</code></pre>
+                    <div class="code-output hidden"></div>
+                </div>
+            </section>
+
+            <!-- Step 6: Put it together! -->
+            <section class="lesson" id="step-6">
+                <h2>Step 6: The Complete Game!</h2>
+                <p>Now let's combine everything into a working guessing game!</p>
+
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python">import random
+
+# The computer picks a secret number
+secret = random.randint(1, 10)
+print("I'm thinking of a number between 1 and 10...")
+print(f"(Psst... it's {secret})")
+print("---")
+
+# Simulate some guesses (in real game, this would use input())
+guesses = [3, 7, 5, 2, 8, 6, 1, 9, 4, 10]
+attempts = 0
+
+for guess in guesses:
+    attempts += 1
+    print(f"Guess #{attempts}: {guess}")
+
+    if guess < secret:
+        print("Too low!")
+    elif guess > secret:
+        print("Too high!")
+    else:
+        print(f"Correct! You got it in {attempts} tries!")
+        break  # Exit the loop early
+
+print("---")
+print("Game over!")</code></pre>
+                    <div class="code-output hidden"></div>
+                </div>
+
+                <div class="callout callout-tip">
+                    <strong>New keyword: <code>break</code></strong> - This exits the loop immediately when the guess is correct. Without it, the game would keep going through all guesses!
+                </div>
+            </section>
+
+            <!-- Challenge -->
+            <section class="lesson" id="challenge">
+                <h2>Challenge: Customize Your Game!</h2>
+                <p>Try modifying the code to make it your own:</p>
+
+                <div class="callout callout-tip">
+                    <strong>Ideas to try:</strong>
+                    <ul>
+                        <li>Change the range to 1-100 for a harder game</li>
+                        <li>Add a maximum number of guesses (like 5 tries)</li>
+                        <li>Print different messages for close guesses vs far guesses</li>
+                        <li>Keep track of all previous guesses</li>
+                    </ul>
+                </div>
+
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python">import random
+
+# YOUR CHALLENGE: Modify this game!
+secret = random.randint(1, 20)  # Try changing the range!
+max_attempts = 5  # Limit the guesses
+
+print(f"Guess my number (1-20)! You have {max_attempts} tries.")
+print(f"(Secret: {secret})")
+
+guesses = [10, 15, 5, 12, 8]  # Your test guesses
+
+for i, guess in enumerate(guesses):
+    attempt = i + 1
+    if attempt > max_attempts:
+        print(f"Out of tries! The number was {secret}")
+        break
+
+    print(f"Try #{attempt}: {guess}")
+
+    if guess == secret:
+        print("Winner!")
+        break
+    elif guess < secret:
+        print("Higher!")
+    else:
+        print("Lower!")</code></pre>
+                    <div class="code-output hidden"></div>
+                </div>
+            </section>
+
+            <!-- What You Learned -->
+            <section class="lesson" id="recap">
+                <h2>What You Just Learned</h2>
+                <ul>
+                    <li><code>import random</code> - Load Python's random number tools</li>
+                    <li><code>random.randint(a, b)</code> - Pick a random number from a to b</li>
+                    <li><code>&lt;</code>, <code>&gt;</code>, <code>==</code> - Compare numbers</li>
+                    <li><code>if/elif/else</code> - Do different things based on conditions</li>
+                    <li><code>while</code> loop - Repeat while something is True</li>
+                    <li><code>for</code> loop - Go through items one by one</li>
+                    <li><code>break</code> - Exit a loop early</li>
+                </ul>
+
+                <div class="callout callout-tip">
+                    <strong>You've unlocked game logic!</strong> Loops and conditionals are the building blocks of every game. You're thinking like a programmer!
+                </div>
+            </section>
+
+            <!-- Navigation -->
+            <nav class="module-nav">
+                <a href="starter-mad-libs.html" class="btn btn-secondary">← Mad Libs</a>
+                <button id="mark-complete" class="btn btn-primary">Mark as Complete ✓</button>
+                <a href="starter-rps.html" class="btn btn-secondary">Next: Rock Paper Scissors →</a>
+            </nav>
+        </article>
+    </main>
+
+    <!-- Keyboard Shortcuts Modal -->
+    <div id="keyboard-modal" class="modal" role="dialog" aria-labelledby="keyboard-modal-title" aria-hidden="true">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Close">×</button>
+            <h2 id="keyboard-modal-title">Keyboard Shortcuts</h2>
+            <dl class="shortcuts-list">
+                <dt><kbd>d</kbd></dt><dd>Toggle dark/light mode</dd>
+                <dt><kbd>t</kbd></dt><dd>Open AI tutor</dd>
+                <dt><kbd>?</kbd></dt><dd>Show this help</dd>
+                <dt><kbd>Esc</kbd></dt><dd>Close dialogs</dd>
+            </dl>
+        </div>
+    </div>
+
+    <!-- AI Tutor Panel -->
+    <div id="tutor-panel" class="tutor-panel" aria-hidden="true">
+        <div class="tutor-header">
+            <h2>Python Helper</h2>
+            <div class="tutor-status" id="tutor-status">
+                <span class="status-dot"></span>
+                <span class="status-text">Loading...</span>
+            </div>
+            <button id="close-tutor" class="tutor-close" aria-label="Close tutor">×</button>
+        </div>
+        <div class="tutor-messages" id="tutor-messages" role="log" aria-live="polite">
+            <div class="message bot-message">
+                <img src="../sluggy.png" alt="Sluggy" class="sluggy-avatar">
+                <div class="message-content">
+                    <p><strong>Hi! I'm Sluggy.</strong> Building a guessing game? Fun!</p>
+                    <p>Common questions:</p>
+                    <ul>
+                        <li>"What's the difference between = and ==?"</li>
+                        <li>"My loop runs forever - help!"</li>
+                        <li>"What does 'break' do?"</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="tutor-input-area">
+            <div id="model-loading" class="model-loading">
+                <div class="loading-spinner"></div>
+                <span id="loading-text">Initializing...</span>
+                <div class="loading-progress"><div class="loading-bar" id="loading-bar"></div></div>
+            </div>
+            <form id="tutor-form" class="tutor-form">
+                <label for="tutor-input" class="visually-hidden">Ask a question</label>
+                <input type="text" id="tutor-input" placeholder="Ask about loops, if/else..." autocomplete="off" disabled>
+                <button type="submit" id="tutor-submit" disabled>→</button>
+            </form>
+        </div>
+    </div>
+
+    <button id="tutor-fab" class="tutor-fab" aria-label="Open AI tutor (Press 't')">
+        <span class="fab-icon"><img src="../sluggy.png" alt="" class="sluggy-avatar"></span>
+        <span class="fab-text">Get Help</span>
+    </button>
+
+    <footer class="site-footer">
+        <p>Built with the <strong>Producer Mindset</strong></p>
+        <p class="footer-note">No data leaves your browser. Everything runs locally.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/tutor-flow.js"></script>
+    <script src="../js/tutor-ui.js"></script>
+    <script src="../js/pyodide-runner.js"></script>
+    <script>
+        // Mark complete button
+        document.getElementById('mark-complete')?.addEventListener('click', () => {
+            const progress = JSON.parse(localStorage.getItem('pylearn-starter-progress') || '{}');
+            progress['starter-2'] = { completed: true, completedAt: new Date().toISOString() };
+            localStorage.setItem('pylearn-starter-progress', JSON.stringify(progress));
+            alert('Project complete! Ready for Rock Paper Scissors?');
+        });
+
+        // Explain This button handler
+        function explainCode(btn) {
+            const codeBlock = btn.closest('.code-container')?.querySelector('pre code');
+            if (codeBlock && window.TutorUI) {
+                window.TutorUI.askAboutCode(codeBlock.textContent);
+            }
+        }
+
+        // Run button handler
+        async function runCode(btn) {
+            const container = btn.closest('.code-container');
+            const codeBlock = container?.querySelector('pre code');
+            const outputDiv = container?.querySelector('.code-output');
+
+            if (!codeBlock || !outputDiv) return;
+
+            const code = codeBlock.textContent;
+            outputDiv.classList.remove('hidden', 'success', 'error');
+            outputDiv.classList.add('loading');
+            outputDiv.textContent = 'Running...';
+            btn.disabled = true;
+
+            try {
+                if (window.PythonRunner) {
+                    const result = await window.PythonRunner.runCode(code);
+                    outputDiv.classList.remove('loading');
+                    outputDiv.classList.add(result.success ? 'success' : 'error');
+                    outputDiv.textContent = result.output || '(no output)';
+                } else {
+                    outputDiv.textContent = 'Python environment loading... try again in a moment!';
+                    outputDiv.classList.remove('loading');
+                }
+            } catch (err) {
+                outputDiv.classList.remove('loading');
+                outputDiv.classList.add('error');
+                outputDiv.textContent = 'Error: ' + err.message;
+            }
+
+            btn.disabled = false;
+        }
+    </script>
+</body>
+</html>

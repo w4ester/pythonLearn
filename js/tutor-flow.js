@@ -167,10 +167,17 @@ class GetContextNode extends Node {
         const aiWeekMatch = currentPage.match(/ai-week-(\d)/);
         const currentAIWeek = aiWeekMatch ? parseInt(aiWeekMatch[1]) : null;
 
+        // Detect Python Starter pages
+        const isStarterTrack = currentPage.includes('python-starter') || currentPage.includes('starter-');
+        const starterProjectMatch = currentPage.match(/starter-([a-z-]+)\.html/);
+        const currentStarterProject = starterProjectMatch ? starterProjectMatch[1] : null;
+
         return {
             currentModule,
             isAITrack,
             currentAIWeek,
+            isStarterTrack,
+            currentStarterProject,
             completedModules: Object.entries(progress.modules || {})
                 .filter(([_, m]) => m.completed)
                 .map(([num, _]) => parseInt(num)),
@@ -204,11 +211,45 @@ class BuildPromptNode extends Node {
     async exec({ question, context }) {
         const isGuideMode = context.tutorMode === 'guide';
         const isAITrack = context.isAITrack;
+        const isStarterTrack = context.isStarterTrack;
 
         // Build context info based on track
         let contextInfo;
 
-        if (isAITrack) {
+        if (isStarterTrack) {
+            const projectNames = {
+                'mad-libs': 'Mad Libs Generator',
+                'guessing-game': 'Number Guessing Game',
+                'rps': 'Rock Paper Scissors',
+                'calculator': 'Simple Calculator',
+                'password': 'Password Generator',
+                'ascii-art': 'ASCII Art Maker',
+                'adventure': 'Text Adventure Game'
+            };
+            const currentProjectName = projectNames[context.currentStarterProject] || 'Python Starter Home';
+
+            contextInfo = `
+CURRENT CONTEXT:
+- User is viewing: ${currentProjectName}
+- This is PYTHON STARTER - for complete beginners with ZERO coding experience
+- Focus on FUN and IMMEDIATE results, not theory
+
+PYTHON STARTER PROJECTS (in order):
+1. Mad Libs Generator - print(), input(), variables, f-strings
+2. Number Guessing Game - while loops, if/else, random numbers, comparisons
+3. Rock Paper Scissors - if/elif/else chains, game logic, user choices
+4. Simple Calculator - functions, def keyword, return values, operators
+5. Password Generator - lists, random.choice(), string methods, loops
+6. ASCII Art Maker - nested loops, string multiplication, patterns
+7. Text Adventure Game - dictionaries, game state, combining everything
+
+KEY TEACHING APPROACH:
+- Keep explanations SHORT and SIMPLE (1-2 sentences max)
+- Always show WORKING CODE they can run immediately
+- Use fun, relatable analogies (boxes for variables, recipes for functions)
+- Celebrate small wins ("Nice! You just made Python talk!")
+- If they're stuck, suggest running the example first`;
+        } else if (isAITrack) {
             contextInfo = `
 CURRENT CONTEXT:
 - User is viewing: ${context.currentAIWeek !== null ? `CS50 AI Week ${context.currentAIWeek}` : 'CS50 AI Home'}
@@ -282,11 +323,21 @@ The learner wants clear, direct explanations. Follow these rules:
 5. Keep responses focused (under 200 words unless they ask for more)
 6. Use analogies to make concepts stick`;
 
-        const baseRole = isAITrack
+        const baseRole = isStarterTrack
+            ? `You are Sluggy, an enthusiastic and patient coding buddy helping someone write their VERY FIRST Python programs. You make coding feel like play, not work.`
+            : isAITrack
             ? `You are Sluggy, a knowledgeable AI tutor helping a Python programmer learn artificial intelligence concepts from CS50 AI.`
             : `You are a friendly Python tutor helping a complete beginner learn programming.`;
 
-        const universalRules = isAITrack
+        const universalRules = isStarterTrack
+            ? `UNIVERSAL RULES:
+- NEVER assume any prior coding knowledge - explain EVERYTHING
+- Keep responses under 100 words - beginners get overwhelmed easily
+- Always end with something they can TRY ("Run the code and see what happens!")
+- Use everyday analogies (mailboxes, recipes, lego bricks)
+- If they make a typo or small error, gently point it out with the fix
+- Celebrate every working piece of code!`
+            : isAITrack
             ? `UNIVERSAL RULES:
 - Assume the learner knows Python basics (variables, loops, functions, classes)
 - Be encouraging - AI concepts can be challenging!

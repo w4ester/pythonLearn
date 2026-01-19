@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Python Starter - Learn Python by building fun projects. No experience needed!">
+    <title>Python Starter - Learn by Making | PyLearn</title>
+    <link rel="icon" type="image/png" href="sluggy.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Prism.js for code highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/tutor.css">
+</head>
+<body>
+    <!-- Skip link for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <header class="site-header">
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <span class="logo-icon" aria-hidden="true">🐍</span>
+                <span class="logo-text">PyLearn</span>
+            </a>
+            <button class="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            <nav aria-label="Main navigation">
+                <ul class="nav-links">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="python-starter.html" class="nav-link active">Python Starter</a></li>
+                    <li><a href="index.html#modules" class="nav-link">Python Basics</a></li>
+                    <li><a href="cs50-ai.html" class="nav-link">CS50 AI</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode (Press 'd')">
+                    <span class="theme-icon-light" aria-hidden="true">☀️</span>
+                    <span class="theme-icon-dark" aria-hidden="true">🌙</span>
+                </button>
+                <button id="keyboard-help" class="icon-btn" aria-label="Keyboard shortcuts" title="Keyboard shortcuts (Press '?')">
+                    <span aria-hidden="true">⌨️</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <span class="hero-badge">Start Here</span>
+                <h1>Learn Python by <em>Making</em></h1>
+                <p class="hero-subtitle">
+                    No experience needed. Build 7 fun projects and learn Python along the way.
+                    <br>Every project runs right in your browser - no setup required!
+                </p>
+                <div class="hero-cta">
+                    <a href="#projects" class="btn btn-primary">Start Building</a>
+                    <button id="open-tutor" class="btn btn-secondary">
+                        <img src="sluggy.png" alt="" class="btn-mascot" aria-hidden="true"> Get Help
+                    </button>
+                </div>
+                <div class="callout callout-tip" style="margin-top: 1.5rem; text-align: left;">
+                    <strong>Instructables-style learning:</strong> Each project teaches concepts naturally. You'll be coding in minutes, not hours!
+                </div>
+            </div>
+            <div class="hero-visual" aria-hidden="true">
+                <pre class="hero-code"><code class="language-python"># Your first Python program!
+name = input("What's your name? ")
+print(f"Hello, {name}!")
+
+# In 15 minutes, you'll build
+# a Mad Libs game like this:
+noun = input("Give me a noun: ")
+verb = input("Give me a verb: ")
+
+story = f"The {noun} decided to {verb}!"
+print(story)  # Instant fun!</code></pre>
+            </div>
+        </section>
+
+        <!-- Philosophy Section -->
+        <section class="info-section">
+            <h2>How This Works</h2>
+            <div class="info-grid" style="grid-template-columns: repeat(3, 1fr);">
+                <div class="info-card">
+                    <span class="info-icon">🎮</span>
+                    <h3>Build First</h3>
+                    <p>Jump straight into making something fun. Theory comes naturally as you go.</p>
+                </div>
+                <div class="info-card">
+                    <span class="info-icon">🌐</span>
+                    <h3>Browser-Based</h3>
+                    <p>Everything runs in your browser. No downloads, no setup, no hassle.</p>
+                </div>
+                <div class="info-card">
+                    <span class="info-icon">🚀</span>
+                    <h3>Quick Wins</h3>
+                    <p>Each project takes 15-30 minutes. Feel accomplished fast!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Grid -->
+        <section id="projects" class="modules-section">
+            <h2>7 Fun Projects</h2>
+            <p class="section-subtitle">Complete them in order, or jump to what interests you</p>
+
+            <div class="modules-grid">
+                <article class="module-card" data-module="starter-1">
+                    <div class="module-header">
+                        <span class="module-number">01</span>
+                        <span class="module-status" id="status-starter-1" aria-label="Not started">○</span>
+                    </div>
+                    <h3>Mad Libs Generator</h3>
+                    <p>Create hilarious stories by filling in the blanks. Learn variables, input, and print.</p>
+                    <div class="module-tags">
+                        <span class="tag">15 min</span>
+                        <span class="tag">strings</span>
+                        <span class="tag">input/output</span>
+                    </div>
+                    <a href="modules/starter-mad-libs.html" class="module-link">Start Project →</a>
+                </article>
+
+                <article class="module-card" data-module="starter-2">
+                    <div class="module-header">
+                        <span class="module-number">02</span>
+                        <span class="module-status" id="status-starter-2" aria-label="Not started">○</span>
+                    </div>
+                    <h3>Number Guessing Game</h3>
+                    <p>Guess the secret number with hints. Learn loops and conditionals.</p>
+                    <div class="module-tags">
+                        <span class="tag">20 min</span>
+                        <span class="tag">loops</span>
+                        <span class="tag">random</span>
+                    </div>
+                    <a href="modules/starter-guessing-game.html" class="module-link">Start Project →</a>
+                </article>
+
+                <article class="module-card" data-module="starter-3">
+                    <div class="module-header">
+                        <span class="module-number">03</span>
+                        <span class="module-status" id="status-starter-3" aria-label="Not started">○</span>
+                    </div>
+                    <h3>Rock Paper Scissors</h3>
+                    <p>Play against the computer. Master if/elif/else logic.</p>
+                    <div class="module-tags">
+                        <span class="tag">15 min</span>
+                        <span class="tag">conditionals</span>
+                        <span class="tag">game logic</span>
+                    </div>
+                    <a href="modules/starter-rps.html" class="module-link">Start Project →</a>
+                </article>
+
+                <article class="module-card" data-module="starter-4">
+                    <div class="module-header">
+                        <span class="module-number">04</span>
+                        <span class="module-status" id="status-starter-4" aria-label="Not started">○</span>
+                    </div>
+                    <h3>Simple Calculator</h3>
+                    <p>Build a calculator with +, -, *, /. Learn functions.</p>
+                    <div class="module-tags">
+                        <span class="tag">20 min</span>
+                        <span class="tag">functions</span>
+                        <span class="tag">operators</span>
+                    </div>
+                    <a href="modules/starter-calculator.html" class="module-link">Start Project →</a>
+                </article>
+
+                <article class="module-card" data-module="starter-5">
+                    <div class="module-header">
+                        <span class="module-number">05</span>
+                        <span class="module-status" id="status-starter-5" aria-label="Not started">○</span>
+                    </div>
+                    <h3>Password Generator</h3>
+                    <p>Generate secure random passwords. Work with lists.</p>
+                    <div class="module-tags">
+                        <span class="tag">15 min</span>
+                        <span class="tag">lists</span>
+                        <span class="tag">random</span>
+                    </div>
+                    <a href="modules/starter-password.html" class="module-link">Start Project →</a>
+                </article>
+
+                <article class="module-card" data-module="starter-6">
+                    <div class="module-header">
+                        <span class="module-number">06</span>
+                        <span class="module-status" id="status-starter-6" aria-label="Not started">○</span>
+                    </div>
+                    <h3>ASCII Art Maker</h3>
+                    <p>Create text art with loops. Visualize how loops work.</p>
+                    <div class="module-tags">
+                        <span class="tag">20 min</span>
+                        <span class="tag">nested loops</span>
+                        <span class="tag">patterns</span>
+                    </div>
+                    <a href="modules/starter-ascii-art.html" class="module-link">Start Project →</a>
+                </article>
+
+                <article class="module-card" data-module="starter-7">
+                    <div class="module-header">
+                        <span class="module-number">07</span>
+                        <span class="module-status" id="status-starter-7" aria-label="Not started">○</span>
+                    </div>
+                    <h3>Text Adventure Game</h3>
+                    <p>Build a choose-your-own-adventure. Combine everything you've learned!</p>
+                    <div class="module-tags">
+                        <span class="tag">30 min</span>
+                        <span class="tag">capstone</span>
+                        <span class="tag">dictionaries</span>
+                    </div>
+                    <a href="modules/starter-adventure.html" class="module-link">Start Project →</a>
+                </article>
+            </div>
+        </section>
+
+        <!-- What's Next -->
+        <section class="next-section">
+            <h2>After These Projects...</h2>
+            <p>You'll be ready for structured Python learning with our certification-aligned modules!</p>
+            <div class="next-actions">
+                <a href="index.html#modules" class="btn btn-primary">Python Basics (Modules 1-6) →</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Keyboard Shortcuts Modal -->
+    <div id="keyboard-modal" class="modal" role="dialog" aria-labelledby="keyboard-modal-title" aria-hidden="true">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Close">×</button>
+            <h2 id="keyboard-modal-title">Keyboard Shortcuts</h2>
+            <dl class="shortcuts-list">
+                <dt><kbd>d</kbd></dt><dd>Toggle dark/light mode</dd>
+                <dt><kbd>t</kbd></dt><dd>Open AI tutor</dd>
+                <dt><kbd>?</kbd></dt><dd>Show this help</dd>
+                <dt><kbd>Esc</kbd></dt><dd>Close dialogs</dd>
+            </dl>
+        </div>
+    </div>
+
+    <!-- AI Tutor Chat Panel -->
+    <div id="tutor-panel" class="tutor-panel" aria-hidden="true">
+        <div class="tutor-header">
+            <h2>Python Helper</h2>
+            <div class="tutor-status" id="tutor-status">
+                <span class="status-dot"></span>
+                <span class="status-text">Loading...</span>
+            </div>
+            <button id="close-tutor" class="tutor-close" aria-label="Close tutor">×</button>
+        </div>
+
+        <div class="tutor-messages" id="tutor-messages" role="log" aria-live="polite">
+            <div class="message bot-message">
+                <img src="sluggy.png" alt="Sluggy" class="sluggy-avatar">
+                <div class="message-content">
+                    <p><strong>Welcome to Python Starter!</strong></p>
+                    <p>I'm here to help you build cool stuff. No question is too simple!</p>
+                    <p>Try asking:</p>
+                    <ul>
+                        <li>"What does print() do?"</li>
+                        <li>"How do I get input from the user?"</li>
+                        <li>"I'm stuck on my Mad Libs - help!"</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="tutor-input-area">
+            <div id="model-loading" class="model-loading">
+                <div class="loading-spinner"></div>
+                <span id="loading-text">Initializing WebLLM...</span>
+                <div class="loading-progress">
+                    <div class="loading-bar" id="loading-bar"></div>
+                </div>
+            </div>
+            <form id="tutor-form" class="tutor-form">
+                <label for="tutor-input" class="visually-hidden">Ask a question</label>
+                <input type="text" id="tutor-input" placeholder="Ask me anything..." autocomplete="off" disabled>
+                <button type="submit" id="tutor-submit" disabled aria-label="Send">→</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Floating Tutor Button -->
+    <button id="tutor-fab" class="tutor-fab" aria-label="Open tutor (Press 't')">
+        <span class="fab-icon"><img src="sluggy.png" alt="" class="sluggy-avatar"></span>
+        <span class="fab-text">Get Help</span>
+    </button>
+
+    <footer class="site-footer">
+        <p>Built with the <strong>Producer Mindset</strong></p>
+        <p class="footer-note">No data leaves your browser. Everything runs locally.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/tutor-flow.js"></script>
+    <script src="js/tutor-ui.js"></script>
+</body>
+</html>
