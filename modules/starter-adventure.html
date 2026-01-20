@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Adventure Game | Python Starter</title>
+    <link rel="icon" type="image/png" href="../sluggy.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/tutor.css">
+    <link rel="stylesheet" href="../css/module.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <header class="site-header">
+        <div class="header-content">
+            <a href="../index.html" class="logo">
+                <span class="logo-icon">🐍</span>
+                <span class="logo-text">PyLearn</span>
+            </a>
+            <button class="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            <nav aria-label="Main navigation">
+                <ul class="nav-links">
+                    <li><a href="../index.html" class="nav-link">Home</a></li>
+                    <li><a href="../python-starter.html" class="nav-link active">Python Starter</a></li>
+                    <li><a href="../index.html#modules" class="nav-link">Python Basics</a></li>
+                    <li><a href="../cs50-ai.html" class="nav-link">CS50 AI</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode (Press 'd')">
+                    <span class="theme-icon-light" aria-hidden="true">☀️</span>
+                    <span class="theme-icon-dark" aria-hidden="true">🌙</span>
+                </button>
+                <button id="keyboard-help" class="icon-btn" aria-label="Keyboard shortcuts" title="Keyboard shortcuts (Press '?')">
+                    <span aria-hidden="true">⌨️</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content" class="module-content">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="../index.html">Home</a>
+            <span aria-hidden="true">→</span>
+            <a href="../python-starter.html">Python Starter</a>
+            <span aria-hidden="true">→</span>
+            <span aria-current="page">Text Adventure Game</span>
+        </nav>
+
+        <article class="module-article">
+            <header class="module-header">
+                <span class="module-badge">Project 7 of 7 - FINAL!</span>
+                <h1>Text Adventure Game</h1>
+                <p class="module-meta">
+                    <span class="tag">30 min</span>
+                    <span class="tag">functions</span>
+                    <span class="tag">dictionaries</span>
+                    <span class="tag">game logic</span>
+                </p>
+            </header>
+
+            <!-- Intro -->
+            <section class="lesson" id="intro">
+                <h2>The Final Project!</h2>
+                <p>You've learned variables, functions, conditionals, loops, and data structures. Now let's combine EVERYTHING into a text adventure game - the kind that inspired games like Zork and modern RPGs!</p>
+
+                <div class="callout callout-tip">
+                    <strong>What you'll build:</strong> A game where players explore rooms, collect items, and make choices. This is real game development!
+                </div>
+
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python"># Sneak peek: A mini adventure!
+print("=" * 50)
+print("THE PYTHON DUNGEON")
+print("=" * 50)
+print()
+print("You wake up in a dark dungeon...")
+print("There's a door to the NORTH and a chest to the EAST.")
+print()
+
+# Simulate player choosing "east"
+choice = "east"  # In real game: input("> ")
+
+if choice == "north":
+    print("You open the door and escape! YOU WIN!")
+elif choice == "east":
+    print("You open the chest and find... a GOLDEN KEY!")
+    print("Maybe this opens something?")
+else:
+    print("You sit and wait. A spider crawls on you. Ew.")
+
+print()
+print("(This is just a taste - let's build the full game!)")</code></pre>
+                    <div class="code-output hidden"></div>
+                </div>
+            </section>
+
+            <!-- Step 1: Game State -->
+            <section class="lesson" id="step-1">
+                <h2>Step 1: Game State with Dictionaries</h2>
+                <p>Games need to track things: where the player is, what items they have, their health. We use a dictionary for this!</p>
+
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python"># The player's state - everything about them in one place
+player = {
+    "name": "Hero",
+    "health": 100,
+    "inventory": [],
+    "location": "entrance",
+    "gold": 0
+}
+
+# Access and modify the state
+print(f"Player: {player['name']}")
+print(f"Health: {player['health']} HP")
+print(f"Location: {player['location']}")
+
+# Pick up an item
+player["inventory"].append("torch")
+player["inventory"].append("rusty sword")
+print(f"Inventory: {player['inventory']}")
+
+# Find some gold
+player["gold"] += 50
+print(f"Gold: {player['gold']}")</code></pre>
+                    <div class="code-output hidden"></div>
+                </div>
+
+                <div class="callout callout-tip">
+                    <strong>Why dictionaries?</strong> They keep related data together with meaningful names. <code>player["health"]</code> is clearer than <code>player_stat_3</code>!
+                </div>
+            </section>
+
+            <!-- Step 2: Rooms -->
+            <section class="lesson" id="step-2">
+                <h2>Step 2: Creating Rooms</h2>
+                <p>Each room is a dictionary with a description and connections to other rooms!</p>
+
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python"># Define rooms as a dictionary of dictionaries
+rooms = {
+    "entrance": {
+        "description": "You're at the dungeon entrance. Torches flicker on the walls.",
+        "exits": {"north": "hallway", "east": "armory"},
+        "items": ["torch"]
+    },
+    "hallway": {
+        "description": "A long dark hallway. You hear dripping water.",
+        "exits": {"south": "entrance", "north": "treasure_room"},
+        "items": []
+    },
+    "armory": {
+        "description": "Old weapons line the walls. Most are rusted.",
+        "exits": {"west": "entrance"},
+        "items": ["rusty sword", "shield"]
+    },
+    "treasure_room": {
+        "description": "Gold coins sparkle everywhere! You found the treasure!",
+        "exits": {"south": "hallway"},
+        "items": ["golden crown", "diamond"]
+    }
+}
+
+# Show a room
+current_room = "entrance"
+room = rooms[current_room]
+
+print(room["description"])
+print()
+print(f"Exits: {', '.join(room['exits'].keys())}")
+print(f"Items here: {room['items'] if room['items'] else 'nothing'}")</code></pre>
+                    <div class="code-output hidden"></div>
+                </div>
+
+                <div class="callout callout-tip">
+                    <strong>Nested dictionaries:</strong> <code>rooms["entrance"]["exits"]["north"]</code> gets the room north of entrance. It's like a map!
+                </div>
+            </section>
+
+            <!-- Step 3: Movement -->
+            <section class="lesson" id="step-3">
+                <h2>Step 3: Player Movement</h2>
+                <p>Let's create a function to move between rooms!</p>
+
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python">rooms = {
+    "entrance": {
+        "description": "Dungeon entrance. Torches flicker.",
+        "exits": {"north": "hallway", "east": "armory"}
+    },
+    "hallway": {
+        "description": "A dark hallway.",
+        "exits": {"south": "entrance", "north": "treasure"}
+    },
+    "armory": {
+        "description": "Weapons on the walls.",
+        "exits": {"west": "entrance"}
+    },
+    "treasure": {
+        "description": "TREASURE ROOM! You win!",
+        "exits": {}
+    }
+}
+
+player = {"location": "entrance"}
+
+def move(direction):
+    """Move player in a direction"""
+    current = player["location"]
+    exits = rooms[current]["exits"]
+
+    if direction in exits:
+        player["location"] = exits[direction]
+        print(f"You go {direction}...")
+        print(rooms[player["location"]]["description"])
+        return True
+    else:
+        print(f"You can't go {direction} from here!")
+        return False
+
+def look():
+    """Describe current room"""
+    room = rooms[player["location"]]
+    print(room["description"])
+    print(f"Exits: {', '.join(room['exits'].keys())}")
+
+# Simulate a playthrough!
+print("=== ADVENTURE START ===\n")
+look()
+print()
+move("north")  # Go to hallway
+print()
+move("north")  # Go to treasure - WIN!</code></pre>
+                    <div class="code-output hidden"></div>
+                </div>
+            </section>
+
+            <!-- Step 4: Items -->
+            <section class="lesson" id="step-4">
+                <h2>Step 4: Picking Up Items</h2>
+                <p>Let players collect items from rooms!</p>
+
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python">rooms = {
+    "entrance": {
+        "description": "Dungeon entrance.",
+        "exits": {"north": "hallway"},
+        "items": ["torch", "old map"]
+    },
+    "hallway": {
+        "description": "A hallway.",
+        "exits": {"south": "entrance"},
+        "items": ["golden key"]
+    }
+}
+
+player = {
+    "location": "entrance",
+    "inventory": []
+}
+
+def take(item_name):
+    """Pick up an item"""
+    room = rooms[player["location"]]
+
+    if item_name in room["items"]:
+        room["items"].remove(item_name)
+        player["inventory"].append(item_name)
+        print(f"You picked up the {item_name}!")
+    else:
+        print(f"There's no {item_name} here.")
+
+def show_inventory():
+    """Show player's items"""
+    if player["inventory"]:
+        print("You're carrying:")
+        for item in player["inventory"]:
+            print(f"  - {item}")
+    else:
+        print("Your inventory is empty.")
+
+def look():
+    room = rooms[player["location"]]
+    print(room["description"])
+    if room["items"]:
+        print(f"You see: {', '.join(room['items'])}")
+
+# Demo
+print("=== ITEM DEMO ===\n")
+look()
+print()
+take("torch")
+take("old map")
+print()
+show_inventory()</code></pre>
+                    <div class="code-output hidden"></div>
+                </div>
+            </section>
+
+            <!-- Step 5: Commands -->
+            <section class="lesson" id="step-5">
+                <h2>Step 5: Command Parser</h2>
+                <p>Parse player commands like "go north" or "take sword"!</p>
+
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python">def parse_command(command):
+    """Break command into action and target"""
+    words = command.lower().strip().split()
+
+    if len(words) == 0:
+        return None, None
+
+    action = words[0]
+    target = " ".join(words[1:]) if len(words) > 1 else None
+
+    return action, target
+
+def process_command(command):
+    """Handle a player command"""
+    action, target = parse_command(command)
+
+    if action in ["go", "move", "walk"]:
+        if target:
+            print(f"Moving {target}...")
+        else:
+            print("Go where?")
+
+    elif action in ["take", "get", "grab"]:
+        if target:
+            print(f"Taking {target}...")
+        else:
+            print("Take what?")
+
+    elif action in ["look", "examine", "l"]:
+        print("Looking around...")
+
+    elif action in ["inventory", "inv", "i"]:
+        print("Checking inventory...")
+
+    elif action in ["help", "?"]:
+        print("Commands: go, take, look, inventory, help, quit")
+
+    elif action in ["quit", "exit", "q"]:
+        print("Thanks for playing!")
+
+    else:
+        print(f"I don't understand '{command}'")
+
+# Test the parser
+commands = [
+    "go north",
+    "take golden key",
+    "look",
+    "inventory",
+    "help",
+    "dance wildly"  # Unknown command
+]
+
+for cmd in commands:
+    print(f"> {cmd}")
+    process_command(cmd)
+    print()</code></pre>
+                    <div class="code-output hidden"></div>
+                </div>
+
+                <div class="callout callout-tip">
+                    <strong>Aliases:</strong> Notice how "go", "move", and "walk" all do the same thing. This makes the game more forgiving!
+                </div>
+            </section>
+
+            <!-- Step 6: Combat -->
+            <section class="lesson" id="step-6">
+                <h2>Step 6: Simple Combat!</h2>
+                <p>Add enemies and fighting to your adventure!</p>
+
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python">import random
+
+def create_enemy(name, health, damage):
+    return {
+        "name": name,
+        "health": health,
+        "damage": damage
+    }
+
+def combat(player, enemy):
+    """Simple turn-based combat"""
+    print(f"\n⚔️  A {enemy['name']} appears!")
+    print(f"Enemy HP: {enemy['health']}")
+
+    while player["health"] > 0 and enemy["health"] > 0:
+        # Player attacks
+        player_damage = random.randint(5, 15)
+        enemy["health"] -= player_damage
+        print(f"\nYou strike for {player_damage} damage!")
+
+        if enemy["health"] <= 0:
+            print(f"The {enemy['name']} is defeated!")
+            return True
+
+        print(f"Enemy HP: {enemy['health']}")
+
+        # Enemy attacks
+        enemy_damage = random.randint(1, enemy["damage"])
+        player["health"] -= enemy_damage
+        print(f"The {enemy['name']} hits you for {enemy_damage}!")
+        print(f"Your HP: {player['health']}")
+
+    print("You have been defeated...")
+    return False
+
+# Demo combat!
+player = {"name": "Hero", "health": 50}
+goblin = create_enemy("Goblin", 25, 8)
+
+print("=" * 40)
+print("COMBAT DEMO")
+print("=" * 40)
+
+result = combat(player, goblin)
+print()
+print("Victory!" if result else "Game Over!")</code></pre>
+                    <div class="code-output hidden"></div>
+                </div>
+            </section>
+
+            <!-- Step 7: Full Game -->
+            <section class="lesson" id="step-7">
+                <h2>Step 7: Putting It All Together!</h2>
+                <p>Here's a complete mini-adventure that combines everything!</p>
+
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python">import random
+
+# === GAME DATA ===
+rooms = {
+    "cell": {
+        "description": "A damp prison cell. Light seeps through a crack.",
+        "exits": {"north": "corridor"},
+        "items": ["rusty key"],
+        "enemy": None
+    },
+    "corridor": {
+        "description": "A torch-lit corridor. You hear growling to the east.",
+        "exits": {"south": "cell", "north": "gate", "east": "guard_room"},
+        "items": [],
+        "enemy": None
+    },
+    "guard_room": {
+        "description": "The guard room. A goblin spots you!",
+        "exits": {"west": "corridor"},
+        "items": ["sword", "health potion"],
+        "enemy": {"name": "Goblin", "health": 20, "damage": 5}
+    },
+    "gate": {
+        "description": "A massive gate blocks your escape. It has a rusty lock.",
+        "exits": {"south": "corridor"},
+        "items": [],
+        "enemy": None,
+        "locked": True
+    }
+}
+
+player = {
+    "health": 30,
+    "inventory": [],
+    "location": "cell"
+}
+
+def look():
+    room = rooms[player["location"]]
+    print(f"\n{room['description']}")
+    if room.get("items"):
+        print(f"Items: {', '.join(room['items'])}")
+    if room.get("exits"):
+        print(f"Exits: {', '.join(room['exits'].keys())}")
+
+def move(direction):
+    room = rooms[player["location"]]
+    if direction in room["exits"]:
+        new_room = room["exits"][direction]
+
+        # Check if locked
+        if rooms[new_room].get("locked") and "rusty key" not in player["inventory"]:
+            print("The gate is locked! You need a key.")
+            return
+
+        player["location"] = new_room
+        look()
+
+        # Check for enemy
+        if rooms[new_room].get("enemy"):
+            enemy = rooms[new_room]["enemy"]
+            print(f"\n⚔️ A {enemy['name']} attacks!")
+            if "sword" in player["inventory"]:
+                print("You fight with your sword and win!")
+                rooms[new_room]["enemy"] = None
+            else:
+                player["health"] -= 15
+                print(f"You take 15 damage fleeing! HP: {player['health']}")
+    else:
+        print("You can't go that way.")
+
+def take(item):
+    room = rooms[player["location"]]
+    if item in room.get("items", []):
+        room["items"].remove(item)
+        player["inventory"].append(item)
+        print(f"Got {item}!")
+        if item == "health potion":
+            player["health"] += 20
+            player["inventory"].remove("health potion")
+            print(f"Healed! HP: {player['health']}")
+    else:
+        print("That's not here.")
+
+# === SIMULATE A PLAYTHROUGH ===
+print("=" * 50)
+print("ESCAPE THE DUNGEON!")
+print("=" * 50)
+
+look()
+
+# Player actions (simulated)
+actions = [
+    ("take", "rusty key"),
+    ("go", "north"),
+    ("go", "east"),
+    ("take", "sword"),
+    ("take", "health potion"),
+    ("go", "west"),
+    ("go", "north")
+]
+
+for action, target in actions:
+    print(f"\n> {action} {target}")
+    if action == "go":
+        move(target)
+    elif action == "take":
+        take(target)
+
+# Win condition
+if player["location"] == "gate" and "rusty key" in player["inventory"]:
+    print("\n" + "=" * 50)
+    print("🎉 You unlock the gate and ESCAPE! YOU WIN! 🎉")
+    print("=" * 50)</code></pre>
+                    <div class="code-output hidden"></div>
+                </div>
+            </section>
+
+            <!-- Step 8: Interactive Version -->
+            <section class="lesson" id="step-8">
+                <h2>Step 8: Make It Interactive!</h2>
+                <p>Here's the code to run as a real game on your computer with <code>input()</code>:</p>
+
+                <div class="callout callout-tip">
+                    <strong>Run locally!</strong> Copy this code to a file called <code>adventure.py</code> and run it with <code>python adventure.py</code> in your terminal. The <code>input()</code> function works there!
+                </div>
+
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python"># FULL GAME TEMPLATE - Copy and run locally!
+# This shows the game loop structure
+
+game_running = True
+commands_demo = ["look", "go north", "take sword", "inventory", "quit"]
+cmd_index = 0
+
+def get_command():
+    """Simulates input() for browser demo"""
+    global cmd_index
+    if cmd_index < len(commands_demo):
+        cmd = commands_demo[cmd_index]
+        cmd_index += 1
+        return cmd
+    return "quit"
+
+# Mini game state
+player = {"location": "start", "inventory": []}
+rooms = {
+    "start": {"desc": "Starting room", "exits": {"north": "end"}, "items": ["sword"]},
+    "end": {"desc": "You escaped!", "exits": {}, "items": []}
+}
+
+print("=" * 40)
+print("TEXT ADVENTURE - GAME LOOP DEMO")
+print("=" * 40)
+print("Commands: look, go [dir], take [item], inventory, quit")
+print()
+
+while game_running:
+    # In real game: command = input("> ").lower().strip()
+    command = get_command()
+    print(f"> {command}")
+
+    parts = command.split()
+    action = parts[0] if parts else ""
+    target = " ".join(parts[1:]) if len(parts) > 1 else ""
+
+    if action == "quit":
+        print("Thanks for playing!")
+        game_running = False
+
+    elif action == "look":
+        room = rooms[player["location"]]
+        print(room["desc"])
+        if room["items"]:
+            print(f"Items: {room['items']}")
+        if room["exits"]:
+            print(f"Exits: {list(room['exits'].keys())}")
+
+    elif action == "go":
+        room = rooms[player["location"]]
+        if target in room["exits"]:
+            player["location"] = room["exits"][target]
+            print(f"You go {target}...")
+            print(rooms[player["location"]]["desc"])
+        else:
+            print("Can't go that way!")
+
+    elif action == "take":
+        room = rooms[player["location"]]
+        if target in room["items"]:
+            room["items"].remove(target)
+            player["inventory"].append(target)
+            print(f"Took {target}!")
+        else:
+            print("Not here!")
+
+    elif action == "inventory":
+        print(f"Carrying: {player['inventory'] or 'nothing'}")
+
+    else:
+        print("Unknown command!")
+
+    print()</code></pre>
+                    <div class="code-output hidden"></div>
+                </div>
+            </section>
+
+            <!-- Challenge -->
+            <section class="lesson" id="challenge">
+                <h2>Challenge: Build Your Own Adventure!</h2>
+                <p>You now have all the pieces. Create your own story!</p>
+
+                <div class="callout callout-tip">
+                    <strong>Ideas to expand:</strong>
+                    <ul>
+                        <li>Add more rooms with puzzles</li>
+                        <li>Create NPCs (non-player characters) to talk to</li>
+                        <li>Add a save/load system using dictionaries</li>
+                        <li>Implement magic spells or special abilities</li>
+                        <li>Add a timer or hunger system</li>
+                        <li>Create multiple endings based on choices</li>
+                    </ul>
+                </div>
+
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python"># YOUR ADVENTURE TEMPLATE!
+# Customize this to create your own game!
+
+# Your story's rooms
+my_rooms = {
+    "start": {
+        "description": "You wake up in a mysterious forest...",
+        "exits": {"north": "cabin", "east": "river"},
+        "items": ["stick"]
+    },
+    "cabin": {
+        "description": "An old cabin. Smoke rises from the chimney.",
+        "exits": {"south": "start"},
+        "items": ["lantern", "note"]
+    },
+    "river": {
+        "description": "A rushing river blocks your path.",
+        "exits": {"west": "start"},
+        "items": ["fishing rod"]
+    }
+}
+
+# Your player
+hero = {
+    "name": "Adventurer",
+    "health": 100,
+    "inventory": [],
+    "location": "start"
+}
+
+# Show the game
+print("=" * 40)
+print("YOUR CUSTOM ADVENTURE")
+print("=" * 40)
+print()
+
+for room_id, room in my_rooms.items():
+    print(f"📍 {room_id.upper()}")
+    print(f"   {room['description']}")
+    print(f"   Items: {room['items']}")
+    print(f"   Exits: {list(room['exits'].keys())}")
+    print()
+
+print("Now add game logic and make it playable!")
+print("Copy the game loop from Step 8 to get started.")</code></pre>
+                    <div class="code-output hidden"></div>
+                </div>
+            </section>
+
+            <!-- What You Learned -->
+            <section class="lesson" id="recap">
+                <h2>Congratulations - You've Completed Python Starter!</h2>
+
+                <div style="text-align: center; padding: 2rem; background: var(--color-bg-alt); border-radius: 12px; margin: 2rem 0;">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">🎉 You built 7 real projects! 🎉</h3>
+                    <p>From Mad Libs to a Text Adventure Game, you've learned real programming skills.</p>
+                </div>
+
+                <h3>Skills You've Mastered:</h3>
+                <ul>
+                    <li><strong>Variables & Data Types</strong> - strings, numbers, lists, dictionaries</li>
+                    <li><strong>Control Flow</strong> - if/elif/else, while loops, for loops</li>
+                    <li><strong>Functions</strong> - def, parameters, return values</li>
+                    <li><strong>Modules</strong> - import, random, string</li>
+                    <li><strong>Data Structures</strong> - lists, dictionaries, nested data</li>
+                    <li><strong>String Operations</strong> - f-strings, split, join, formatting</li>
+                    <li><strong>Game Development</strong> - state management, commands, game loops</li>
+                </ul>
+
+                <h3>What's Next?</h3>
+                <ul>
+                    <li>📚 <a href="../index.html#modules">Python Basics</a> - Deepen your fundamentals</li>
+                    <li>🤖 <a href="../cs50-ai.html">CS50 AI</a> - Learn AI & Machine Learning</li>
+                    <li>🚀 <a href="../projects.html">Project Ideas</a> - Keep building!</li>
+                </ul>
+
+                <div class="callout callout-tip">
+                    <strong>Remember:</strong> The best way to learn is to BUILD. Take these projects, modify them, break them, fix them. Make them yours!
+                </div>
+            </section>
+
+            <!-- Navigation -->
+            <nav class="module-nav">
+                <a href="starter-ascii.html" class="btn btn-secondary">← ASCII Art</a>
+                <button id="mark-complete" class="btn btn-primary">Complete Python Starter! 🎉</button>
+                <a href="../python-starter.html" class="btn btn-secondary">Back to Projects →</a>
+            </nav>
+        </article>
+    </main>
+
+    <!-- Keyboard Shortcuts Modal -->
+    <div id="keyboard-modal" class="modal" role="dialog" aria-labelledby="keyboard-modal-title" aria-hidden="true">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Close">×</button>
+            <h2 id="keyboard-modal-title">Keyboard Shortcuts</h2>
+            <dl class="shortcuts-list">
+                <dt><kbd>d</kbd></dt><dd>Toggle dark/light mode</dd>
+                <dt><kbd>t</kbd></dt><dd>Open AI tutor</dd>
+                <dt><kbd>?</kbd></dt><dd>Show this help</dd>
+                <dt><kbd>Esc</kbd></dt><dd>Close dialogs</dd>
+            </dl>
+        </div>
+    </div>
+
+    <!-- AI Tutor Panel -->
+    <div id="tutor-panel" class="tutor-panel" aria-hidden="true">
+        <div class="tutor-header">
+            <h2>Python Helper</h2>
+            <div class="tutor-status" id="tutor-status">
+                <span class="status-dot"></span>
+                <span class="status-text">Loading...</span>
+            </div>
+            <button id="close-tutor" class="tutor-close" aria-label="Close tutor">×</button>
+        </div>
+        <div class="tutor-messages" id="tutor-messages" role="log" aria-live="polite">
+            <div class="message bot-message">
+                <img src="../sluggy.png" alt="Sluggy" class="sluggy-avatar">
+                <div class="message-content">
+                    <p><strong>Congrats on the final project!</strong> Text adventures are how many programmers got started.</p>
+                    <p>Questions I can help with:</p>
+                    <ul>
+                        <li>"How do I add more rooms?"</li>
+                        <li>"Can I save the game state?"</li>
+                        <li>"How do dictionaries work?"</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="tutor-input-area">
+            <div id="model-loading" class="model-loading">
+                <div class="loading-spinner"></div>
+                <span id="loading-text">Initializing...</span>
+                <div class="loading-progress"><div class="loading-bar" id="loading-bar"></div></div>
+            </div>
+            <form id="tutor-form" class="tutor-form">
+                <label for="tutor-input" class="visually-hidden">Ask a question</label>
+                <input type="text" id="tutor-input" placeholder="Ask about game design..." autocomplete="off" disabled>
+                <button type="submit" id="tutor-submit" disabled>→</button>
+            </form>
+        </div>
+    </div>
+
+    <button id="tutor-fab" class="tutor-fab" aria-label="Open AI tutor (Press 't')">
+        <span class="fab-icon"><img src="../sluggy.png" alt="" class="sluggy-avatar"></span>
+        <span class="fab-text">Get Help</span>
+    </button>
+
+    <footer class="site-footer">
+        <p>Built with the <strong>Producer Mindset</strong></p>
+        <p class="footer-note">No data leaves your browser. Everything runs locally.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/tutor-flow.js"></script>
+    <script src="../js/tutor-ui.js"></script>
+    <script src="../js/pyodide-runner.js"></script>
+    <script>
+        // Mark complete button
+        document.getElementById('mark-complete')?.addEventListener('click', () => {
+            const progress = JSON.parse(localStorage.getItem('pylearn-starter-progress') || '{}');
+            progress['starter-7'] = { completed: true, completedAt: new Date().toISOString() };
+            progress['track-complete'] = true;
+            localStorage.setItem('pylearn-starter-progress', JSON.stringify(progress));
+            alert('🎉 Congratulations! You completed Python Starter! You\'re now a Python programmer!');
+        });
+
+        // Explain This button handler
+        function explainCode(btn) {
+            const codeBlock = btn.closest('.code-container')?.querySelector('pre code');
+            if (codeBlock && window.TutorUI) {
+                window.TutorUI.askAboutCode(codeBlock.textContent);
+            }
+        }
+
+        // Run button handler
+        async function runCode(btn) {
+            const container = btn.closest('.code-container');
+            const codeBlock = container?.querySelector('pre code');
+            const outputDiv = container?.querySelector('.code-output');
+
+            if (!codeBlock || !outputDiv) return;
+
+            const code = codeBlock.textContent;
+            outputDiv.classList.remove('hidden', 'success', 'error');
+            outputDiv.classList.add('loading');
+            outputDiv.textContent = 'Running...';
+            btn.disabled = true;
+
+            try {
+                if (window.PythonRunner) {
+                    const result = await window.PythonRunner.runCode(code);
+                    outputDiv.classList.remove('loading');
+                    outputDiv.classList.add(result.success ? 'success' : 'error');
+                    outputDiv.textContent = result.output || '(no output)';
+                } else {
+                    outputDiv.textContent = 'Python environment loading... try again in a moment!';
+                    outputDiv.classList.remove('loading');
+                }
+            } catch (err) {
+                outputDiv.classList.remove('loading');
+                outputDiv.classList.add('error');
+                outputDiv.textContent = 'Error: ' + err.message;
+            }
+
+            btn.disabled = false;
+        }
+    </script>
+</body>
+</html>

@@ -196,19 +196,22 @@ a:hover, a:focus {
 
 .nav-links {
     display: flex;
+    flex-wrap: nowrap;
     list-style: none;
     margin: 0;
     padding: 0;
-    gap: var(--space-lg);
+    gap: var(--space-md);
 }
 
 .nav-link {
     color: var(--color-text);
     text-decoration: none;
     font-weight: 500;
-    padding: var(--space-sm) var(--space-md);
+    padding: var(--space-xs) var(--space-sm);
     border-radius: var(--border-radius);
     transition: background-color var(--transition-fast);
+    white-space: nowrap;
+    font-size: 0.9rem;
 }
 
 .nav-link:hover, .nav-link.active {
@@ -691,35 +694,9 @@ kbd {
 /* ===========================================
    Responsive
    =========================================== */
-@media (max-width: 768px) {
-    .hero {
-        grid-template-columns: 1fr;
-        text-align: center;
-    }
 
-    .hero-cta {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .hero-cta .btn {
-        width: 100%;
-        max-width: 280px;
-        justify-content: center;
-    }
-
-    .hero-visual {
-        display: none;
-    }
-
-    .hero-mascot {
-        float: none;
-        display: block;
-        margin: 0 auto var(--space-lg);
-        width: 140px;
-    }
-
-    /* Mobile Navigation */
+/* Medium screens - show hamburger earlier for 5+ nav items */
+@media (max-width: 950px) {
     .hamburger {
         display: flex;
     }
@@ -754,6 +731,40 @@ kbd {
         display: block;
         padding: var(--space-md);
         border-radius: var(--border-radius);
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .hero-cta {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hero-cta .btn {
+        width: 100%;
+        max-width: 280px;
+        justify-content: center;
+    }
+
+    .hero-visual {
+        display: none;
+    }
+
+    .hero-mascot {
+        float: none;
+        display: block;
+        margin: 0 auto var(--space-lg);
+        width: 140px;
+    }
+
+    /* Mobile Navigation - enhanced button style for small screens */
+    .nav-link {
         background: var(--color-bg-alt);
         border: 1px solid var(--color-border);
     }

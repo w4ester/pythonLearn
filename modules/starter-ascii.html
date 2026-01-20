@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASCII Art Maker | Python Starter</title>
+    <link rel="icon" type="image/png" href="../sluggy.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/tutor.css">
+    <link rel="stylesheet" href="../css/module.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <header class="site-header">
+        <div class="header-content">
+            <a href="../index.html" class="logo">
+                <span class="logo-icon">🐍</span>
+                <span class="logo-text">PyLearn</span>
+            </a>
+            <button class="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            <nav aria-label="Main navigation">
+                <ul class="nav-links">
+                    <li><a href="../index.html" class="nav-link">Home</a></li>
+                    <li><a href="../python-starter.html" class="nav-link active">Python Starter</a></li>
+                    <li><a href="../index.html#modules" class="nav-link">Python Basics</a></li>
+                    <li><a href="../cs50-ai.html" class="nav-link">CS50 AI</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode (Press 'd')">
+                    <span class="theme-icon-light" aria-hidden="true">☀️</span>
+                    <span class="theme-icon-dark" aria-hidden="true">🌙</span>
+                </button>
+                <button id="keyboard-help" class="icon-btn" aria-label="Keyboard shortcuts" title="Keyboard shortcuts (Press '?')">
+                    <span aria-hidden="true">⌨️</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content" class="module-content">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="../index.html">Home</a>
+            <span aria-hidden="true">→</span>
+            <a href="../python-starter.html">Python Starter</a>
+            <span aria-hidden="true">→</span>
+            <span aria-current="page">ASCII Art Maker</span>
+        </nav>
+
+        <article class="module-article">
+            <header class="module-header">
+                <span class="module-badge">Project 6 of 7</span>
+                <h1>ASCII Art Maker</h1>
+                <p class="module-meta">
+                    <span class="tag">20 min</span>
+                    <span class="tag">loops</span>
+                    <span class="tag">patterns</span>
+                </p>
+            </header>
+
+            <!-- Intro -->
+            <section class="lesson" id="intro">
+                <h2>What We're Building</h2>
+                <p>Create pictures using only text characters! ASCII art was how programmers made graphics before GUIs existed. It's still used in terminals, code comments, and retro games.</p>
+
+                <div class="callout callout-tip">
+                    <strong>Why this matters:</strong> ASCII art teaches you to think about loops, patterns, and spacing - skills used in game development and graphics programming!
+                </div>
+
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python"># Sneak peek: A Python snake!
+snake = """
+    ____
+   / . .\\
+   \\  ---<
+    \\  /
+  __/ /
+ (____|
+"""
+print(snake)
+
+# And a generated pattern
+print("Diamond pattern:")
+for i in range(1, 6):
+    spaces = " " * (5 - i)
+    stars = "*" * (2 * i - 1)
+    print(spaces + stars)
+for i in range(4, 0, -1):
+    spaces = " " * (5 - i)
+    stars = "*" * (2 * i - 1)
+    print(spaces + stars)</code></pre>
+                    <div class="code-output hidden"></div>
+                </div>
+            </section>
+
+            <!-- Step 1: String multiplication -->
+            <section class="lesson" id="step-1">
+                <h2>Step 1: String Multiplication Magic</h2>
+                <p>In Python, you can multiply strings! This is the foundation of ASCII art.</p>
+
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python"># Multiply a string to repeat it!
+print("*" * 10)      # 10 stars
+print("-" * 20)      # 20 dashes
+print("Ha" * 5)      # HaHaHaHaHa
+print("=" * 30)
+
+# Create a simple box
+width = 20
+print("+" + "-" * (width - 2) + "+")
+print("|" + " " * (width - 2) + "|")
+print("|" + " " * (width - 2) + "|")
+print("+" + "-" * (width - 2) + "+")</code></pre>
+                    <div class="code-output hidden"></div>
+                </div>
+
+                <div class="callout callout-tip">
+                    <strong>Key concept:</strong> <code>"*" * 5</code> creates <code>"*****"</code>. This works with any string and any number!
+                </div>
+            </section>
+
+            <!-- Step 2: Simple patterns -->
+            <section class="lesson" id="step-2">
+                <h2>Step 2: Loop-Based Patterns</h2>
+                <p>Combine loops with string multiplication to create patterns!</p>
+
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python"># Right triangle
+print("Right Triangle:")
+for i in range(1, 6):
+    print("*" * i)
+
+print()
+
+# Inverted triangle
+print("Inverted Triangle:")
+for i in range(5, 0, -1):
+    print("*" * i)
+
+print()
+
+# Staircase
+print("Staircase:")
+for i in range(1, 6):
+    print("█" * i)</code></pre>
+                    <div class="code-output hidden"></div>
+                </div>
+
+                <div class="callout callout-tip">
+                    <strong>The range trick:</strong> <code>range(5, 0, -1)</code> counts down: 5, 4, 3, 2, 1. The -1 is the "step" value.
+                </div>
+            </section>
+
+            <!-- Step 3: Centered patterns -->
+            <section class="lesson" id="step-3">
+                <h2>Step 3: Centered Shapes (Pyramids!)</h2>
+                <p>To center a shape, add spaces before the characters!</p>
+
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python"># Pyramid
+height = 5
+print("Pyramid:")
+for i in range(1, height + 1):
+    spaces = " " * (height - i)
+    stars = "*" * (2 * i - 1)
+    print(spaces + stars)
+
+print()
+
+# Christmas tree!
+print("Christmas Tree:")
+for i in range(1, 8):
+    spaces = " " * (7 - i)
+    stars = "*" * (2 * i - 1)
+    print(spaces + stars)
+# Tree trunk
+print(" " * 5 + "|||")
+print(" " * 5 + "|||")</code></pre>
+                    <div class="code-output hidden"></div>
+                </div>
+
+                <div class="callout callout-tip">
+                    <strong>The math:</strong> For row <code>i</code>, we need <code>(height - i)</code> spaces and <code>(2*i - 1)</code> stars to make a centered pyramid.
+                </div>
+            </section>
+
+            <!-- Step 4: Fun shapes -->
+            <section class="lesson" id="step-4">
+                <h2>Step 4: Fun Shapes</h2>
+                <p>Let's create some recognizable shapes!</p>
+
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python"># Heart shape
+heart = """
+  **   **
+ **** ****
+***********
+ *********
+  *******
+   *****
+    ***
+     *
+"""
+print("Heart:")
+print(heart)
+
+# Cat face
+cat = """
+ /\\_/\\
+( o.o )
+ > ^ <
+"""
+print("Cat:")
+print(cat)
+
+# Robot
+robot = """
+  ___
+ [o_o]
+/|===|\\
+  | |
+ _| |_
+"""
+print("Robot:")
+print(robot)</code></pre>
+                    <div class="code-output hidden"></div>
+                </div>
+            </section>
+
+            <!-- Step 5: Text banners -->
+            <section class="lesson" id="step-5">
+                <h2>Step 5: Text Banners</h2>
+                <p>Turn any text into a fancy banner!</p>
+
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python">def make_banner(text, char="*", padding=2):
+    """Create a text banner with a border"""
+    text_len = len(text)
+    width = text_len + (padding * 2) + 2  # +2 for border chars
+
+    # Top border
+    print(char * width)
+
+    # Text with padding
+    print(char + " " * padding + text + " " * padding + char)
+
+    # Bottom border
+    print(char * width)
+
+# Try different styles!
+make_banner("HELLO PYTHON!")
+
+print()
+make_banner("Welcome", char="#", padding=4)
+
+print()
+make_banner("Game Over", char="=", padding=3)</code></pre>
+                    <div class="code-output hidden"></div>
+                </div>
+
+                <div class="callout callout-tip">
+                    <strong>Reusability:</strong> Functions let you create banners with any text, border character, and padding - without rewriting code!
+                </div>
+            </section>
+
+            <!-- Step 6: Box drawing -->
+            <section class="lesson" id="step-6">
+                <h2>Step 6: Draw Boxes Around Text</h2>
+                <p>Create professional-looking boxes for text!</p>
+
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python">def text_box(lines, padding=1):
+    """Draw a box around multiple lines of text"""
+    # Find the longest line
+    max_len = max(len(line) for line in lines)
+    width = max_len + (padding * 2)
+
+    # Draw box
+    print("+" + "-" * width + "+")
+    for line in lines:
+        # Pad each line to same width
+        padded = line.ljust(max_len)
+        print("|" + " " * padding + padded + " " * padding + "|")
+    print("+" + "-" * width + "+")
+
+# Single line
+text_box(["Hello World!"])
+
+print()
+
+# Multiple lines
+text_box([
+    "Welcome to Python!",
+    "Let's learn to code.",
+    "It's fun!"
+])
+
+print()
+
+# Menu style
+text_box([
+    "=== MENU ===",
+    "1. Start Game",
+    "2. Options",
+    "3. Quit"
+], padding=2)</code></pre>
+                    <div class="code-output hidden"></div>
+                </div>
+
+                <div class="callout callout-tip">
+                    <strong>The ljust() method:</strong> <code>"Hi".ljust(10)</code> pads the string with spaces to make it 10 characters: <code>"Hi        "</code>
+                </div>
+            </section>
+
+            <!-- Step 7: Animated patterns -->
+            <section class="lesson" id="step-7">
+                <h2>Step 7: Pattern Generator</h2>
+                <p>Create a function that generates various patterns!</p>
+
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python">def draw_pattern(pattern_type, size=5, char="*"):
+    """Draw different ASCII patterns"""
+
+    if pattern_type == "triangle":
+        for i in range(1, size + 1):
+            print(char * i)
+
+    elif pattern_type == "pyramid":
+        for i in range(1, size + 1):
+            spaces = " " * (size - i)
+            stars = char * (2 * i - 1)
+            print(spaces + stars)
+
+    elif pattern_type == "diamond":
+        # Top half
+        for i in range(1, size + 1):
+            spaces = " " * (size - i)
+            stars = char * (2 * i - 1)
+            print(spaces + stars)
+        # Bottom half
+        for i in range(size - 1, 0, -1):
+            spaces = " " * (size - i)
+            stars = char * (2 * i - 1)
+            print(spaces + stars)
+
+    elif pattern_type == "square":
+        for i in range(size):
+            print(char * size)
+
+    elif pattern_type == "hollow_square":
+        print(char * size)
+        for i in range(size - 2):
+            print(char + " " * (size - 2) + char)
+        if size > 1:
+            print(char * size)
+
+# Demo all patterns!
+patterns = ["triangle", "pyramid", "diamond", "square", "hollow_square"]
+
+for p in patterns:
+    print(f"\n{p.upper()}:")
+    draw_pattern(p, size=5, char="*")</code></pre>
+                    <div class="code-output hidden"></div>
+                </div>
+            </section>
+
+            <!-- Step 8: Name art -->
+            <section class="lesson" id="step-8">
+                <h2>Step 8: Big Letter Art</h2>
+                <p>Create block letters from characters!</p>
+
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python"># Block letter dictionary
+letters = {
+    'H': [
+        "H   H",
+        "H   H",
+        "HHHHH",
+        "H   H",
+        "H   H"
+    ],
+    'I': [
+        "IIIII",
+        "  I  ",
+        "  I  ",
+        "  I  ",
+        "IIIII"
+    ],
+    'P': [
+        "PPPP ",
+        "P   P",
+        "PPPP ",
+        "P    ",
+        "P    "
+    ],
+    'Y': [
+        "Y   Y",
+        " Y Y ",
+        "  Y  ",
+        "  Y  ",
+        "  Y  "
+    ],
+    ' ': [
+        "     ",
+        "     ",
+        "     ",
+        "     ",
+        "     "
+    ]
+}
+
+def print_big(text):
+    """Print text in block letters"""
+    text = text.upper()
+    # Print row by row across all letters
+    for row in range(5):
+        line = ""
+        for char in text:
+            if char in letters:
+                line += letters[char][row] + "  "
+            else:
+                line += "     " + "  "  # Unknown char
+        print(line)
+
+print_big("HI")
+print()
+print_big("PYPY")</code></pre>
+                    <div class="code-output hidden"></div>
+                </div>
+
+                <div class="callout callout-tip">
+                    <strong>How it works:</strong> Each letter is stored as 5 rows of text. We print row 0 of all letters, then row 1, etc. This creates the block effect!
+                </div>
+            </section>
+
+            <!-- Challenge -->
+            <section class="lesson" id="challenge">
+                <h2>Challenge: Create Your Own Art!</h2>
+                <p>Try these creative challenges:</p>
+
+                <div class="callout callout-tip">
+                    <strong>Ideas:</strong>
+                    <ul>
+                        <li>Add more letters to the block letter dictionary</li>
+                        <li>Create a house, tree, or car</li>
+                        <li>Make a loading bar animation</li>
+                        <li>Design your own logo</li>
+                    </ul>
+                </div>
+
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python"># Challenge: Create a scene!
+
+def draw_house():
+    print("     /\\")
+    print("    /  \\")
+    print("   /    \\")
+    print("  /______\\")
+    print("  |    |")
+    print("  | [] |")
+    print("  |____|")
+
+def draw_tree():
+    print("    *")
+    print("   ***")
+    print("  *****")
+    print(" *******")
+    print("   |||")
+
+def draw_sun():
+    print("    \\  |  /")
+    print("   -- O --")
+    print("    /  |  \\")
+
+# Create a scene!
+print("\n" + "=" * 40)
+print("  A PEACEFUL SCENE")
+print("=" * 40 + "\n")
+
+draw_sun()
+print()
+draw_tree()
+print()
+draw_house()
+print("_" * 40)  # Ground
+
+# Progress bar example
+print("\n\nLoading: ", end="")
+for i in range(20):
+    print("█", end="")
+print(" 100%")</code></pre>
+                    <div class="code-output hidden"></div>
+                </div>
+            </section>
+
+            <!-- What You Learned -->
+            <section class="lesson" id="recap">
+                <h2>What You Just Learned</h2>
+                <ul>
+                    <li><code>"*" * n</code> - String multiplication</li>
+                    <li><code>range(5, 0, -1)</code> - Counting backwards</li>
+                    <li>Combining spaces and characters for centering</li>
+                    <li><code>str.ljust(width)</code> - Left-justify strings</li>
+                    <li>Multi-line strings with triple quotes</li>
+                    <li>Dictionaries to store letter patterns</li>
+                    <li>Nested loops for 2D patterns</li>
+                </ul>
+
+                <div class="callout callout-tip">
+                    <strong>Real-world connection:</strong> ASCII art is used in terminal applications, code documentation, email signatures, and retro game development. The pattern-thinking you learned applies to graphics programming!
+                </div>
+            </section>
+
+            <!-- Navigation -->
+            <nav class="module-nav">
+                <a href="starter-password.html" class="btn btn-secondary">← Password Generator</a>
+                <button id="mark-complete" class="btn btn-primary">Mark as Complete ✓</button>
+                <a href="starter-adventure.html" class="btn btn-secondary">Next: Text Adventure →</a>
+            </nav>
+        </article>
+    </main>
+
+    <!-- Keyboard Shortcuts Modal -->
+    <div id="keyboard-modal" class="modal" role="dialog" aria-labelledby="keyboard-modal-title" aria-hidden="true">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Close">×</button>
+            <h2 id="keyboard-modal-title">Keyboard Shortcuts</h2>
+            <dl class="shortcuts-list">
+                <dt><kbd>d</kbd></dt><dd>Toggle dark/light mode</dd>
+                <dt><kbd>t</kbd></dt><dd>Open AI tutor</dd>
+                <dt><kbd>?</kbd></dt><dd>Show this help</dd>
+                <dt><kbd>Esc</kbd></dt><dd>Close dialogs</dd>
+            </dl>
+        </div>
+    </div>
+
+    <!-- AI Tutor Panel -->
+    <div id="tutor-panel" class="tutor-panel" aria-hidden="true">
+        <div class="tutor-header">
+            <h2>Python Helper</h2>
+            <div class="tutor-status" id="tutor-status">
+                <span class="status-dot"></span>
+                <span class="status-text">Loading...</span>
+            </div>
+            <button id="close-tutor" class="tutor-close" aria-label="Close tutor">×</button>
+        </div>
+        <div class="tutor-messages" id="tutor-messages" role="log" aria-live="polite">
+            <div class="message bot-message">
+                <img src="../sluggy.png" alt="Sluggy" class="sluggy-avatar">
+                <div class="message-content">
+                    <p><strong>Hi! I'm Sluggy.</strong> ASCII art is so fun! Ask me anything.</p>
+                    <p>Common questions:</p>
+                    <ul>
+                        <li>"How do I center a pattern?"</li>
+                        <li>"Why multiply strings?"</li>
+                        <li>"How does the pyramid math work?"</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="tutor-input-area">
+            <div id="model-loading" class="model-loading">
+                <div class="loading-spinner"></div>
+                <span id="loading-text">Initializing...</span>
+                <div class="loading-progress"><div class="loading-bar" id="loading-bar"></div></div>
+            </div>
+            <form id="tutor-form" class="tutor-form">
+                <label for="tutor-input" class="visually-hidden">Ask a question</label>
+                <input type="text" id="tutor-input" placeholder="Ask about patterns, loops..." autocomplete="off" disabled>
+                <button type="submit" id="tutor-submit" disabled>→</button>
+            </form>
+        </div>
+    </div>
+
+    <button id="tutor-fab" class="tutor-fab" aria-label="Open AI tutor (Press 't')">
+        <span class="fab-icon"><img src="../sluggy.png" alt="" class="sluggy-avatar"></span>
+        <span class="fab-text">Get Help</span>
+    </button>
+
+    <footer class="site-footer">
+        <p>Built with the <strong>Producer Mindset</strong></p>
+        <p class="footer-note">No data leaves your browser. Everything runs locally.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/tutor-flow.js"></script>
+    <script src="../js/tutor-ui.js"></script>
+    <script src="../js/pyodide-runner.js"></script>
+    <script>
+        // Mark complete button
+        document.getElementById('mark-complete')?.addEventListener('click', () => {
+            const progress = JSON.parse(localStorage.getItem('pylearn-starter-progress') || '{}');
+            progress['starter-6'] = { completed: true, completedAt: new Date().toISOString() };
+            localStorage.setItem('pylearn-starter-progress', JSON.stringify(progress));
+            alert('Project complete! Ready for the final adventure?');
+        });
+
+        // Explain This button handler
+        function explainCode(btn) {
+            const codeBlock = btn.closest('.code-container')?.querySelector('pre code');
+            if (codeBlock && window.TutorUI) {
+                window.TutorUI.askAboutCode(codeBlock.textContent);
+            }
+        }
+
+        // Run button handler
+        async function runCode(btn) {
+            const container = btn.closest('.code-container');
+            const codeBlock = container?.querySelector('pre code');
+            const outputDiv = container?.querySelector('.code-output');
+
+            if (!codeBlock || !outputDiv) return;
+
+            const code = codeBlock.textContent;
+            outputDiv.classList.remove('hidden', 'success', 'error');
+            outputDiv.classList.add('loading');
+            outputDiv.textContent = 'Running...';
+            btn.disabled = true;
+
+            try {
+                if (window.PythonRunner) {
+                    const result = await window.PythonRunner.runCode(code);
+                    outputDiv.classList.remove('loading');
+                    outputDiv.classList.add(result.success ? 'success' : 'error');
+                    outputDiv.textContent = result.output || '(no output)';
+                } else {
+                    outputDiv.textContent = 'Python environment loading... try again in a moment!';
+                    outputDiv.classList.remove('loading');
+                }
+            } catch (err) {
+                outputDiv.classList.remove('loading');
+                outputDiv.classList.add('error');
+                outputDiv.textContent = 'Error: ' + err.message;
+            }
+
+            btn.disabled = false;
+        }
+    </script>
+</body>
+</html>

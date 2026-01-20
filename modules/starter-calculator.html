@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mad Libs Generator | Python Starter</title>
+    <title>Simple Calculator | Python Starter</title>
     <link rel="icon" type="image/png" href="../sluggy.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -53,232 +53,364 @@
             <span aria-hidden="true">→</span>
             <a href="../python-starter.html">Python Starter</a>
             <span aria-hidden="true">→</span>
-            <span aria-current="page">Mad Libs Generator</span>
+            <span aria-current="page">Simple Calculator</span>
         </nav>
 
         <article class="module-article">
             <header class="module-header">
-                <span class="module-badge">Project 1 of 7</span>
-                <h1>Mad Libs Generator</h1>
+                <span class="module-badge">Project 4 of 7</span>
+                <h1>Simple Calculator</h1>
                 <p class="module-meta">
-                    <span class="tag">15 min</span>
-                    <span class="tag">strings</span>
-                    <span class="tag">input/output</span>
+                    <span class="tag">20 min</span>
+                    <span class="tag">functions</span>
+                    <span class="tag">operators</span>
                 </p>
             </header>
 
-            <!-- Step 0: See the result first! -->
+            <!-- Intro -->
             <section class="lesson" id="intro">
                 <h2>What We're Building</h2>
-                <p>Remember Mad Libs from road trips? You fill in random words, and they get plugged into a silly story. By the end of this project, you'll have built your own!</p>
+                <p>A calculator that can add, subtract, multiply, and divide! But more importantly, you'll learn about <strong>functions</strong> - reusable blocks of code.</p>
 
                 <div class="callout callout-tip">
-                    <strong>Try it first!</strong> Click "Run" to see a finished Mad Libs in action!
+                    <strong>Why functions matter:</strong> Instead of writing the same code over and over, you write it once as a function and call it whenever you need it. It's like creating your own Python commands!
                 </div>
 
                 <div class="code-container">
                     <button class="run-btn" onclick="runCode(this)">▶ Run</button>
                     <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
-                    <pre><code class="language-python"># A working Mad Libs - see how it works!
-# (In the real game, these would come from user input)
-noun = "elephant"
-verb = "dance"
-adjective = "sparkly"
-place = "the moon"
+                    <pre><code class="language-python"># Sneak peek: A working calculator!
+def add(a, b):
+    return a + b
 
-story = f"""
-Once upon a time, a {adjective} {noun}
-decided to {verb} all the way to {place}.
-Everyone was amazed!
-"""
-print(story)</code></pre>
+def subtract(a, b):
+    return a - b
+
+def multiply(a, b):
+    return a * b
+
+def divide(a, b):
+    if b == 0:
+        return "Error: Can't divide by zero!"
+    return a / b
+
+# Use the calculator
+print(f"10 + 5 = {add(10, 5)}")
+print(f"10 - 5 = {subtract(10, 5)}")
+print(f"10 * 5 = {multiply(10, 5)}")
+print(f"10 / 5 = {divide(10, 5)}")</code></pre>
                     <div class="code-output hidden"></div>
                 </div>
 
-                <p>Pretty cool, right? Let's build this step by step.</p>
+                <p>Let's learn how functions work!</p>
             </section>
 
-            <!-- Step 1: print() -->
+            <!-- Step 1: What is a function? -->
             <section class="lesson" id="step-1">
-                <h2>Step 1: Say Hello to Python</h2>
-                <p>First, let's get Python to talk. The <code>print()</code> function displays text on screen.</p>
+                <h2>Step 1: Your First Function</h2>
+                <p>A <strong>function</strong> is a named block of code that does something. You <strong>define</strong> it once with <code>def</code>, then <strong>call</strong> it whenever you want.</p>
 
                 <div class="code-container">
                     <button class="run-btn" onclick="runCode(this)">▶ Run</button>
                     <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
-                    <pre><code class="language-python"># Your first Python program!
-print("Hello, World!")
-print("Welcome to Mad Libs!")</code></pre>
+                    <pre><code class="language-python"># Define a function with 'def'
+def say_hello():
+    print("Hello!")
+    print("Nice to meet you!")
+
+# Call the function by its name + parentheses
+say_hello()
+say_hello()  # Call it again!</code></pre>
                     <div class="code-output hidden"></div>
                 </div>
 
                 <div class="callout callout-tip">
-                    <strong>Key concept:</strong> Text inside quotes <code>"like this"</code> is called a <strong>string</strong>. Python treats it as literal text.
+                    <strong>Key parts:</strong>
+                    <ul>
+                        <li><code>def</code> - "I'm defining a function"</li>
+                        <li><code>say_hello</code> - The name you choose</li>
+                        <li><code>()</code> - Parentheses (we'll put stuff here soon!)</li>
+                        <li><code>:</code> - Don't forget the colon!</li>
+                        <li>Indented code - What the function does</li>
+                    </ul>
                 </div>
             </section>
 
-            <!-- Step 2: variables -->
+            <!-- Step 2: Functions with parameters -->
             <section class="lesson" id="step-2">
-                <h2>Step 2: Storing Words in Variables</h2>
-                <p>A <strong>variable</strong> is like a labeled box. You put something in, and you can get it back later using the label.</p>
+                <h2>Step 2: Functions with Inputs (Parameters)</h2>
+                <p>Functions become powerful when they can accept <strong>inputs</strong>. These are called <strong>parameters</strong>.</p>
 
                 <div class="code-container">
                     <button class="run-btn" onclick="runCode(this)">▶ Run</button>
                     <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
-                    <pre><code class="language-python"># Creating variables
-animal = "dragon"
-food = "pizza"
-action = "dances"
+                    <pre><code class="language-python"># 'name' is a parameter - a placeholder for input
+def greet(name):
+    print(f"Hello, {name}!")
 
-# Using variables in print
-print(animal)
-print("The", animal, "loves", food)</code></pre>
+# Call with different values (arguments)
+greet("Alice")
+greet("Bob")
+greet("Python")</code></pre>
                     <div class="code-output hidden"></div>
                 </div>
 
-                <p>Notice: when we type <code>animal</code> without quotes, Python gives us what's <em>inside</em> the box, not the word "animal".</p>
+                <p><strong>Parameter</strong> = the variable in the definition (<code>name</code>)<br>
+                <strong>Argument</strong> = the actual value you pass in (<code>"Alice"</code>)</p>
             </section>
 
-            <!-- Step 3: input() -->
+            <!-- Step 3: Multiple parameters -->
             <section class="lesson" id="step-3">
-                <h2>Step 3: Getting User Input</h2>
-                <p>In a real program, <code>input()</code> asks the user for something and stores their answer. Here's how it works conceptually:</p>
+                <h2>Step 3: Multiple Parameters</h2>
+                <p>Functions can take multiple inputs, separated by commas.</p>
 
                 <div class="code-container">
                     <button class="run-btn" onclick="runCode(this)">▶ Run</button>
                     <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
-                    <pre><code class="language-python"># In a real program, you'd use input() like this:
-# name = input("What's your name? ")
-# color = input("What's your favorite color? ")
+                    <pre><code class="language-python"># Two parameters: a and b
+def add_numbers(a, b):
+    result = a + b
+    print(f"{a} + {b} = {result}")
 
-# For this demo, we'll simulate what the user typed:
-name = "Alex"      # Pretend user typed "Alex"
-color = "blue"     # Pretend user typed "blue"
-
-print("Hello,", name)
-print("I like", color, "too!")</code></pre>
+# Call with two arguments
+add_numbers(5, 3)
+add_numbers(100, 200)
+add_numbers(7, 7)</code></pre>
                     <div class="code-output hidden"></div>
-                </div>
-
-                <div class="callout callout-tip">
-                    <strong>About input():</strong> The <code>input()</code> function pauses and waits for the user to type something. The text inside the parentheses is the prompt they see. When you run Python on your computer (not in browser), input() works interactively!
                 </div>
             </section>
 
-            <!-- Step 4: f-strings -->
+            <!-- Step 4: Return values -->
             <section class="lesson" id="step-4">
-                <h2>Step 4: Building Sentences (f-strings)</h2>
-                <p>Here's a cleaner way to mix variables with text: <strong>f-strings</strong>. Put an <code>f</code> before the quotes, then use <code>{variable}</code> to insert values.</p>
+                <h2>Step 4: Returning Values</h2>
+                <p>Instead of just printing, functions can <strong>return</strong> a value back to you. This is super useful!</p>
 
                 <div class="code-container">
                     <button class="run-btn" onclick="runCode(this)">▶ Run</button>
                     <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
-                    <pre><code class="language-python"># f-strings make it easy!
-hero = "Captain Python"
-weapon = "keyboard"
-enemy = "bugs"
+                    <pre><code class="language-python"># 'return' sends a value back
+def add(a, b):
+    return a + b
 
-# The 'f' before the string is the magic part
-battle_cry = f"{hero} fights {enemy} with a mighty {weapon}!"
-print(battle_cry)</code></pre>
+# Now we can USE the result!
+result = add(10, 5)
+print(f"The sum is: {result}")
+
+# Or use it directly in expressions
+total = add(1, 2) + add(3, 4)
+print(f"(1+2) + (3+4) = {total}")</code></pre>
                     <div class="code-output hidden"></div>
                 </div>
 
                 <div class="callout callout-tip">
-                    <strong>Remember:</strong> The <code>f</code> stands for "formatted". Without it, you'd literally see {hero} instead of "Captain Python".
+                    <strong>print() vs return:</strong>
+                    <ul>
+                        <li><code>print()</code> - Shows text on screen, that's it</li>
+                        <li><code>return</code> - Sends a value back so you can USE it</li>
+                    </ul>
                 </div>
             </section>
 
-            <!-- Step 5: Put it together! -->
+            <!-- Step 5: All four operations -->
             <section class="lesson" id="step-5">
-                <h2>Step 5: Your Complete Mad Libs!</h2>
-                <p>Now let's combine everything into a complete Mad Libs! Try changing the words to make your own silly story.</p>
+                <h2>Step 5: Building the Calculator</h2>
+                <p>Let's create functions for all four basic operations!</p>
 
                 <div class="code-container">
                     <button class="run-btn" onclick="runCode(this)">▶ Run</button>
                     <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
-                    <pre><code class="language-python"># Your Mad Libs Generator!
-print("=== MAD LIBS: THE SILLY ADVENTURE ===")
+                    <pre><code class="language-python">def add(a, b):
+    return a + b
 
-# The words (change these to make your own story!)
-name = "Taylor"
-adjective1 = "fuzzy"
-noun1 = "penguin"
-verb1 = "breakdance"
-place = "the grocery store"
-adjective2 = "glittery"
-noun2 = "unicorn"
-exclamation = "Holy guacamole!"
+def subtract(a, b):
+    return a - b
 
-# Build the story using f-strings
-story = f"""
-THE {adjective1.upper()} ADVENTURE OF {name.upper()}!
+def multiply(a, b):
+    return a * b
 
-One day, {name} found a {adjective1} {noun1}
-hiding under the bed. It started to {verb1}!
+def divide(a, b):
+    return a / b
 
-"Quick! To {place}!" {name} shouted.
+# Test them all!
+x = 20
+y = 4
 
-But when they got there, a {adjective2} {noun2}
-was waiting for them.
+print(f"{x} + {y} = {add(x, y)}")
+print(f"{x} - {y} = {subtract(x, y)}")
+print(f"{x} * {y} = {multiply(x, y)}")
+print(f"{x} / {y} = {divide(x, y)}")</code></pre>
+                    <div class="code-output hidden"></div>
+                </div>
+            </section>
 
-"{exclamation}" everyone yelled.
+            <!-- Step 6: Error handling -->
+            <section class="lesson" id="step-6">
+                <h2>Step 6: Handling Errors (Division by Zero)</h2>
+                <p>What happens if you divide by zero? Let's handle that gracefully!</p>
 
-THE END
-"""
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python">def safe_divide(a, b):
+    if b == 0:
+        return "Error: Cannot divide by zero!"
+    return a / b
 
-print(story)</code></pre>
+# Test normal division
+print(safe_divide(10, 2))
+
+# Test division by zero
+print(safe_divide(10, 0))
+
+# Works correctly!
+print(safe_divide(100, 5))</code></pre>
                     <div class="code-output hidden"></div>
                 </div>
 
                 <div class="callout callout-tip">
-                    <strong>Make it yours!</strong> Change the words at the top (name, adjective1, etc.) and run it again to create different silly stories!
+                    <strong>Good habit:</strong> Always think about what could go wrong and handle it! This is called <strong>defensive programming</strong>.
+                </div>
+            </section>
+
+            <!-- Step 7: Complete calculator -->
+            <section class="lesson" id="step-7">
+                <h2>Step 7: The Complete Calculator!</h2>
+                <p>Let's put it all together with a nice interface:</p>
+
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python"># Calculator Functions
+def add(a, b):
+    return a + b
+
+def subtract(a, b):
+    return a - b
+
+def multiply(a, b):
+    return a * b
+
+def divide(a, b):
+    if b == 0:
+        return "Error!"
+    return a / b
+
+def calculate(num1, operator, num2):
+    """Main calculator function"""
+    if operator == "+":
+        return add(num1, num2)
+    elif operator == "-":
+        return subtract(num1, num2)
+    elif operator == "*":
+        return multiply(num1, num2)
+    elif operator == "/":
+        return divide(num1, num2)
+    else:
+        return "Unknown operator!"
+
+# Run some calculations!
+print("=" * 30)
+print("PYTHON CALCULATOR")
+print("=" * 30)
+
+calculations = [
+    (15, "+", 7),
+    (20, "-", 8),
+    (6, "*", 7),
+    (100, "/", 4),
+    (10, "/", 0),  # Test error handling
+]
+
+for num1, op, num2 in calculations:
+    result = calculate(num1, op, num2)
+    print(f"{num1} {op} {num2} = {result}")
+
+print("=" * 30)</code></pre>
+                    <div class="code-output hidden"></div>
+                </div>
+            </section>
+
+            <!-- Step 8: Advanced functions -->
+            <section class="lesson" id="step-8">
+                <h2>Step 8: Bonus - More Math Functions!</h2>
+                <p>Let's add some extra operations:</p>
+
+                <div class="code-container">
+                    <button class="run-btn" onclick="runCode(this)">▶ Run</button>
+                    <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
+                    <pre><code class="language-python">def power(base, exponent):
+    """Raise base to the power of exponent"""
+    return base ** exponent
+
+def modulo(a, b):
+    """Get the remainder of division"""
+    return a % b
+
+def floor_divide(a, b):
+    """Divide and round down to whole number"""
+    return a // b
+
+def absolute(n):
+    """Get the absolute value"""
+    if n < 0:
+        return -n
+    return n
+
+# Test them!
+print(f"2 to the power of 10 = {power(2, 10)}")
+print(f"17 mod 5 = {modulo(17, 5)}")
+print(f"17 // 5 = {floor_divide(17, 5)}")
+print(f"absolute of -42 = {absolute(-42)}")</code></pre>
+                    <div class="code-output hidden"></div>
                 </div>
             </section>
 
             <!-- Challenge -->
             <section class="lesson" id="challenge">
-                <h2>Challenge: Make Your Own!</h2>
-                <p>You've learned all the pieces. Now create your own Mad Libs story!</p>
+                <h2>Challenge: Extend Your Calculator!</h2>
+                <p>Try adding these features:</p>
 
                 <div class="callout callout-tip">
                     <strong>Ideas:</strong>
                     <ul>
-                        <li>A recipe gone wrong</li>
-                        <li>A superhero origin story</li>
-                        <li>A news report about something absurd</li>
-                        <li>A fairy tale remix</li>
+                        <li>Add a <code>square_root</code> function (hint: <code>n ** 0.5</code>)</li>
+                        <li>Add a <code>percentage</code> function</li>
+                        <li>Create a <code>average</code> function that takes a list of numbers</li>
+                        <li>Add memory functions (store/recall a value)</li>
                     </ul>
                 </div>
 
                 <div class="code-container">
                     <button class="run-btn" onclick="runCode(this)">▶ Run</button>
                     <button class="explain-btn" onclick="explainCode(this)">Explain This</button>
-                    <pre><code class="language-python"># YOUR TURN! Create your own Mad Libs
-# Edit these words to make your own silly story!
+                    <pre><code class="language-python"># Challenge: Extended Calculator!
 
-print("=== YOUR AMAZING MAD LIBS ===")
+def square_root(n):
+    """Calculate square root"""
+    if n < 0:
+        return "Error: Can't sqrt negative!"
+    return n ** 0.5
 
-# Change these words to whatever you want:
-animal = "penguin"
-verb = "yodel"
-adjective = "sparkly"
-food = "spaghetti"
-place = "Mars"
+def percentage(part, whole):
+    """Calculate what percent 'part' is of 'whole'"""
+    if whole == 0:
+        return "Error: Can't divide by zero!"
+    return (part / whole) * 100
 
-# Build your story using f-strings:
-story = f"""
-A {adjective} {animal} decided to {verb}
-while eating {food} on {place}.
+def average(numbers):
+    """Calculate the average of a list"""
+    if len(numbers) == 0:
+        return "Error: Empty list!"
+    return sum(numbers) / len(numbers)
 
-Everyone was speechless!
-"""
+# Test your functions!
+print(f"Square root of 64 = {square_root(64)}")
+print(f"Square root of 2 = {square_root(2):.4f}")
 
-print(story)
+print(f"\n15 is what % of 60? {percentage(15, 60)}%")
 
-# TIP: When you run Python on your computer (not in browser),
-# you can use input() to ask users for words:
-# animal = input("Give me an animal: ")</code></pre>
+scores = [85, 90, 78, 92, 88]
+print(f"\nAverage of {scores} = {average(scores)}")</code></pre>
                     <div class="code-output hidden"></div>
                 </div>
             </section>
@@ -287,22 +419,25 @@ print(story)
             <section class="lesson" id="recap">
                 <h2>What You Just Learned</h2>
                 <ul>
-                    <li><code>print("text")</code> - Display text on screen</li>
-                    <li><code>variable = "value"</code> - Store data in a named container</li>
-                    <li><code>input("prompt")</code> - Get text from the user</li>
-                    <li><code>f"Hello {name}"</code> - f-strings for easy text formatting</li>
+                    <li><code>def function_name():</code> - Define a function</li>
+                    <li><code>def greet(name):</code> - Parameters are inputs</li>
+                    <li><code>return value</code> - Send a value back</li>
+                    <li><code>function_name(arg)</code> - Call a function with arguments</li>
+                    <li>Functions can call other functions</li>
+                    <li>Error handling inside functions</li>
+                    <li><code>**</code> for exponents, <code>%</code> for remainder, <code>//</code> for floor division</li>
                 </ul>
 
                 <div class="callout callout-tip">
-                    <strong>You're already coding!</strong> These same concepts power everything from websites to AI. Nice work!
+                    <strong>Functions are everywhere!</strong> Every time you use <code>print()</code>, <code>len()</code>, or <code>range()</code>, you're calling functions that someone else wrote. Now you can write your own!
                 </div>
             </section>
 
             <!-- Navigation -->
             <nav class="module-nav">
-                <a href="../python-starter.html" class="btn btn-secondary">← Back to Projects</a>
+                <a href="starter-rps.html" class="btn btn-secondary">← Rock Paper Scissors</a>
                 <button id="mark-complete" class="btn btn-primary">Mark as Complete ✓</button>
-                <a href="starter-guessing-game.html" class="btn btn-secondary">Next: Number Guessing Game →</a>
+                <a href="starter-password.html" class="btn btn-secondary">Next: Password Generator →</a>
             </nav>
         </article>
     </main>
@@ -335,12 +470,12 @@ print(story)
             <div class="message bot-message">
                 <img src="../sluggy.png" alt="Sluggy" class="sluggy-avatar">
                 <div class="message-content">
-                    <p><strong>Hi! I'm Sluggy.</strong> Building your first Mad Libs? Awesome!</p>
-                    <p>Click "Explain This" on any code, or ask me anything like:</p>
+                    <p><strong>Hi! I'm Sluggy.</strong> Functions are one of the most important concepts in programming!</p>
+                    <p>Common questions:</p>
                     <ul>
-                        <li>"What's an f-string?"</li>
-                        <li>"Why do I need quotes around text?"</li>
-                        <li>"My code isn't working - help!"</li>
+                        <li>"What's the difference between print and return?"</li>
+                        <li>"Why do I need to call a function?"</li>
+                        <li>"Can a function call itself?"</li>
                     </ul>
                 </div>
             </div>
@@ -353,7 +488,7 @@ print(story)
             </div>
             <form id="tutor-form" class="tutor-form">
                 <label for="tutor-input" class="visually-hidden">Ask a question</label>
-                <input type="text" id="tutor-input" placeholder="Ask about your Mad Libs..." autocomplete="off" disabled>
+                <input type="text" id="tutor-input" placeholder="Ask about functions, return..." autocomplete="off" disabled>
                 <button type="submit" id="tutor-submit" disabled>→</button>
             </form>
         </div>
@@ -379,13 +514,10 @@ print(story)
     <script>
         // Mark complete button
         document.getElementById('mark-complete')?.addEventListener('click', () => {
-            // Save to localStorage
             const progress = JSON.parse(localStorage.getItem('pylearn-starter-progress') || '{}');
-            progress['starter-1'] = { completed: true, completedAt: new Date().toISOString() };
+            progress['starter-4'] = { completed: true, completedAt: new Date().toISOString() };
             localStorage.setItem('pylearn-starter-progress', JSON.stringify(progress));
-
-            // Update UI
-            alert('Project complete! Ready for the next one?');
+            alert('Project complete! Ready to generate some passwords?');
         });
 
         // Explain This button handler
@@ -396,7 +528,7 @@ print(story)
             }
         }
 
-        // Run button handler (connects to pyodide-runner.js)
+        // Run button handler
         async function runCode(btn) {
             const container = btn.closest('.code-container');
             const codeBlock = container?.querySelector('pre code');
